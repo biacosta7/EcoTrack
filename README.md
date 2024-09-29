@@ -50,7 +50,7 @@ A crescente produção de resíduos e o descarte inadequado de materiais represe
 
 ## Equipe
 - Aline Farias Amancio
-- Beatriz Victória Costa Pinto
+-  Beatriz Victória Costa Pinto
 - Gustavo Carneiro  
 - Júlio César Aragão Vilas Bôas
 - Nina Henrique França Fernandes Bento De Sá
