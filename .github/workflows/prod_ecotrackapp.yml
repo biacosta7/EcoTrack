@@ -30,10 +30,19 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
         
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+      - name: Cleaning testing files
+        run: |
+          cd projeto/
+          rm db.sqlite3
+          rm .env
+          cd ..
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: |
+          cd projeto/
+          zip release.zip ./* -r
+          cd ..
+          mv projeto/release.zip .
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
