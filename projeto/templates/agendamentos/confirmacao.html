@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Agendamento - EcoTrack</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style_confirmacao.css' %}"> <!-- Referência ao CSS -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Confirmação de Agendamento</h1>
+        </header>
+        
+        <div class="confirmation-message">
+            <p>Seu agendamento foi confirmado com sucesso!</p>
+            <p>Agradecemos por escolher o EcoTrack.</p>
+        </div>
+
+        <div class="details">
+            <h2>Detalhes do Agendamento</h2>
+            <p><strong>Data:</strong> {{ data_agendamento }}</p>
+            <p><strong>Horário:</strong> {{ horario_agendamento }}</p>
+            <p><strong>Empresa:</strong> {{ empresa_nome }}</p>
+        </div>
+
+        <div class="actions">
+            <a href="{% url 'user:usuario_dashboard' %}" class="btn">Voltar ao Dashboard</a>
+            <a href="{% url 'home' %}" class="btn">Ir para a Home</a>
+        </div>
+    </div>
+</body>
+</html>
