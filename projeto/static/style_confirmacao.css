@@ -1,0 +1,56 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #E4E2DD;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #E4E2DD;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #4CAF50;
+}
+
+.confirmation-message {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+.details {
+    background-color: #E4E2DD;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.details h2 {
+    margin-top: 0;
+}
+
+.actions {
+    margin-top: 20px;
+}
+
+.btn {
+    display: inline-block;
+    margin: 5px;
+    padding: 10px 20px;
+    color: white;
+    background-color: #4CAF50;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
