@@ -8,53 +8,81 @@
     <link rel="stylesheet" href="{% static 'styles_home.css' %}">
 </head>
 <body>
-    <header>
-        <img src="{% static 'logo.png' %}" alt="Ecotrack" class="logo">
-        <h1>Bem-vindo ao EcoTrack</h1>
-        <p>Sua plataforma para agendamento e gestão de reciclagem.</p>
+    <header class="main-header">
+        <div class="logo-text">
+            <img src="{% static 'logo.png' %}" alt="Ecotrack" class="logo">
+        </div>
+        
+        <!-- Botão de Login sem imagem -->
+        <a href="{% url 'user:login' %}" class="login-btn">
+            <span>Entrar</span>
+        </a>
     </header>
-
-    <nav class="nav-buttons">
-        <a href="{% url 'user:login' %}" class="btn btn-primary">Fazer Login</a>
-        <a href="#" id="openPopup" class="btn btn-primary">Registrar-se</a>
-        <a href="#" class="btn btn-primary">Sobre</a>
-        <a href="#" class="btn btn-primary">Dicas</a>
-    </nav>
-
-    <div class="container">
-        <h2>Sobre o EcoTrack</h2>
-        <p>O EcoTrack ajuda você a gerenciar seus resíduos recicláveis de forma eficiente, contribuindo para um futuro mais sustentável.</p>
+    
+    <!-- Seção "Junte-se a nós" com imagem de reciclagem alinhada -->
+    <div class="join-section">
+        <div class="join-text-image">
+            <div class="join-text">
+                <h2>Junte-se a nós,</h2>
+                <h2>Vamos Proteger</h2>
+                <h2><span>Nosso Planeta!</span></h2>
+                <nav class="menu">
+                    <ul>
+                        <li><a href="#" id="openPopup">
+                            <span>Registre-se</span></a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="join-image">
+                <img src="{% static 'img reciclagem3.png' %}" alt="Imagem de Reciclagem" class="hero-image">
+            </div>
+        </div>
     </div>
-
-    <footer>
-        <p>&copy; 2024 EcoTrack. Todos os direitos reservados.</p>
-    </footer>
-
+    
     <!-- Estrutura do Pop-up -->
     <div id="myModal" class="modal">
         <div class="modal-content">
             <h2>Escolha o tipo de cadastro</h2>
             <p>Selecione uma das opções abaixo para se registrar.</p>
             <a href="{% url 'user:register' %}?type=company" class="btn btn-primary">Registrar como Empresa</a>
+            <br>
             <a href="{% url 'user:register' %}?type=user" class="btn btn-secondary">Registrar como Usuário Comum</a>
             <br><br>
             <button id="closePopup" class="btn close-btn">Fechar</button>
         </div>
     </div>
+    
+    <section class="info-section">
+        <h2>O Que Fazemos</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Educação</h3>
+                <p>Oferecemos dicas e conteúdo educativo sobre reciclagem.</p>
+            </div>
+            <div class="feature">
+                <h3>Coleta e Reciclagem</h3>
+                <p>Ajudamos você a agendar e rastrear coletas de resíduos.</p>
+            </div>
+            <div class="feature">
+                <h3>Rastreamento</h3>
+                <p>Rastreie a jornada dos seus resíduos até o destino final.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 EcoTrack. Todos os direitos reservados.</p>
+    </footer>
 
     <!-- Script para abrir e fechar o pop-up -->
     <script>
-        // Abrir o pop-up
         document.getElementById("openPopup").onclick = function() {
             document.getElementById("myModal").style.display = "block";
         };
-
-        // Fechar o pop-up
         document.getElementById("closePopup").onclick = function() {
             document.getElementById("myModal").style.display = "none";
         };
-
-        // Fechar o pop-up clicando fora do conteúdo
         window.onclick = function(event) {
             var modal = document.getElementById("myModal");
             if (event.target == modal) {

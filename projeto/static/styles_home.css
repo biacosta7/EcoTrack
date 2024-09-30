@@ -1,77 +1,152 @@
 /* Configurações básicas */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #E4E2DD; /* Nova cor de fundo */
+    background-color: #E4E2DD;
     margin: 0;
     padding: 20px;
-    color: #333; /* Cor do texto */
+    color: #333;
 }
 
 /* Estilo do cabeçalho */
-header {
-    background-color: #4caf50; /* Verde reciclável */
-    color: white;
-    padding: 20px;
-    text-align: center;
-    border-radius: 8px;
-    position: relative; /* Para posicionar a imagem */
-}
-
-/* Imagem no cabeçalho */
-header img {
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    width: 50px; /* Ajuste o tamanho conforme necessário */
-}
-
-/* Estilo dos títulos */
-h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-}
-
-h2 {
-    color: #2e7d32; /* Verde mais escuro */
-}
-
-/* Estilo dos parágrafos */
-p {
-    line-height: 1.6;
-    margin: 10px 0;
-}
-
-/* Centralização e estilo dos botões estilizados */
-.nav-buttons {
+.main-header {
     display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    flex-wrap: wrap; /* Permite que os botões quebrem para a linha seguinte, se necessário */
-    margin: 30px 0; /* Espaçamento acima e abaixo dos botões */
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #E4E2DD;
+    position: relative;
 }
 
-.nav-buttons .btn {
-    background-color: #76c7c0; /* Verde água */
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s;
-    margin: 10px; /* Espaçamento entre os botões */
+.logo-text {
+    display: flex;
+    align-items: center;
 }
 
-.nav-buttons .btn:hover {
-    background-color: #5aa79e; /* Verde mais escuro ao passar o mouse */
+.logo {
+    width: 165px; /* Tamanho ajustado */
+    height: 68px; /* Tamanho ajustado */
+    margin-right: 20px;
 }
 
-/* Estilo das seções */
-.container {
-    margin-top: 50px; /* Ajusta a distância do container em relação ao nav */
-    background-color: #ffffff; /* Fundo branco para seções */
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+/* Botão de Login no canto superior direito */
+.login-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    text-align: center;
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #57D463;
+    width: 157px;    /* Largura do background */
+    height: 42px;    /* Altura do background */
+    border-radius: 8px;  /* Opcional: arredondar os cantos */
+}
+
+
+.login-btn img {
+    display: none; /* Esconder imagem de login */
+}
+
+/* Seção "Junte-se a nós" com alinhamento flexbox */
+/* Seção "Junte-se a nós" */
+.join-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0;
+}
+
+.join-text-image {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* Ocupar a largura completa */
+    padding: 0 20px;
+}
+
+.join-text {
+    width: 60%; /* Ajuste a largura para o texto */
+    text-align: left;
+}
+
+.join-text h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    margin: 0;
+}
+
+.join-text h2:nth-child(1) {
+    font-size: 48px;
+    line-height: 67.2px;
+}
+
+.join-text h2:nth-child(2) {
+    font-size: 64px;
+    line-height: 89.6px;
+}
+
+.join-text h2 span {
+    font-size: 55px;
+    line-height: 77px;
+}
+
+.join-image {
+    width: 40%; /* Ajuste a largura para a imagem */
+    text-align: right;
+}
+
+.hero-image {
+    width: 789.03px;
+    height: 418px;
+    top: 119px;
+    left: 651px;
+    gap: 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+}
+
+
+/* Estilo do menu */
+.menu {
+    margin-top: 30px;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #2c3e50; /* Cor do texto */
+    font-size: 18px;
+    display: inline-block; /* Para aplicar dimensões */
+    width: 157px; /* Largura do botão */
+    height: 42px; /* Altura do botão */
+    background-color: #57D463; /* Cor de fundo */
+    text-align: center; /* Centraliza o texto */
+    line-height: 42px; /* Centraliza verticalmente */
+    border-radius: 5px; /* Bordas arredondadas, se desejado */
+    transition: background-color 0.3s; /* Transição suave ao passar o mouse */
+}
+
+.menu a:hover {
+    background-color: #45b357; /* Cor ao passar o mouse */
+}
+
+
+.menu img {
+    display: none; /* Esconder imagem de registrar */
 }
 
 /* Estilo de rodapé */
@@ -82,52 +157,84 @@ footer {
     color: #777;
 }
 
-/* Links */
-a {
-    color: #4caf50; /* Verde reciclável */
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline; /* Sublinhado ao passar o mouse */
-}
-
-/* Estilos para o pop-up */
+/* Estilos para a modal */
 .modal {
-    display: none; /* Oculto por padrão */
-    position: fixed;
-    z-index: 1;
+    display: none; /* Oculta a modal por padrão */
+    position: fixed; /* Fica fixo na tela */
+    z-index: 1000; /* Garante que fique acima de outros elementos */
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro */
+    width: 100%; /* Largura completa da tela */
+    height: 100%; /* Altura completa da tela */
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente */
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
 }
 
+/* Estilo do conteúdo da modal */
 .modal-content {
-    background-color: #fff;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 30%;
-    text-align: center;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff; /* Cor de fundo branca */
+    border-radius: 10px; /* Bordas arredondadas */
+    padding: 30px; /* Espaçamento interno */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    max-width: 400px; /* Largura máxima da modal */
+    width: 90%; /* Largura responsiva */
+    text-align: center; /* Centraliza o texto */
 }
 
-/* Botões do modal */
+/* Estilo dos botões */
+.btn {
+    display: inline-block; /* Exibe como bloco em linha */
+    padding: 10px 20px; /* Padding interno */
+    margin: 10px 0; /* Margem vertical */
+    border: none; /* Sem borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    text-decoration: none; /* Remove sublinhado */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor em forma de mão ao passar o mouse */
+}
+
 .btn-primary {
-    background-color: #007bff;
+    background-color: #57D463; /* Cor de fundo do botão primário */
+    color: white; /* Cor do texto */
 }
 
 .btn-secondary {
-    background-color: #6c757d;
-}
-
-.btn:hover {
-    opacity: 0.8;
+    background-color: #2c3e50; /* Cor de fundo do botão secundário */
+    color: white; /* Cor do texto */
 }
 
 .close-btn {
-    background-color: red;
-    color: white;
+    background-color: #e74c3c; /* Cor de fundo para o botão de fechar */
+    color: white; /* Cor do texto */
+}
+
+
+
+.info-section {
+    text-align: center; /* Centraliza o texto */
+    margin: 50px 0; /* Margem superior e inferior */
+}
+
+.features {
+    display: flex; /* Usar flexbox para organizar as features */
+    justify-content: center; /* Centraliza as features horizontalmente */
+    flex-wrap: wrap; /* Permite que as features quebrem em várias linhas, se necessário */
+    gap: 20px; /* Espaço entre os cards das features */
+    max-width: 1200px; /* Limita a largura máxima da seção */
+    margin: 0 auto; /* Centraliza a seção na tela */
+}
+
+.feature {
+    background-color: #f9f9f9; /* Cor de fundo para cada feature */
+    border: 1px solid #ddd; /* Borda sutil */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 20px; /* Espaçamento interno */
+    width: 300px; /* Largura fixa para cada feature */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: transform 0.2s; /* Transição suave ao passar o mouse */
+}
+
+.feature:hover {
+    transform: translateY(-5px); /* Eleva a feature ao passar o mouse */
 }
