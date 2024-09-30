@@ -1,7 +1,7 @@
 /* Estilos Gerais */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #E4E2DD;
+    background-color: #F3F4F6; /* Ajuste da cor de fundo para algo mais claro */
     margin: 0;
     padding: 0;
 }
@@ -9,13 +9,14 @@ body {
 
 h1, h2 {
     text-align: center;
-    color: #2c3e50;
+    color: #2C3E50;
     margin-top: 20px;
+    font-weight: bold;
 }
 
 
 p {
-    color: #7f8c8d;
+    color: #4A4A4A;
     font-size: 16px;
 }
 
@@ -25,6 +26,8 @@ p {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    background-color: #FFF;
+    border-radius: 10px;
 }
 
 
@@ -45,7 +48,7 @@ p {
 
 /* Formulários */
 form {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 
@@ -56,26 +59,39 @@ form .form-group {
 
 form .form-group label {
     font-weight: bold;
-    margin-bottom: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
     display: block;
+    color: #34495E;
 }
 
 
 form input, form select, form textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 12px;
+    border: 1px solid #DDD;
+    border-radius: 8px;
     font-size: 14px;
+    background-color: #F9F9F9;
     box-sizing: border-box;
 }
 
 
 form button {
-    padding: 10px 20px;
+    padding: 12px 20px;
     font-size: 16px;
     border-radius: 4px;
     cursor: pointer;
+    display: block;
+    width: 100%;
+    background-color: #28a745;
+    border: none;
+    color: white;
+}
+
+
+form button:hover {
+    background-color: #218838;
 }
 
 
@@ -198,6 +214,87 @@ small {
 }
 
 
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+
+th {
+    background-color: #28A745;
+    color: white;
+    font-weight: bold;
+}
+
+
+td {
+    background-color: #F9F9F9;
+}
+
+
+/* Cards */
+.card {
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+
+.card h3 {
+    font-size: 18px;
+    color: #2C3E50;
+}
+
+
+.card p {
+    color: #7F8C8D;
+    font-size: 14px;
+}
+
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Empurra os itens para os cantos */
+    align-items: center; /* Centraliza verticalmente os itens */
+    background-color: #e0ddd5; /* Cor de fundo opcional */
+    padding: 10px 20px; /* Espaçamento opcional */
+}
+
+
+.nav-link {
+    margin-right: auto; /* Empurra o link para o canto direito */
+    padding: 10px 15px; /* Espaçamento ao redor do link */
+}
+
+
+.nav-link2 {
+    margin-left: auto; /* Empurra o link para o canto direito */
+    color: rgb(0, 0, 0); /* Cor do texto */
+    background-color: #28a745;
+    text-decoration: none;
+    padding: 10px 15px; /* Espaçamento ao redor do link */
+    border-radius: 10px;
+}
+
+
+.nav-link:hover {
+    background-color: #34495e; /* Cor de fundo ao passar o mouse */
+    border-radius: 4px; /* Bordas arredondadas ao passar o mouse */
+}
+
+
 /* Responsividade */
 @media (max-width: 768px) {
     .col-md-8 {
@@ -216,31 +313,31 @@ small {
         width: 100%;
         text-align: center;
     }
+
+
+    li {
+        padding: 10px;
+        margin: 5px 0;
+    }
+
+
+    .navbar {
+        flex-direction: column;
+    }
+
+
+    .container {
+        padding: 10px;
+    }
+
+
+    table, .card {
+        width: 100%;
+        padding: 15px;
+    }
 }
 
-/* Navbar */
-.navbar {
-    display: flex;
-    justify-content: space-between; /* Empurra os itens para os cantos */
-    align-items: center; /* Centraliza verticalmente os itens */
-    background-color: #e0ddd5; /* Cor de fundo opcional */
-    padding: 10px 20px; /* Espaçamento opcional */
-}
-.nav-link {
-    margin-right: auto; /* Empurra o link para o canto direito */
-    padding: 10px 15px; /* Espaçamento ao redor do link */
-}
 
-.nav-link2 {
-    margin-left: auto; /* Empurra o link para o canto direito */
-    color: rgb(0, 0, 0); /* Cor do texto */
-    background-color: #28a745;
-    text-decoration: none;
-    padding: 10px 15px; /* Espaçamento ao redor do link */
-    border-radius: 10px;
-}
 
-.nav-link:hover {
-    background-color: #34495e; /* Cor de fundo ao passar o mouse */
-    border-radius: 4px; /* Bordas arredondadas ao passar o mouse */
-}
+
+
