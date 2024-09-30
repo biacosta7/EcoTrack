@@ -74,11 +74,11 @@ form button {
     border-radius: 4px;
     cursor: pointer;
     display: block;
-    width: 100%;
     background-color: #28a745;
     border: none;
     color: white;
 }
+
 
 form button:hover {
     background-color: #218838;
