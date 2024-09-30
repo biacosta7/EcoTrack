@@ -1,7 +1,7 @@
 /* Configurações básicas */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #eaf2f8; /* Cor de fundo suave */
+    background-color: #E4E2DD; /* Nova cor de fundo */
     margin: 0;
     padding: 20px;
     color: #333; /* Cor do texto */
@@ -14,6 +14,15 @@ header {
     padding: 20px;
     text-align: center;
     border-radius: 8px;
+    position: relative; /* Para posicionar a imagem */
+}
+
+/* Imagem no cabeçalho */
+header img {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    width: 50px; /* Ajuste o tamanho conforme necessário */
 }
 
 /* Estilo dos títulos */
@@ -32,8 +41,15 @@ p {
     margin: 10px 0;
 }
 
-/* Botões estilizados */
-button {
+/* Centralização e estilo dos botões estilizados */
+.nav-buttons {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    flex-wrap: wrap; /* Permite que os botões quebrem para a linha seguinte, se necessário */
+    margin: 30px 0; /* Espaçamento acima e abaixo dos botões */
+}
+
+.nav-buttons .btn {
     background-color: #76c7c0; /* Verde água */
     color: white;
     border: none;
@@ -42,17 +58,18 @@ button {
     cursor: pointer;
     font-size: 1em;
     transition: background-color 0.3s;
+    margin: 10px; /* Espaçamento entre os botões */
 }
 
-button:hover {
+.nav-buttons .btn:hover {
     background-color: #5aa79e; /* Verde mais escuro ao passar o mouse */
 }
 
 /* Estilo das seções */
-.section {
+.container {
+    margin-top: 50px; /* Ajusta a distância do container em relação ao nav */
     background-color: #ffffff; /* Fundo branco para seções */
     padding: 15px;
-    margin: 20px 0;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -73,4 +90,44 @@ a {
 
 a:hover {
     text-decoration: underline; /* Sublinhado ao passar o mouse */
+}
+
+/* Estilos para o pop-up */
+.modal {
+    display: none; /* Oculto por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Botões do modal */
+.btn-primary {
+    background-color: #007bff;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+.close-btn {
+    background-color: red;
+    color: white;
 }
