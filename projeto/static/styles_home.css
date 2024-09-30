@@ -159,7 +159,7 @@ footer {
 
 /* Estilos para a modal */
 .modal {
-    display: none; /* Oculta a modal por padrão */
+    display: flex; /* Usar flexbox para centralizar */
     position: fixed; /* Fica fixo na tela */
     z-index: 1000; /* Garante que fique acima de outros elementos */
     left: 0;
