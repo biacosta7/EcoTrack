@@ -21,6 +21,14 @@
         
         <h1>Agendamento</h1>
         
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
         <form method="POST">
             {% csrf_token %}
             
@@ -31,7 +39,7 @@
         
             <div class="input-group">
                 <label for="date">Data</label>
-                <input type="date" id="date" name="data" placeholder="" required>
+                <input type="date" id="date" name="data" required>
             </div>
         
             <div class="input-group">
@@ -48,13 +56,9 @@
                 <label for="empresa">Escolha a empresa</label>
                 <select id="empresa" name="empresa" required>
                     <option value="">Selecione uma empresa</option>
-                    <option value="1">Ecovia</option>
-                    <option value="2">Recycling Technologies</option>
-                    <option value="3">Wasteless</option>
-                    <option value="4">TerraCycle</option>
-                    <option value="5">Brightmark</option>
-                    <option value="6">Recipro</option>
-                    <option value="7">Greenback</option>
+                    {% for empresa in empresas %}
+                        <option value="{{ empresa.id }}">{{ empresa.nome }}</option>
+                    {% endfor %}
                 </select>
             </div>
         
