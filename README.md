@@ -57,6 +57,7 @@ A crescente produção de resíduos e o descarte inadequado de materiais represe
 - Thiago Vinnícius 
 
 ## Entrega 1
+- Link [Jira](https://cesar-ecotrack.atlassian.net/jira/software/projects/EC/boards/1)
 - **Histórias bem definidas**
   - [Documento com histórias](https://docs.google.com/document/d/1KLpmdgkq_9-2uOrfhZg1mmdmRydcJOLx7CMLJBF2K6E/edit)
   - [Print do quadro e backlog (JIRA)](Mídia/QuadroBacklog)
