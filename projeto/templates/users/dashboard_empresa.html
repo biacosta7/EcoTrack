@@ -7,26 +7,52 @@
 {% endblock css %}
 
 {% block content %}
-    <header>
-        <h1>Bem-vindo ao EcoTrack</h1>
-        <p>Sua plataforma para agendamento e gestão de reciclagem.</p>
-    </header>
-
-    <nav>
-        <ul>
-            <li><a href="{% url 'agendamentos:agendamentos_coleta'%}">Agendamentos</a></li>
-            <li><a href="#">Rastrear</a></li>
-            <li><a href="{% url 'centros:lista_centros'%}">Localizações</a></li>
-            <li><a href="#">Sobre</a></li>
-            <li><a href="#">Dicas</a></li>
-            <li><a href="{% url 'centros:cadastrar_centro' %}">Cadastrar centro</a></li>
-        </ul>
-    </nav>
-
-    <div class="container">
-        <h2>Sobre o EcoTrack</h2>
-        <p>O EcoTrack ajuda você a gerenciar seus resíduos recicláveis de forma eficiente, contribuindo para um futuro mais sustentável.</p>
+<header class="main-header">
+    <div class="logo-container">
+        <img src="{% static 'img_reciclagem2.png' %}" alt="Imagem de Reciclagem" class="hero-image">
     </div>
+</header>
+<main>
+    <section class="hero">
+        <nav class="menu">
+            <ul>
+                <li><a href="#">
+                    <img src="{% static 'Agendar.png' %}" alt="Agendar">
+                    <span>Agendamentos</span></a>
+                </li>
+                <li><a href="#"><img src="{% static 'Rastrear.png' %}" alt="Rastrear">
+                    <span>Rastrear</span></a>
+                </li>
+                <li><a href="{% url 'centros:lista_centros' %}">
+                    <img src="{% static 'Localizar.png' %}" alt="Localizar">
+                    <span>Localizações</span></a>
+                </li>
+                <li><a href="#"><img src="{% static 'Sobre.png' %}" alt="Sobre">
+                    <span>Sobre</span></a>
+                </li>
+                <li><a href="#"><img src="{% static 'Dicas.png' %}" alt="Dicas">
+                    <span>Dicas</span></a>
+                </li>
+            </ul>
+        </nav>
+    </section>
 
-
-{% endblock %}
+    <section class="info-section">
+        <h2>Sobre o EcoTrack</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Gestão de Resíduos</h3>
+                <p>Gerencie seus resíduos recicláveis de forma eficiente.</p>
+            </div>
+            <div class="feature">
+                <h3>Rastreamento</h3>
+                <p>Rastreie a jornada dos seus resíduos até o destino final.</p>
+            </div>
+            <div class="feature">
+                <h3>Agendamento</h3>
+                <p>Agende coletas de forma fácil e rápida.</p>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock content %}

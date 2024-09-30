@@ -6,6 +6,10 @@ body {
     padding: 0;
 }
 
+b{
+    font-weight: bolder;
+    color: #2C3E50;
+}
 
 h1, h2 {
     text-align: center;

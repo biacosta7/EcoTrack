@@ -8,21 +8,16 @@
 
 {% block content %}
     <h1>Centros de Coleta</h1>
-    {% if user.is_company %}
-        <a href="{% url 'user:empresa_dashboard' %}" class="back-btn">&larr;</a>
-    {% else %}
-        <a href="{% url 'user:usuario_dashboard' %}" class="back-btn">&larr;</a>
-    {% endif %}
 
     {% if centros %}
         <ul>
             {% for centro in centros %}
                 <li>
                     <strong>{{ centro.nome }}</strong><br>
-                    Endereço: {{ centro.endereco }}, {{ centro.numero }} {{ centro.complemento }}<br>
-                    CEP: {{ centro.cep }}<br>
-                    Telefone: {{ centro.telefone }}<br>
-                    <strong>Tipos de Materiais:</strong><br>
+                    <br><b>Endereço:</b> {{ centro.endereco }}, {{ centro.numero }} {{ centro.complemento }}<br>
+                    <br><b>CEP:</b> {{ centro.cep }}<br>
+                    <br><b>Telefone:</b> {{ centro.telefone }}<br>
+                    <br><b>Tipos de Materiais:</b><br>
                     <ul>
                         {% if centro.tipos_lista %}
                             {% for tipo in centro.tipos_lista %}
@@ -32,9 +27,9 @@
                             <li>Nenhum tipo selecionado.</li>
                         {% endif %}
                     </ul>
-                    Horário de Abertura: {{ centro.horario_abertura }}<br>
-                    Horário de Fechamento: {{ centro.horario_fechamento }}<br>
-                    
+                    <br><b>Horário de Abertura:</b> {{ centro.horario_abertura }}<br>
+                    <br><b>Horário de Fechamento:</b> {{ centro.horario_fechamento }}<br>
+                    <br>
                     <!-- Botões de Remover e Editar -->
                     <form action="{% url 'centros:remover_centro' centro.id %}" method="post" style="display: inline;">
                         {% csrf_token %}

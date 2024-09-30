@@ -140,7 +140,7 @@ def register_view(request):
         context = {
             'form_action': request.path,
             'csrf_token': request.COOKIES.get('csrftoken'),
-            'title': 'Registrar como Empresa' if user_type == 'company' else 'Registrar como Usuário Comum',
+            'title': 'Registrar como Empresa' if user_type == 'company' else 'Registrar como Usuário',
             'user_type': user_type,
         }
         return render(request, template_name, context)

@@ -5,16 +5,11 @@
 
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'users.css' %}">
+    <link rel="stylesheet" href="{% static 'centros.css' %}">
 {% endblock css %}
 
 {% block content %}
   <h2>Detalhes do Usuário</h2>
-  {% if user.is_company %}
-      <a href="{% url 'user:empresa_dashboard' %}" class="back-btn">&larr;</a>
-  {% else %}
-      <a href="{% url 'user:usuario_dashboard' %}" class="back-btn">&larr;</a>
-  {% endif %}
   <ul class="list-group">
     <li class="list-group-item"><strong>ID:</strong> {{ user_detail.id }}</li>
     {% if user_detail.is_company %}

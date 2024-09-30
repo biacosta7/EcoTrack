@@ -41,13 +41,13 @@
     </div>
     
     <!-- Estrutura do Pop-up -->
-    <div id="myModal" class="modal">
+    <div id="myModal" class="modal" style="display: none;">
         <div class="modal-content">
             <h2>Escolha o tipo de cadastro</h2>
             <p>Selecione uma das opções abaixo para se registrar.</p>
             <a href="{% url 'user:register' %}?type=company" class="btn btn-primary">Registrar como Empresa</a>
             <br>
-            <a href="{% url 'user:register' %}?type=user" class="btn btn-secondary">Registrar como Usuário Comum</a>
+            <a href="{% url 'user:register' %}?type=user" class="btn btn-secondary">Registrar como Usuário</a>
             <br>
             <button id="closePopup" class="btn close-btn">Fechar</button>
         </div>
@@ -77,16 +77,21 @@
 
     <!-- Script para abrir e fechar o pop-up -->
     <script>
+        // Botão para abrir o pop-up
         document.getElementById("openPopup").onclick = function() {
-            document.getElementById("myModal").style.display = "block";
+            document.getElementById("myModal").style.display = "flex"; // Exibe o modal
         };
+
+        // Botão para fechar o pop-up
         document.getElementById("closePopup").onclick = function() {
-            document.getElementById("myModal").style.display = "none";
+            document.getElementById("myModal").style.display = "none"; // Oculta o modal
         };
+
+        // Fechar o pop-up ao clicar fora dele
         window.onclick = function(event) {
             var modal = document.getElementById("myModal");
             if (event.target == modal) {
-                modal.style.display = "none";
+                modal.style.display = "none"; // Oculta o modal se clicar fora dele
             }
         };
     </script>
