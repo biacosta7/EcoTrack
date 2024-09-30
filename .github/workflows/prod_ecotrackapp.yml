@@ -32,7 +32,10 @@ jobs:
         
       - name: Install dependencies
         run: pip install -r ./requirements.txt
-        
+
+      - name: Verify installed packages
+        run: pip freeze
+ 
       - name: Cleaning testing files
         run: |
           cd projeto/
@@ -43,9 +46,10 @@ jobs:
       - name: Zip artifact for deployment
         run: |
           cd projeto/
-          zip release.zip ./* -r
+          zip -r release.zip ./*
           cd ..
           mv projeto/release.zip .
+
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -87,4 +91,5 @@ jobs:
         with:
           app-name: 'EcoTrackApp'
           slot-name: 'Production'
-          
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }} # Alternativa mais segura
+
