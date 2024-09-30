@@ -1,7 +1,7 @@
 /* Estilos Gerais */
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #F3F4F6; /* Ajuste da cor de fundo para algo mais claro */
+    background-color: #e4e2dd; /* Ajuste da cor de fundo para algo mais claro */
     margin: 0;
     padding: 0;
 }
@@ -26,7 +26,7 @@ p {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #FFF;
+    background-color: #e4e2dd;
     border-radius: 10px;
 }
 

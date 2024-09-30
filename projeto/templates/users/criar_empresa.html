@@ -1,51 +1,64 @@
-{% extends "base.html" %}
-{% block title %}Registrar Empresa{% endblock %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Empresa - EcoTrack</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles_login.css' %}"> <!-- Referência ao CSS -->
+    {% load static %}
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'users.css' %}">
+    {% endblock css %}
+</head>
+<body style="padding-top:50px; height: 100vh;">
+    <div class="container"  style="padding-top: 30px; margin-top: 50px;">
 
-{% load static %}
-{% block css %}
-    <link rel="stylesheet" href="{% static 'centros.css' %}">
-{% endblock css %}
+        <div class="back-button">
+            <a href="{% url 'home' %}" class="back-btn">&larr; </a>        
+        </div>
+        <br>
+        <div class="login-box">
+            <img src="{% static 'logo.png' %}" alt="Logo Ecotrack" class="logo">
+            <h1>Registrar Empresa</h1>
+            <br>
 
-{% block content %}
-    <h2>Registrar Empresa</h2>
-    <form method="post" action="{{ form_action }}">
-        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        <input type="hidden" name="user_type" value="{{ user_type }}">
+            <form method="post" action="{{ form_action }}">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+                <input type="hidden" name="user_type" value="{{ user_type }}">
+                {% csrf_token %}
+                <!-- Verificação de erros -->
+                {% if errors %}
+                    <ul class="error-list alert alert-danger">
+                        {% for field, error in errors.items %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                
+                <label for="nome_empresa">Nome da Empresa:</label>
+                <input type="text" id="nome_empresa" name="nome_empresa" class="form-control" value="{{ nome_empresa_value }}">
+            
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" value="{{ email_value }}">            
+            
+                <label for="password1">Senha:</label>
+                <input type="password" id="password1" name="password1" class="form-control">
+            
+                <label for="password2">Confirme a Senha:</label>
+                <input type="password" id="password2" name="password2" class="form-control">
+            
+                <label for="endereco">Endereço:</label>
+                <input type="text" id="endereco" name="endereco" class="form-control" value="{{ endereco_value }}">
+            
+                <label for="cep">CEP:</label>
+                <input type="text" id="cep" name="cep" class="form-control" value="{{ cep_value }}">
+            
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </form>
+            <a href="{% url 'user:login' %}">Já possui uma conta? Faça login aqui.</a>
+        </div>
+    </div>
+</body>
+</html>
 
-        <!-- Verificação de erros -->
-        {% if errors %}
-            <ul class="error-list alert alert-danger">
-                {% for field, error in errors.items %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
-        <div class="form-group">
-            <label for="nome_empresa">Nome da Empresa:</label>
-            <input type="text" id="nome_empresa" name="nome_empresa" class="form-control" value="{{ nome_empresa_value }}">
-        </div>
-        <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" class="form-control" value="{{ email_value }}">
-        </div>
-        <div class="form-group">
-            <label for="password1">Senha:</label>
-            <input type="password" id="password1" name="password1" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="password2">Confirme a Senha:</label>
-            <input type="password" id="password2" name="password2" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="endereco">Endereço:</label>
-            <input type="text" id="endereco" name="endereco" class="form-control" value="{{ endereco_value }}">
-        </div>
-        <div class="form-group">
-            <label for="cep">CEP:</label>
-            <input type="text" id="cep" name="cep" class="form-control" value="{{ cep_value }}">
-        </div>
-        <button type="submit" class="btn btn-primary">Registrar</button>
-    </form>
-    <a href="{% url 'user:login' %}">Já possui uma conta? Faça login aqui.</a>
-{% endblock %}
