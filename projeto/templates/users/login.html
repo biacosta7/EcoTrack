@@ -6,6 +6,10 @@
     <title>Login - EcoTrack</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles_login.css' %}"> <!-- Referência ao CSS -->
+    {% load static %}
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'users.css' %}">
+    {% endblock css %}
 </head>
 <body>
     <div class="container">

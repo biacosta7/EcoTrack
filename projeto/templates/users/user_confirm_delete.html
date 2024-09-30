@@ -2,6 +2,11 @@
 
 {% extends "base.html" %}
 {% block title %}Deletar Usuário{% endblock %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'users.css' %}">
+{% endblock css %}
+
 {% if user.is_company %}
   <a href="{% url 'user:empresa_dashboard' %}" class="back-btn">&larr;</a>
 {% else %}

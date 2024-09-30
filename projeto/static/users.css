@@ -1,0 +1,252 @@
+/* Estilos Gerais */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #F3F4F6; /* Fundo claro */
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #2C3E50;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+p {
+    color: #4A4A4A;
+    font-size: 16px;
+}
+
+/* Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.col-md-8 {
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Formulários */
+form {
+    margin-top: 30px;
+}
+
+form .form-group {
+    margin-bottom: 15px;
+}
+
+form .form-group label {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+    display: block;
+    color: #34495E;
+}
+
+form input, form select, form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #DDD;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #F9F9F9;
+    box-sizing: border-box;
+}
+
+form button {
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    background-color: #28a745;
+    border: none;
+    color: white;
+}
+
+form button:hover {
+    background-color: #218838;
+}
+
+/* Botões */
+.btn {
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: #28A745;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #218838;
+}
+
+.btn-danger {
+    background-color: #DC3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #C82333;
+}
+
+/* Cards */
+.card {
+    background-color: #FFF;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card h3 {
+    font-size: 18px;
+    color: #2C3E50;
+}
+
+.card p {
+    color: #7F8C8D;
+    font-size: 14px;
+}
+
+/* Login */
+.login-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    background-color: #FFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #2C3E50;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #28A745;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-container button:hover {
+    background-color: #218838;
+}
+
+.login-container .register-link {
+    margin-top: 15px;
+    display: block;
+    color: #28A745;
+    text-decoration: none;
+}
+
+.login-container .register-link:hover {
+    color: #218838;
+}
+
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #28A745;
+    color: white;
+    font-weight: bold;
+}
+
+td {
+    background-color: #F9F9F9;
+}
+
+/* Base layout adjustments */
+.base-container {
+    padding: 50px;
+    text-align: center;
+}
+
+.base-container h2 {
+    font-size: 28px;
+    color: #2C3E50;
+}
+
+.base-container p {
+    font-size: 18px;
+    color: #7F8C8D;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .col-md-8, .login-container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    form button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    table, .card {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .navbar {
+        flex-direction: column;
+    }
+}

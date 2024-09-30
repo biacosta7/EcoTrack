@@ -1,0 +1,48 @@
+<form method="post" action="{{ form_action }}">
+    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+    <input type="hidden" name="user_type" value="{{ user_type }}">
+
+    {% extends "base.html" %}
+    {% block title %}Registrar Usuário Comum{% endblock %}
+
+    {% load static %}
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'users.css' %}">
+    {% endblock css %}
+    <!-- Verificação de erros -->
+    {% if errors %}
+        <ul class="error-list alert alert-danger">
+            {% for field, error in errors.items %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="form-group">
+        <label for="nome_empresa">Nome da Empresa:</label>
+        <input type="text" id="nome_empresa" name="nome_empresa" class="form-control" value="{{ nome_empresa_value }}">
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" class="form-control" value="{{ email_value }}">
+    </div>
+    <div class="form-group">
+        <label for="password1">Senha:</label>
+        <input type="password" id="password1" name="password1" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="password2">Confirme a Senha:</label>
+        <input type="password" id="password2" name="password2" class="form-control">
+    </div>
+    
+    <div class="form-group">
+        <label for="endereco">Endereço:</label>
+        <input type="text" id="endereco" name="endereco" class="form-control" value="{{ endereco_value }}">
+    </div>
+    <div class="form-group">
+        <label for="cep">CEP:</label>
+        <input type="text" id="cep" name="cep" class="form-control" value="{{ cep_value }}">
+    </div>
+    <button type="submit" class="btn btn-primary">Registrar</button>
+</form>
+<a href="{% url 'user:login' %}">Já possui uma conta? Faça login aqui.</a>

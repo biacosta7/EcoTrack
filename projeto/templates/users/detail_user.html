@@ -3,6 +3,11 @@
 {% extends "base.html" %}
 {% block title %}Detalhes do Usuário{% endblock %}
 
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'users.css' %}">
+{% endblock css %}
+
 {% block content %}
   <h2>Detalhes do Usuário</h2>
   {% if user.is_company %}
