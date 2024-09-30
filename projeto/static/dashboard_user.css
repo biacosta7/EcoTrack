@@ -288,6 +288,11 @@ small {
     height: 40px;
     margin-bottom: 10px;
 }
+.menu img:hover {
+    filter: brightness(0.8); /* Reduz o brilho para criar contraste */
+    transform: scale(1.1); /* Aumenta o ícone ligeiramente */
+    transition: all 0.3s ease; /* Suaviza a transição */
+}
 
 .menu a span {
     display: block;
