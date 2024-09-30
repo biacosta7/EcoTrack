@@ -33,8 +33,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r ./requirements.txt
 
-      - name: Verify installed packages
-        run: pip freeze
+      - name: Install Django
+        run: pip install Django
  
       - name: Cleaning testing files
         run: |
@@ -91,5 +91,4 @@ jobs:
         with:
           app-name: 'EcoTrackApp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }} # Alternativa mais segura
 
