@@ -57,7 +57,7 @@
                 <select id="empresa" name="empresa" required>
                     <option value="">Selecione uma empresa</option>
                     {% for empresa in empresas %}
-                        <option value="{{ empresa.id }}">{{ empresa.nome }}</option>
+                        <option value="{{ empresa.id }}">{{ empresa.nome_empresa }}</option>
                     {% endfor %}
                 </select>
             </div>

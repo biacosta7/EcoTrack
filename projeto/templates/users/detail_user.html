@@ -15,12 +15,10 @@
     {% if user_detail.is_company %}
       <li class="list-group-item"><strong>Nome da Empresa:</strong> {{ user_detail.nome_empresa }}</li>
       <li class="list-group-item"><strong>Endereço da Empresa:</strong> {{ user_detail.endereco_empresa }}</li>
-      <li class="list-group-item"><strong>Telefone da Empresa:</strong> {{ user_detail.telefone_empresa }}</li>
     {% else %}
       <li class="list-group-item"><strong>Nome:</strong> {{ user_detail.nome }} {{ user_detail.sobrenome }}</li>
     {% endif %}
     <li class="list-group-item"><strong>Email:</strong> {{ user_detail.email }}</li>
-    <li class="list-group-item"><strong>Telefone:</strong> {{ user_detail.telefone }}</li>
     <li class="list-group-item"><strong>Tipo:</strong> 
       {% if user_detail.is_company %}
         Empresa

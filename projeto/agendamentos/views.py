@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages  # Importando para exibir mensagens
 from .models import Agendamento, Empresa
+from users.models import User
 from django.core.exceptions import ValidationError
 
 def agendar(request):
@@ -17,7 +18,7 @@ def agendar(request):
         # Verificação de conflitos
         if Agendamento.objects.filter(data=data, hora=hora, empresa_id=empresa_id).exists():
             messages.error(request, 'Já existe um agendamento para esta data, hora e empresa. Por favor, escolha outro horário.')
-            empresas = Empresa.objects.all()  # Obtém todas as empresas para repopular o formulário
+            empresas = User.objects.filter(is_company=True)  # Obtém todas as empresas cadastradas
             return render(request, 'agendamentos/agendamentos_coleta.html', {'empresas': empresas})
 
         try:
@@ -33,12 +34,12 @@ def agendar(request):
             agendamento.save()  # Salva o agendamento no banco de dados
             
             # Redireciona para a página de confirmação com os dados do agendamento
-            return redirect('agendamentos:confirmacao', data_agendamento=data, horario_agendamento=hora, empresa_nome=Empresa.objects.get(id=empresa_id).nome)
+            return redirect('agendamentos:confirmacao', data_agendamento=data, horario_agendamento=hora, empresa_nome=User.objects.get(id=empresa_id).nome_empresa)
         
         except ValidationError as e:
             print(f"Erro de validação: {e}")
 
-    empresas = Empresa.objects.all()  # Obtém todas as empresas
+    empresas = User.objects.filter(is_company=True)  # Obtém todas as empresas cadastradas
     return render(request, 'agendamentos/agendamentos_coleta.html', {'empresas': empresas})
 
 def confirmacao_view(request, data_agendamento, horario_agendamento, empresa_nome):
