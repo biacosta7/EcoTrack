@@ -63,3 +63,6 @@ A crescente produção de resíduos e o descarte inadequado de materiais represe
 - **Criação de protótipos de Lo-Fi (Figma)**
   - [Sketches e storyboards para as histórias](Mídia/PrototipoLoFi) | [Figma](https://www.figma.com/design/GZIwTY0R01e2LLRgEx0dhD/EcoTrack-(Copy)?node-id=2-843&t=Zj9UyQcf8VQxUv3y-1)
   - [Screencast apresentando protótipo](https://youtu.be/tzCCMGEnhbo)
+
+## Entrega 2
+- **[Print do quadro da Sprint e backlog (JIRA)]** (https://drive.google.com/drive/u/2/folders/14Yr9PQSrD76bvjG2oEo-Pa6d0y2lUmnU?hl=pt-BR)
