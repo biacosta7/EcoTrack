@@ -8,11 +8,6 @@
 
 {% block content %}
     <h2>Cadastrar Ponto de Coleta</h2>
-    {% if user.is_company %}
-        <a href="{% url 'user:empresa_dashboard' %}" class="back-btn">&larr;</a>
-    {% else %}
-        <a href="{% url 'user:usuario_dashboard' %}" class="back-btn">&larr;</a>
-    {% endif %}
 
     <form method="post" action="{% url 'centros:cadastrar_centro' %}">
         {% csrf_token %}

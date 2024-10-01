@@ -140,13 +140,17 @@ def register_view(request):
         context = {
             'form_action': request.path,
             'csrf_token': request.COOKIES.get('csrftoken'),
-            'title': 'Registrar como Empresa' if user_type == 'company' else 'Registrar como Usuário Comum',
+            'title': 'Registrar como Empresa' if user_type == 'company' else 'Registrar como Usuário',
             'user_type': user_type,
         }
         return render(request, template_name, context)
 
 class CustomLoginView(LoginView):
     template_name = 'users/login.html'
+    def form_invalid(self, form):
+        # Quando o formulário de login for inválido, exibe uma mensagem de erro.
+        messages.error(self.request, "E-mail ou senha inválidos.")
+        return super().form_invalid(form)
 
     def get_redirect_url(self):
         user = self.request.user

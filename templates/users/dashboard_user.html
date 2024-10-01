@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Dashboard Usuário{% endblock %}
+
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'users.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <header>
+        <h1>Bem-vindo ao EcoTrack</h1>
+        <p>Sua plataforma para agendamento e gestão de reciclagem.</p>
+    </header>
+
+    <main>
+
+        <nav>
+            <ul>
+                <li><a href="{% url 'agendamentos:agendamentos_coleta'%}">Agendar</a></li>
+                <li><a href="#">Rastrear</a></li>
+                <li><a href="{% url 'centros:lista_centros' %}">Localizar</a></li>
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Dicas</a></li>
+            </ul>
+        </nav>
+
+        <div class="container">
+            <h2>Sobre o EcoTrack</h2>
+            <p>O EcoTrack ajuda você a gerenciar seus resíduos recicláveis de forma eficiente, contribuindo para um futuro mais sustentável.</p>
+        </div>
+    </main>
+{% endblock %}

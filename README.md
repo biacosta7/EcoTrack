@@ -60,7 +60,10 @@ A crescente produção de resíduos e o descarte inadequado de materiais represe
 - Link [Jira](https://cesar-ecotrack.atlassian.net/jira/software/projects/EC/boards/1)
 - **Histórias bem definidas**
   - [Documento com histórias](https://docs.google.com/document/d/1KLpmdgkq_9-2uOrfhZg1mmdmRydcJOLx7CMLJBF2K6E/edit)
-  - [Print do quadro e backlog (JIRA)](Mídia/QuadroBacklog)
+  - [Print do quadro e backlog (JIRA)](projeto/Mídia/QuadroBacklog)
 - **Criação de protótipos de Lo-Fi (Figma)**
   - [Sketches e storyboards para as histórias](Mídia/PrototipoLoFi) | [Figma](https://www.figma.com/design/GZIwTY0R01e2LLRgEx0dhD/EcoTrack-(Copy)?node-id=2-843&t=Zj9UyQcf8VQxUv3y-1)
   - [Screencast apresentando protótipo](https://youtu.be/tzCCMGEnhbo)
+
+## Entrega 2
+- [Print do quadro da Sprint e backlog (JIRA)](https://drive.google.com/drive/u/2/folders/14Yr9PQSrD76bvjG2oEo-Pa6d0y2lUmnU?hl=pt-BR)

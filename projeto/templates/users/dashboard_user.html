@@ -3,30 +3,56 @@
 
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'centros.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard_user.css' %}">
 {% endblock css %}
 
 {% block content %}
-    <header>
-        <h1>Bem-vindo ao EcoTrack</h1>
-        <p>Sua plataforma para agendamento e gestão de reciclagem.</p>
-    </header>
-
-    <main>
-
-        <nav>
+<header class="main-header">
+    <div class="logo-container">
+        <img src="{% static 'img_reciclagem2.png' %}" alt="Imagem de Reciclagem" class="hero-image">
+    </div>
+</header>
+<main>
+    <section class="hero">
+        <nav class="menu">
             <ul>
-                <li><a href="{% url 'agendamentos:agendamentos_coleta'%}">Agendar</a></li>
-                <li><a href="#">Rastrear</a></li>
-                <li><a href="{% url 'centros:lista_centros' %}">Localizar</a></li>
-                <li><a href="#">Sobre</a></li>
-                <li><a href="#">Dicas</a></li>
+                <li><a href="{% url 'agendamentos:agendamentos_coleta'%}">
+                    <img src="{% static 'Agendar.png' %}" alt="Agendar">
+                    <span>Agendar</span></a>
+                </li>
+                <li><a href="#"><img src="{% static 'Rastrear.png' %}" alt="Rastrear">
+                    <span>Rastrear</span></a>
+                </li>
+                <li><a href="#">
+                    <img src="{% static 'Localizar.png' %}" alt="Localizar">
+                    <span>Localizar</span></a>
+                </li>
+                <li><a href="#"><img src="{% static 'Sobre.png' %}" alt="Sobre">
+                    <span>Sobre</span></a>
+                </li>
+                <li><a href="#"><img src="{% static 'Dicas.png' %}" alt="Dicas">
+                    <span>Dicas</span></a>
+                </li>
             </ul>
         </nav>
+    </section>
 
-        <div class="container">
-            <h2>Sobre o EcoTrack</h2>
-            <p>O EcoTrack ajuda você a gerenciar seus resíduos recicláveis de forma eficiente, contribuindo para um futuro mais sustentável.</p>
+    <section class="info-section">
+        <h2>O Que Fazemos</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>Educação</h3>
+                <p>Oferecemos dicas e conteúdo educativo sobre reciclagem.</p>
+            </div>
+            <div class="feature">
+                <h3>Coleta e Reciclagem</h3>
+                <p>Ajudamos você a agendar e rastrear coletas de resíduos.</p>
+            </div>
+            <div class="feature">
+                <h3>Rastreamento</h3>
+                <p>Rastreie a jornada dos seus resíduos até o destino final.</p>
+            </div>
         </div>
-    </main>
-{% endblock %}
+    </section>
+</main>
+{% endblock content %}

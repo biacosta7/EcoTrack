@@ -6,6 +6,9 @@
     <title>Login - EcoTrack</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles_login.css' %}"> <!-- Referência ao CSS -->
+    {% block css %}
+    <link rel="stylesheet" href="{% static 'users.css' %}">
+    {% endblock css %}
 </head>
 <body>
     <div class="container">
@@ -18,6 +21,15 @@
             <br>
             <p>Ainda não tem conta? <a href="{% url 'user:register' %}" class="signup-link">Cadastre-se</a></p>
             
+            <!-- Exibir mensagens de erro -->
+            {% if messages %}
+                <div class="error-messages">
+                    {% for message in messages %}
+                        <div class="error">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <!-- Formulário de login -->
             <form method="post" action="{% url 'user:login' %}">
                 {% csrf_token %}
@@ -28,9 +40,8 @@
                 <label for="password">Senha</label>
                 <input type="password" id="password" name="password" placeholder="**********" required>
                 
-                <button type="submit">Entrar</button>
+                <button class="button-login" type="submit">Entrar</button>
             </form>
-            
             
         </div>
 
@@ -38,5 +49,6 @@
             <img src="{% static 'img_reciclagem.png' %}" alt="Mãos com recicláveis" class="logo2">
         </div>
     </div>
+
 </body>
 </html>

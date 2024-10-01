@@ -2,6 +2,10 @@
 {% load static %}
 
 {% block title %}{{ title }}{% endblock %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'users.css' %}">
+{% endblock css %}
 
 {% block content %}
 <h2>{{ title }}</h2>
