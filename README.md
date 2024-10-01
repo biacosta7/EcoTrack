@@ -65,4 +65,4 @@ A crescente produção de resíduos e o descarte inadequado de materiais represe
   - [Screencast apresentando protótipo](https://youtu.be/tzCCMGEnhbo)
 
 ## Entrega 2
-- **[Print do quadro da Sprint e backlog (JIRA)]** (https://drive.google.com/drive/u/2/folders/14Yr9PQSrD76bvjG2oEo-Pa6d0y2lUmnU?hl=pt-BR)
+- [Print do quadro da Sprint e backlog (JIRA)](https://drive.google.com/drive/u/2/folders/14Yr9PQSrD76bvjG2oEo-Pa6d0y2lUmnU?hl=pt-BR)
