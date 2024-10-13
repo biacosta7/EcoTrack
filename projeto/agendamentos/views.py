@@ -52,3 +52,17 @@ def confirmacao_view(request, data_agendamento, horario_agendamento, empresa_nom
 def lista_agendamentos(request):
     agendamentos = Agendamento.objects.all()  # Obtém todos os agendamentos
     return render(request, 'agendamentos/lista_agendamentos.html', {'agendamentos': agendamentos})
+
+def ver_agendamentos(request):
+    try:
+        # Obtém a instância da empresa associada ao usuário atual
+        empresa = Empresa.objects.get(nome=request.user.username)  # Ajuste se necessário
+
+        # Filtra os agendamentos associados à empresa
+        agendamentos = Agendamento.objects.filter(empresa=empresa)
+
+    except Empresa.DoesNotExist:
+        messages.error(request, 'Empresa não encontrada. Verifique seus dados de login.')
+        agendamentos = []
+
+    return render(request, 'agendamentos/ver_agendamentos.html', {'agendamentos': agendamentos})

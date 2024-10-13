@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Agendamentos para {{ request.user.nome_empresa }}</h2>
+    {% if agendamentos %}
+        <ul>
+            {% for agendamento in agendamentos %}
+                <li>
+                    Nome: {{ agendamento.nome }} <br>
+                    Data: {{ agendamento.data }} <br>
+                    Hora: {{ agendamento.hora }} <br>
+                    Tipos de resíduos: {{ agendamento.tipos_residuos }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Não há agendamentos para a sua empresa.</p>
+    {% endif %}
+{% endblock %}
