@@ -10,6 +10,7 @@ def agendar(request):
         nome = request.POST.get('nome')
         data = request.POST.get('data')
         hora = request.POST.get('hora')
+        endereco = request.POST.get('endereco')
         empresa_id = request.POST.get('empresa')  # Captura a empresa selecionada
         tipos_residuos = request.POST.getlist('tipos_residuos')  # Lista de resíduos selecionados
 
@@ -29,8 +30,10 @@ def agendar(request):
                 data=data,
                 hora=hora,
                 tipos_residuos=tipos_residuos_str,
-                empresa_id=empresa_id  # Define a empresa selecionada
+                empresa_id=empresa_id,  # Define a empresa selecionada
+                endereco=endereco
             )
+            
             agendamento.full_clean()  # Valida os dados
             agendamento.save()  # Salva o agendamento no banco de dados
             

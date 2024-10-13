@@ -1,18 +1,39 @@
 {% extends "base.html" %}
+{% block title %}Ver Agendamentos{% endblock %}
+
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'style_ver_agendamentos.css' %}">
+{% endblock css %}
 
 {% block content %}
+    <br>
     <h2>Agendamentos para {{ request.user.nome_empresa }}</h2>
+    <br>
     {% if agendamentos %}
-        <ul>
+    <table> <!-- Removido o style inline e deixado apenas o CSS para definir a tabela -->
+        <thead>
+            <tr>
+                <th style="background-color: #5db467;">Código</th>
+                <th style="background-color: #5db467;">Nome</th>
+                <th style="background-color: #5db467;">Tipos de resíduos</th>
+                <th style="background-color: #5db467;">Detalhes</th>
+            </tr>
+        </thead>
+        <tbody>
             {% for agendamento in agendamentos %}
-                <li>
-                    Nome: {{ agendamento.nome }} <br>
-                    Data: {{ agendamento.data }} <br>
-                    Hora: {{ agendamento.hora }} <br>
-                    Tipos de resíduos: {{ agendamento.tipos_residuos }}
-                </li>
+            <tr>
+                <td>#{{ agendamento.id }}</td>
+                <td>{{ agendamento.nome }}</td>
+                <td>{{ agendamento.tipos_residuos }}</td>
+                <td>
+                    <p>{{ agendamento.endereco }}</p>
+                    <p>{{ agendamento.data }} - {{ agendamento.hora }}h</p>
+                </td>
+            </tr>
             {% endfor %}
-        </ul>
+        </tbody>
+    </table>
     {% else %}
         <p>Não há agendamentos para a sua empresa.</p>
     {% endif %}
