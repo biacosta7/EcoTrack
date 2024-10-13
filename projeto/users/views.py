@@ -180,9 +180,9 @@ def empresa_dashboard_view(request):
     Dashboard para empresas.
     Apenas usuários autenticados podem acessar.
     """
-
     context = {
         'user': request.user,
+        'empresa': request.user,
         'user_id': request.user.id,
     }
     return render(request, 'users/dashboard_empresa.html', context)

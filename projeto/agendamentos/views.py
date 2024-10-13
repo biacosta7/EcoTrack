@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages  # Importando para exibir mensagens
-from .models import Agendamento, Empresa
+from .models import Agendamento
 from users.models import User
 from django.core.exceptions import ValidationError
+from django.contrib.auth.decorators import login_required
 
 def agendar(request):
     if request.method == 'POST':
@@ -53,16 +54,20 @@ def lista_agendamentos(request):
     agendamentos = Agendamento.objects.all()  # Obtém todos os agendamentos
     return render(request, 'agendamentos/lista_agendamentos.html', {'agendamentos': agendamentos})
 
-def ver_agendamentos(request):
-    try:
-        # Obtém a instância da empresa associada ao usuário atual
-        empresa = Empresa.objects.get(nome=request.user.username)  # Ajuste se necessário
+@login_required
+def ver_agendamentos(request, id):
+    # Obtém o usuário específico pelo ID, ou retorna 404 se não existir
+    empresa = get_object_or_404(User, id=id, is_company=True)
+    # Obtém a instância da empresa associada ao usuário atual
+    #empresa = Empresa.objects.get(nome=request.user.id)  # Ajuste se necessário
 
-        # Filtra os agendamentos associados à empresa
-        agendamentos = Agendamento.objects.filter(empresa=empresa)
+    # Filtra os agendamentos associados à empresa
+    agendamentos = Agendamento.objects.filter(empresa=empresa)
 
-    except Empresa.DoesNotExist:
-        messages.error(request, 'Empresa não encontrada. Verifique seus dados de login.')
-        agendamentos = []
+    context= {
+        'agendamentos': agendamentos, 
+        'empresa': empresa
+    }
 
-    return render(request, 'agendamentos/ver_agendamentos.html', {'agendamentos': agendamentos})
+    print(f"Empresa: {empresa.email}, ID: {id}")
+    return render(request, 'agendamentos/ver_agendamentos.html', context)
