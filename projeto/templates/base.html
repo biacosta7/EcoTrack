@@ -24,7 +24,7 @@
   
 
     <!-- Container Principal -->
-    <div class="container mt-4">
+    <div class="container mt-4" style="min-height: 80vh;">
       {% if messages %}
       <div class="alert alert-danger" role="alert">
           {% for message in messages %}
@@ -38,7 +38,10 @@
         <!-- O conteúdo das páginas filhas será inserido aqui -->
         {% endblock %}
     </div>
-    <footer style="text-align: center;">
+    <footer style="
+    text-align: center;
+    padding: 20px;
+    position: relative;">
         <p>&copy; 2024 EcoTrack. Todos os direitos reservados.</p>
     </footer>
 

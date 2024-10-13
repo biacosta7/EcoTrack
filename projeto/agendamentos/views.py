@@ -1,14 +1,16 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages  # Importando para exibir mensagens
-from .models import Agendamento, Empresa
+from .models import Agendamento
 from users.models import User
 from django.core.exceptions import ValidationError
+from django.contrib.auth.decorators import login_required
 
 def agendar(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
         data = request.POST.get('data')
         hora = request.POST.get('hora')
+        endereco = request.POST.get('endereco')
         empresa_id = request.POST.get('empresa')  # Captura a empresa selecionada
         tipos_residuos = request.POST.getlist('tipos_residuos')  # Lista de resíduos selecionados
 
@@ -28,8 +30,10 @@ def agendar(request):
                 data=data,
                 hora=hora,
                 tipos_residuos=tipos_residuos_str,
-                empresa_id=empresa_id  # Define a empresa selecionada
+                empresa_id=empresa_id,  # Define a empresa selecionada
+                endereco=endereco
             )
+            
             agendamento.full_clean()  # Valida os dados
             agendamento.save()  # Salva o agendamento no banco de dados
             
@@ -52,3 +56,21 @@ def confirmacao_view(request, data_agendamento, horario_agendamento, empresa_nom
 def lista_agendamentos(request):
     agendamentos = Agendamento.objects.all()  # Obtém todos os agendamentos
     return render(request, 'agendamentos/lista_agendamentos.html', {'agendamentos': agendamentos})
+
+@login_required
+def ver_agendamentos(request, id):
+    # Obtém o usuário específico pelo ID, ou retorna 404 se não existir
+    empresa = get_object_or_404(User, id=id, is_company=True)
+    # Obtém a instância da empresa associada ao usuário atual
+    #empresa = Empresa.objects.get(nome=request.user.id)  # Ajuste se necessário
+
+    # Filtra os agendamentos associados à empresa
+    agendamentos = Agendamento.objects.filter(empresa=empresa)
+
+    context= {
+        'agendamentos': agendamentos, 
+        'empresa': empresa
+    }
+
+    print(f"Empresa: {empresa.email}, ID: {id}")
+    return render(request, 'agendamentos/ver_agendamentos.html', context)

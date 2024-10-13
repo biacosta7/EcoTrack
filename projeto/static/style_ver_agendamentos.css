@@ -1,0 +1,111 @@
+body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    background-color: #E4E2DD;
+}
+
+.elements {
+    text-align: center;
+}
+
+/* Estilo para a tabela */
+table {
+    border-collapse: collapse; /* Remove espaços entre as bordas */
+    width: 80%; /* Defina a largura desejada da tabela (80% ou um valor fixo) */
+    margin: 0 auto; /* Centraliza a tabela horizontalmente */
+    border-radius: 15px; /* Arredonda as bordas da tabela */
+    overflow: hidden; /* Garante que os cantos arredondados sejam visíveis */
+}
+
+/* Estilo para os cabeçalhos da tabela */
+th, td {
+    padding: 10px; /* Preenchimento interno */
+    border: 1px solid #ccc; /* Borda das células */
+    text-align: center; /* Alinhamento do texto */
+}
+
+th {
+    background-color: #f0f0f0; /* Cor de fundo dos cabeçalhos */
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9; /* Cor de fundo para linhas pares */
+}
+
+tr:hover {
+    background-color: #e0e0e0; /* Cor de fundo ao passar o mouse */
+}
+
+h2 {
+    text-align: center; 
+}
+
+/* Estilo para os cabeçalhos e parágrafos dentro do item */
+h4 {
+    margin: 0; /* Remove margem padrão */
+}
+
+p {
+    margin: 0; /* Remove margem padrão */
+    padding: 2px 0; /* Espaçamento vertical para os parágrafos */
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Empurra os itens para os cantos */
+    align-items: center; /* Centraliza verticalmente os itens */
+    background-color: #e0ddd5; /* Cor de fundo opcional */
+    padding: 10px 20px; /* Espaçamento opcional */
+}
+
+.nav-link {
+    margin-right: auto; /* Empurra o link para o canto direito */
+    padding: 10px 15px; /* Espaçamento ao redor do link */
+}
+
+.nav-link2 {
+    margin-left: auto; /* Empurra o link para o canto direito */
+    color: rgb(0, 0, 0); /* Cor do texto */
+    background-color: #28a745;
+    text-decoration: none;
+    padding: 10px 15px; /* Espaçamento ao redor do link */
+    border-radius: 10px;
+}
+
+.nav-link:hover {
+    background-color: #34495e; /* Cor de fundo ao passar o mouse */
+    border-radius: 4px; /* Bordas arredondadas ao passar o mouse */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .col-md-8 {
+        width: 100%;
+        padding: 15px;
+    }
+
+    form button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Ajuste para a tabela em telas menores */
+    table {
+        font-size: 14px; /* Reduz o tamanho da fonte em telas pequenas */
+        width: 100%; /* A tabela ocupará 100% da largura em telas pequenas */
+    }
+
+    th, td {
+        padding: 8px; /* Reduz o preenchimento interno das células */
+    }
+
+    .navbar {
+        flex-direction: column;
+    }
+}
