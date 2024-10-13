@@ -67,6 +67,10 @@ A crescente produção de resíduos e o descarte inadequado de materiais represe
 
 ## Entrega 2
 - Link do [JIRA](https://cesar-ecotrack.atlassian.net/jira/software/projects/EC/boards/1)
-- [Print do quadro da Sprint e backlog (JIRA)](https://drive.google.com/drive/u/2/folders/14Yr9PQSrD76bvjG2oEo-Pa6d0y2lUmnU?hl=pt-BR)
+- [Print do quadro da Sprint e backlog (JIRA)](projeto/Mídia/Entrega2)
 - Instruções de acesso: Para acessar o site, basta copiar e colar o link: https://ecotrackapp.azurewebsites.net/ na barra de pesquisa do seu navegador de preferência. (Para saber mais, clique em 'Screencast' abaixo)
 - [Screencast apresentando sistema](https://youtu.be/oN77fTKYXE8)
+
+## Entrega 3
+- [Print do quadro da Sprint e backlog (JIRA)](projeto/Mídia/Entrega3)
+- [Screencast]()
