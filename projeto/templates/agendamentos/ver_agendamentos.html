@@ -4,14 +4,51 @@
 {% load static %}
 {% block css %}
     <link rel="stylesheet" href="{% static 'style_ver_agendamentos.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function confirmarExclusao(event, form) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+            const agendamentoId = form.querySelector('input[name="agendamento_id"]').value; // Obtenha o ID do agendamento
+            
+            // Exibe o modal de confirmação
+            const modal = document.getElementById('confirmModal');
+            modal.style.display = 'block';
+            
+            // Atribui a função de exclusão ao botão "Sim"
+            document.getElementById('btnSim').onclick = function() {
+                $.ajax({
+                    url: form.action,
+                    type: 'POST',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'agendamento_id': agendamentoId // Passando o ID do agendamento para a requisição
+                    },
+                    success: function(response) {
+                        // Aqui você pode atualizar a página ou remover a linha da tabela
+                        // Remover a linha da tabela
+                        $(form).closest('tr').remove();
+                        fecharModal(); // Fecha o modal
+                    },
+                    error: function(xhr) {
+                        alert('Ocorreu um erro ao tentar excluir o agendamento.');
+                    }
+                });
+            };
+        }
+
+        function fecharModal() {
+            const modal = document.getElementById('confirmModal');
+            modal.style.display = 'none';
+        }
+    </script>
 {% endblock css %}
 
 {% block content %}
     <br>
-    <h2>Agendamentos para {{ request.user.nome_empresa }}</h2>
+    <h2>Agendamentos</h2>
     <br>
     {% if agendamentos %}
-    <table> <!-- Removido o style inline e deixado apenas o CSS para definir a tabela -->
+    <table>
         <thead>
             <tr>
                 <th style="background-color: #5db467;">Código</th>
@@ -30,11 +67,30 @@
                     <p>{{ agendamento.endereco }}</p>
                     <p>{{ agendamento.data }} - {{ agendamento.hora }}h</p>
                 </td>
+                <td class="agendamento_excluir">
+                    <form action="{% url 'agendamentos:cancelar_agendamento' agendamento.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="agendamento_id" value="{{ agendamento.id }}">
+                        <button type="button" class="btn-excluir" onclick="confirmarExclusao(event, this.form)">
+                            <img src="{% static 'agendamento_excluir.png' %}" alt="Excluir" />
+                        </button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     {% else %}
-        <p>Não há agendamentos para a sua empresa.</p>
+        <p class = "agendamento_sem-agendamento">Não há agendamentos para a sua empresa.</p>
     {% endif %}
+
+    <!-- Modal de Confirmação -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h4>Tem certeza que deseja excluir?</h4>
+            <button type="button" class="btn_btn_excluir" id="btnSim">Sim</button>
+            <button type="button" class="btn" onclick="fecharModal()">Não</button>
+        </div>
+    </div>
+    
 {% endblock %}

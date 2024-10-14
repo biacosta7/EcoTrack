@@ -1,3 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     height: 100vh;
@@ -24,16 +30,12 @@ th, td {
     text-align: center; /* Alinhamento do texto */
 }
 
+.agendamento_excluir{
+    border: none; 
+}
+
 th {
     background-color: #f0f0f0; /* Cor de fundo dos cabeçalhos */
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9; /* Cor de fundo para linhas pares */
-}
-
-tr:hover {
-    background-color: #e0e0e0; /* Cor de fundo ao passar o mouse */
 }
 
 h2 {
@@ -48,6 +50,10 @@ h4 {
 p {
     margin: 0; /* Remove margem padrão */
     padding: 2px 0; /* Espaçamento vertical para os parágrafos */
+}
+
+.details {
+    margin-bottom: 10px; /* Ajuste este valor conforme necessário */
 }
 
 /* Navbar */
@@ -76,6 +82,82 @@ p {
 .nav-link:hover {
     background-color: #34495e; /* Cor de fundo ao passar o mouse */
     border-radius: 4px; /* Bordas arredondadas ao passar o mouse */
+}
+.btn-excluir {
+    background-color: transparent; /* Remove fundo */
+    border: none; /* Remove borda */
+    cursor: pointer;
+    width: 40px; /* Ajuste conforme necessário */
+    height: 40px; /* Ajuste conforme necessário */
+    padding: 0; /* Remove padding */
+}
+
+.btn-excluir img {
+    width: 100%; /* A imagem ocupa toda a largura do botão */
+    height: 100%; /* A imagem ocupa toda a altura do botão */
+    object-fit: contain; /* Mantém a proporção da imagem */
+}
+
+.agendamento_sem-agendamento {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+/* Modal estilo */
+.modal {
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white; 
+    padding: 20px; 
+    margin: 15% auto; 
+    width: 300px; 
+    text-align: center; 
+    border-radius: 5px;
+}
+
+.btn-excluir {
+    border: none; /* Sem borda */
+    text-decoration: none; /* Remove sublinhado */
+}
+
+.btn-excluir:hover {
+    background-color: transparent; /* Cor de fundo ao passar o mouse */
+}
+
+.btn_btn_excluir{
+    display: inline-block; /* Exibe como bloco em linha */
+    padding: 10px 20px; /* Padding interno */
+    margin: 10px 0; /* Margem vertical */
+    border: none; /* Sem borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    text-decoration: none; /* Remove sublinhado */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor em forma de mão ao passar o mouse */
+    background-color: #57D463; /* Cor de fundo do botão primário */
+    color: white; /* Cor do texto */
+
+}
+
+.btn {
+    display: inline-block; /* Exibe como bloco em linha */
+    padding: 10px 20px; /* Padding interno */
+    margin: 10px 0; /* Margem vertical */
+    border: none; /* Sem borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    text-decoration: none; /* Remove sublinhado */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Cursor em forma de mão ao passar o mouse */
+    background-color: #ff0000; /* Cor de fundo do botão primário */
+    color: white; /* Cor do texto */
 }
 
 /* Responsividade */

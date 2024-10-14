@@ -4,6 +4,7 @@ from .models import Agendamento
 from users.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 
 def agendar(request):
     if request.method == 'POST':
@@ -59,18 +60,25 @@ def lista_agendamentos(request):
 
 @login_required
 def ver_agendamentos(request, id):
-    # Obtém o usuário específico pelo ID, ou retorna 404 se não existir
     empresa = get_object_or_404(User, id=id, is_company=True)
-    # Obtém a instância da empresa associada ao usuário atual
-    #empresa = Empresa.objects.get(nome=request.user.id)  # Ajuste se necessário
-
-    # Filtra os agendamentos associados à empresa
     agendamentos = Agendamento.objects.filter(empresa=empresa)
 
-    context= {
-        'agendamentos': agendamentos, 
+    context = {
+        'agendamentos': agendamentos,
         'empresa': empresa
     }
 
     print(f"Empresa: {empresa.email}, ID: {id}")
     return render(request, 'agendamentos/ver_agendamentos.html', context)
+
+@login_required
+def cancelar_agendamento(request, agendamento_id):
+    agendamento = get_object_or_404(Agendamento, id=agendamento_id)
+
+    if request.method == 'POST':
+        agendamento.delete()
+        # Retorna uma resposta JSON informando que a exclusão foi bem-sucedida
+        return JsonResponse({'status': 'success', 'message': 'Agendamento cancelado com sucesso.'})
+
+    # Se a requisição não for POST, você pode retornar um erro ou uma mensagem padrão
+    return JsonResponse({'status': 'error', 'message': 'Método não permitido.'})
