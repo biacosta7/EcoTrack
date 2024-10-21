@@ -74,3 +74,22 @@ def ver_agendamentos(request, id):
 
     print(f"Empresa: {empresa.email}, ID: {id}")
     return render(request, 'agendamentos/ver_agendamentos.html', context)
+
+
+
+
+@login_required
+def delete_appointment(request, agendamento_id):
+    # Obtém o agendamento ou retorna um 404 se não for encontrado
+    agendamento = get_object_or_404(Agendamento, id=agendamento_id)
+
+    # Verifica se o usuário logado é a empresa associada ao agendamento
+    agendamento.delete()  # Exclui o agendamento
+
+    # Redireciona de volta para a página de visualização de agendamentos
+    agendamentos = Agendamento.objects.filter(empresa=request.user)
+    
+    return render(request, 'agendamentos/ver_agendamentos.html', {
+        'agendamentos': agendamentos,
+        'empresa': request.user 
+    })
