@@ -26,10 +26,16 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-      
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+          
+      - name: Upgrade pip
+        run: pip install --upgrade pip
         
+      - name: Install dependencies
+        run: pip install -r ./requirements.txt
+
+      - name: Install Django
+        run: pip install Django
+ 
       - name: Cleaning testing files
         run: |
           cd projeto/
@@ -40,9 +46,10 @@ jobs:
       - name: Zip artifact for deployment
         run: |
           cd projeto/
-          zip release.zip ./* -r
+          zip -r release.zip ./*
           cd ..
           mv projeto/release.zip .
+
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -84,4 +91,4 @@ jobs:
         with:
           app-name: 'EcoTrackApp'
           slot-name: 'Production'
-          
+

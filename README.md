@@ -50,13 +50,14 @@ A crescente produção de resíduos e o descarte inadequado de materiais represe
 
 ## Equipe
 - Aline Farias Amancio
-- Beatriz Victória Costa Pinto
+-  Beatriz Victória Costa Pinto
 - Gustavo Carneiro  
 - Júlio César Aragão Vilas Bôas
 - Nina Henrique França Fernandes Bento De Sá
 - Thiago Vinnícius 
 
 ## Entrega 1
+- Link [Jira](https://cesar-ecotrack.atlassian.net/jira/software/projects/EC/boards/1)
 - **Histórias bem definidas**
   - Link do [JIRA](https://cesar-ecotrack.atlassian.net/jira/software/projects/EC/boards/1)
   - [Documento com histórias](https://docs.google.com/document/d/1KLpmdgkq_9-2uOrfhZg1mmdmRydcJOLx7CMLJBF2K6E/edit)
