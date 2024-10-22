@@ -62,18 +62,12 @@ def lista_agendamentos(request):
 
 @login_required
 def ver_agendamentos(request, id):
-    # Obtém o usuário específico pelo ID, ou retorna 404 se não existir
     empresa = get_object_or_404(User, id=id, is_company=True)
-    # Obtém a instância da empresa associada ao usuário atual
-    #empresa = Empresa.objects.get(nome=request.user.id)  # Ajuste se necessário
-
-    # Filtra os agendamentos associados à empresa
     agendamentos = Agendamento.objects.filter(empresa=empresa)
 
-    context= {
+    context = {
         'agendamentos': agendamentos, 
-        'empresa': empresa
+        'empresa': empresa,
     }
 
-    print(f"Empresa: {empresa.email}, ID: {id}")
     return render(request, 'agendamentos/ver_agendamentos.html', context)
