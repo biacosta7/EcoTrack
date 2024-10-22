@@ -10,6 +10,32 @@
     <link rel="stylesheet" href="{% static 'users.css' %}">
     {% endblock css %}
 </head>
+<style>
+    .error-messages {
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border: 1px solid #f5c6cb;
+        margin: 20px 0;
+        border-radius: 5px;
+        display: none; /* Começa oculto */
+    }
+    
+    /* Classe para mostrar a mensagem */
+    .show {
+        display: block;
+    }   
+
+    .close-button {
+        background: none;
+        border: none;
+        font-size: 20px;
+        color: #721c24;
+        cursor: pointer;
+        float: right; /* Alinha à direita */
+    }
+    
+</style>
 <body>
     <div class="container">
         <div class="back-button">
@@ -24,6 +50,7 @@
             <!-- Exibir mensagens de erro -->
             {% if messages %}
                 <div class="error-messages">
+                    <button class="close-button" aria-label="Fechar">&times;</button>
                     {% for message in messages %}
                         <div class="error">{{ message }}</div>
                     {% endfor %}
@@ -51,4 +78,19 @@
     </div>
 
 </body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const errorMessages = document.querySelector('.error-messages');
+        const closeButton = document.querySelector('.close-button');
+    
+        if (errorMessages) {
+            errorMessages.classList.add('show');
+            
+            // Adiciona um evento de clique ao botão de fechar
+            closeButton.addEventListener('click', function() {
+                errorMessages.classList.remove('show');
+            });
+        }
+    });    
+</script>
 </html>
