@@ -81,6 +81,7 @@ class AgendamentoTests(TestCase):
                 EC.visibility_of_element_located((By.LINK_TEXT, 'Agendamentos'))
             ).click()
             print("Link de Agendamentos clicado")
+            time.sleep(7)
         except Exception as e:
             print("Erro ao encontrar ou clicar no link de Agendamentos:", e)
 
