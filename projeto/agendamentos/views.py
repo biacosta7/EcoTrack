@@ -5,6 +5,7 @@ from users.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 
+@login_required
 def agendar(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
@@ -46,6 +47,7 @@ def agendar(request):
     empresas = User.objects.filter(is_company=True)  # Obtém todas as empresas cadastradas
     return render(request, 'agendamentos/agendamentos_coleta.html', {'empresas': empresas})
 
+@login_required
 def confirmacao_view(request, data_agendamento, horario_agendamento, empresa_nome):
     return render(request, 'agendamentos/confirmacao.html', {
         'data_agendamento': data_agendamento,
@@ -53,24 +55,19 @@ def confirmacao_view(request, data_agendamento, horario_agendamento, empresa_nom
         'empresa_nome': empresa_nome
     })  # Passando os dados para a página de confirmação
 
+@login_required
 def lista_agendamentos(request):
     agendamentos = Agendamento.objects.all()  # Obtém todos os agendamentos
     return render(request, 'agendamentos/lista_agendamentos.html', {'agendamentos': agendamentos})
 
 @login_required
 def ver_agendamentos(request, id):
-    # Obtém o usuário específico pelo ID, ou retorna 404 se não existir
     empresa = get_object_or_404(User, id=id, is_company=True)
-    # Obtém a instância da empresa associada ao usuário atual
-    #empresa = Empresa.objects.get(nome=request.user.id)  # Ajuste se necessário
-
-    # Filtra os agendamentos associados à empresa
     agendamentos = Agendamento.objects.filter(empresa=empresa)
 
-    context= {
+    context = {
         'agendamentos': agendamentos, 
-        'empresa': empresa
+        'empresa': empresa,
     }
 
-    print(f"Empresa: {empresa.email}, ID: {id}")
     return render(request, 'agendamentos/ver_agendamentos.html', context)
