@@ -121,6 +121,10 @@ def delete_user_appointment(request, agendamento_id):
     return redirect('agendamentos:ver_agendamentos_usuario')
 
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .models import Agendamento
+
 def editar_agendamento(request, agendamento_id):
     agendamento = get_object_or_404(Agendamento, id=agendamento_id)
 
@@ -138,7 +142,6 @@ def editar_agendamento(request, agendamento_id):
                 messages.error(request, 'Este horário já está indisponível.')
                 return render(request, 'agendamentos/editar_agendamento.html', {
                     'agendamento': agendamento,
-                    'messages': messages,
                 })
 
         # Atualizar agendamento
@@ -149,11 +152,12 @@ def editar_agendamento(request, agendamento_id):
         agendamento.tipos_residuos = tipos_residuos
         agendamento.save()
         messages.success(request, 'Agendamento atualizado com sucesso!')
-        return redirect('user:usuario_dashboard')  # ou onde você quiser redirecionar
+        return redirect('user:usuario_dashboard')  # Redirecionar após atualização
 
     return render(request, 'agendamentos/editar_agendamento.html', {
         'agendamento': agendamento,
     })
+
 
 
 
