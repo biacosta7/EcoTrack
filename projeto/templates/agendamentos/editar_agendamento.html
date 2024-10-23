@@ -3,11 +3,11 @@
 
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'style_agendamentos.css' %}">
+    <link rel="stylesheet" href="{% static 'style_editar_agendamento.css' %}">
 {% endblock css %}
 
 {% block content %}
-    <div class="container">  <!-- Adicionando a classe container -->
+    <div class="container">
         <h1>Editar Agendamento</h1>
         <form method="POST" action="{% url 'agendamentos:editar_agendamento' agendamento.id %}">
             {% csrf_token %}
@@ -29,7 +29,6 @@
                     <option value="08:00">08:00</option>
                     <option value="09:00">09:00</option>
                     <option value="10:00">10:00</option>
-                    <!-- Adicione mais opções conforme necessário -->
                 </select>
             </div>
 
