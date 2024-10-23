@@ -4,14 +4,12 @@ from . import views
 app_name = 'agendamentos'
 
 urlpatterns = [
-    path('', views.agendar, name='agendamentos_coleta'),  # View para o formulário de agendamento
+    path('', views.agendar, name='agendamentos_coleta'),
     path('confirmacao/<str:data_agendamento>/<str:horario_agendamento>/<str:empresa_nome>/', views.confirmacao_view, name='confirmacao'),
-    path('lista/', views.lista_agendamentos, name='lista_agendamentos'),  # View para listar agendamentos
+    path('lista/', views.lista_agendamentos, name='lista_agendamentos'),
     path('visualizar/<int:id>/', views.ver_agendamentos, name='ver_agendamentos'),
-    path('delete/<int:agendamento_id>/', views.delete_appointment, name='delete_appointment'),
-    path('meus-agendamentos/', views.ver_agendamentos_usuario, name='ver_agendamentos_usuario'),  # Nova rota para visualizar agendamentos do usuário
-    path('meus-agendamentos/delete/<int:agendamento_id>/', views.delete_user_appointment, name='delete_user_appointment'),  # Nova rota para deletar agendamento do usuário
+    path('delete/<int:agendamento_id>/', views.delete_user_appointment, name='delete_user_appointment'),  # Corrigido para delete_user_appointment
+    path('meus-agendamentos/', views.ver_agendamentos, name='ver_agendamentos_usuario'),  # Atualizado para o método correto
+    path('meus-agendamentos/delete/<int:agendamento_id>/', views.delete_user_appointment, name='delete_user_appointment'),
     path('editar_agendamento/<int:agendamento_id>/', views.editar_agendamento, name='editar_agendamento'),
 ]
-
-
