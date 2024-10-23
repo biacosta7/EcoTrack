@@ -75,17 +75,27 @@ def ver_agendamentos(request, id):
 
 @login_required
 def delete_appointment(request, agendamento_id):
-    # Obtém o agendamento ou retorna um 404 se não for encontrado
-    agendamento = get_object_or_404(Agendamento, id=agendamento_id)
+    try:
+        # Tenta obter o agendamento pelo ID ou gera um erro se não for encontrado
+        agendamento = Agendamento.objects.get(id=agendamento_id)
 
-    # Verifica se o usuário logado é a empresa associada ao agendamento
-    if request.user.is_company and agendamento.empresa == request.user:
-        agendamento.delete()  # Exclui o agendamento
-        messages.success(request, 'Agendamento excluído com sucesso.')
-    else:
-        messages.error(request, 'Você não tem permissão para excluir este agendamento.')
+        # Verifica se o usuário logado é a empresa associada ao agendamento
+        if request.user.is_company and agendamento.empresa == request.user:
+            agendamento.delete()  # Exclui o agendamento
+            messages.success(request, 'Agendamento excluído com sucesso.')
+        else:
+            # Se o usuário logado não for a empresa do agendamento
+            messages.error(request, 'Você não tem permissão para excluir este agendamento.')
+    except Agendamento.DoesNotExist:
+        # Se o agendamento não existir, exibe uma mensagem de erro
+        messages.error(request, 'Agendamento não disponível para exclusão.')
 
     # Redireciona de volta para a página de visualização de agendamentos
+    agendamentos = Agendamento.objects.filter(empresa=request.user)
+    return render(request, 'agendamentos/ver_agendamentos.html', {
+        'agendamentos': agendamentos,
+        'empresa': request.user 
+    })
     return redirect('agendamentos:ver_agendamentos', id=request.user.id)
 
 @login_required
