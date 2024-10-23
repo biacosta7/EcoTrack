@@ -46,6 +46,7 @@ def agendar(request):
     return render(request, 'agendamentos/agendamentos_coleta.html', {'empresas': empresas})
 
 
+@login_required
 def confirmacao_view(request, data_agendamento, horario_agendamento, empresa_nome):
     return render(request, 'agendamentos/confirmacao.html', {
         'data_agendamento': data_agendamento,
@@ -53,6 +54,7 @@ def confirmacao_view(request, data_agendamento, horario_agendamento, empresa_nom
         'empresa_nome': empresa_nome
     })  # Passando os dados para a página de confirmação
 
+@login_required
 def lista_agendamentos(request):
     agendamentos = Agendamento.objects.all()  # Obtém todos os agendamentos
     return render(request, 'agendamentos/lista_agendamentos.html', {'agendamentos': agendamentos})
@@ -66,10 +68,9 @@ def ver_agendamentos(request, id):
 
     context = {
         'agendamentos': agendamentos, 
-        'empresa': empresa
+        'empresa': empresa,
     }
 
-    print(f"Empresa: {empresa.email}, ID: {id}")
     return render(request, 'agendamentos/ver_agendamentos.html', context)
 
 @login_required

@@ -1,0 +1,72 @@
+from django.test import TestCase
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+class AgendamentoTests(TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.driver = webdriver.Chrome()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.driver.quit()
+        super().tearDownClass()
+
+    def test_login_empresa(self):
+        """Teste para verificar o login da empresa."""
+        self.driver.get("https://ecotrackapp.azurewebsites.net/")
+        
+        email_field = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.NAME, "email"))
+        )
+        email_field.send_keys("teste@gmail.com")  # Login da empresa
+
+        password_field = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.NAME, "password"))
+        )
+        password_field.send_keys("teste123")  # Senha da empresa
+
+        login_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, '//button[text()="Entrar"]'))
+        )
+        login_button.click()
+
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.LINK_TEXT, 'Agendamentos'))
+        ).click()
+
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.TAG_NAME, 'p'))
+        )
+
+        message_element = self.driver.find_element(By.TAG_NAME, 'p')
+        assert "Não há agendamentos para a sua empresa." in message_element.text
+
+    def test_login_usuario(self):
+        """Teste para verificar o login do usuário comum."""
+        self.driver.get("https://ecotrackapp.azurewebsites.net/")
+        
+        email_field = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.NAME, "email"))
+        )
+        email_field.send_keys("testeruser@gmail.com")  # Login do usuário comum
+
+        password_field = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.NAME, "password"))
+        )
+        password_field.send_keys("testeruser")  # Senha do usuário comum
+
+        login_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, '//button[text()="Entrar"]'))
+        )
+        login_button.click()
+
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.LINK_TEXT, 'Perfil'))  # Ajuste conforme necessário
+        )
+
+        assert "Perfil" in self.driver.page_source  # Verifica se está na página do usuário

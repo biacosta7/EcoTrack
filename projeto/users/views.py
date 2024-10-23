@@ -144,12 +144,17 @@ def register_view(request):
             'user_type': user_type,
         }
         return render(request, template_name, context)
-
+ 
 class CustomLoginView(LoginView):
     template_name = 'users/login.html'
+    def get(self, request, *args, **kwargs):
+        if 'next' in request.GET:
+            messages.error(request, "Você precisa estar autenticado para acessar esta página.")
+        return super().get(request, *args, **kwargs)
+    
     def form_invalid(self, form):
         # Quando o formulário de login for inválido, exibe uma mensagem de erro.
-        messages.error(self.request, "E-mail ou senha inválidos.")
+        messages.error(self.request, "Email ou senha inválidos.")
         return super().form_invalid(form)
 
     def get_redirect_url(self):
