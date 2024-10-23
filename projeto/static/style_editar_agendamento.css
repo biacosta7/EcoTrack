@@ -65,8 +65,8 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
+
 /* Estilo do corpo */
 body {
     font-family: 'Arial', sans-serif;
@@ -75,21 +75,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+
+.messages .error {
+    background-color: #ffdddd;
+    color: #d8000c;
 }
 
-/* Estilo para os elementos */
-.elements {
-    text-align: center;
-}
-
-/* Estilo para a tabela */
-table {
-    border-collapse: collapse; /* Remove espaços entre as bordas */
-    width: 80%; /* Defina a largura desejada da tabela */
-    margin: 0 auto; /* Centraliza a tabela horizontalmente */
-    border-radius: 15px; /* Arredonda as bordas da tabela */
-    overflow: hidden; /* Garante que os cantos arredondados sejam visíveis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para a tabela */
+.messages .success {
+    background-color: #ddffdd;
+    color: #4caf50;
 }
 
 /* Estilo para os cabeçalhos da tabela */
