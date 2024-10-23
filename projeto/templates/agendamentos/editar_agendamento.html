@@ -29,9 +29,6 @@
             </ul>
         {% endif %}
         
-        <p>Empresa: {{ empresa.nome_empresa }}</p> <!-- Exibe a empresa do agendamento -->
-        <p>Data: {{ agendamento.data }}</p> <!-- Exibe a data do agendamento -->
-        
         <form method="POST" action="{% url 'agendamentos:editar_agendamento' agendamento.id %}">
             {% csrf_token %}
             
