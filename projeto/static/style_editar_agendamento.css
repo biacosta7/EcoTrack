@@ -1,10 +1,72 @@
+.messages {
+    list-style: none;
+    padding: 0;
+}
+
+.messages li {
+    margin: 0.5em 0;
+    padding: 1em;
+    border-radius: 5px;
+}
+
+.messages .error {
+    background-color: #ffdddd;
+    color: #d8000c;
+}
+
+.messages .success {
+    background-color: #ddffdd;
+    color: #4caf50;
+}
+
+.messages .info {
+    background-color: #e7f3fe;
+    color: #31708f;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .col-md-8 {
+        width: 100%;
+        padding: 15px;
+    }
+
+    form button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Ajuste para a tabela em telas menores */
+    table {
+        font-size: 14px;
+        width: 100%;
+    }
+
+    th, td {
+        padding: 8px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+
+
+
+/* Fazia parte da main */
 /* Reset básico */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 /* Estilo do corpo */
 body {
     font-family: 'Arial', sans-serif;
@@ -110,37 +172,4 @@ p {
 
 .nav-link2:hover {
     background-color: #218838;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .col-md-8 {
-        width: 100%;
-        padding: 15px;
-    }
-
-    form button {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .btn {
-        width: 100%;
-        text-align: center;
-    }
-
-    /* Ajuste para a tabela em telas menores */
-    table {
-        font-size: 14px;
-        width: 100%;
-    }
-
-    th, td {
-        padding: 8px;
-    }
-
-    .navbar {
-        flex-direction: column;
-        text-align: center;
-    }
 }

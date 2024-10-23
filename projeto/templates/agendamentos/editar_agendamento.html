@@ -3,52 +3,64 @@
 
 {% load static %}
 {% block css %}
-    <link rel="stylesheet" href="{% static 'style_editar_agendamento.css' %}">
+    <link rel="stylesheet" href="{% static 'style_agendamentos.css' %}">
 {% endblock css %}
 
 {% block content %}
-    <div class="container">
-        <h1>Editar Agendamento</h1>
-        <form method="POST" action="{% url 'agendamentos:editar_agendamento' agendamento.id %}">
-            {% csrf_token %}
-            
-            <div class="input-group">
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" value="{{ agendamento.nome }}" required>
-            </div>
+    <h1>Editar Agendamento</h1>
+    
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    
+    <p>Empresa: {{ empresa.nome_empresa }}</p> <!-- Exibe a empresa do agendamento -->
+    <p>Data: {{ agendamento.data }}</p> <!-- Exibe a data do agendamento -->
+    
+    <form method="POST" action="{% url 'agendamentos:editar_agendamento' agendamento.id %}">
+        {% csrf_token %}
+        
+        <div class="input-group">
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="nome" placeholder="Digite seu nome" value="{{ agendamento.nome }}" required>
+        </div>
+    
+        <div class="input-group">
+            <label for="date">Data</label>
+            <input type="date" id="date" name="data" value="{{ agendamento.data }}" required>
+        </div>
+    
+        <div class="input-group">
+            <label for="time">Hora</label>
+            <select id="time" name="hora" required>
+                <option value="">Selecione um horário</option>
+                <option value="08:00" {% if agendamento.hora == "08:00" %}selected{% endif %}>08:00</option>
+                <option value="09:00" {% if agendamento.hora == "09:00" %}selected{% endif %}>09:00</option>
+                <option value="10:00" {% if agendamento.hora == "10:00" %}selected{% endif %}>10:00</option>
+                <!-- Adicione mais opções conforme necessário -->
+            </select>
+        </div>
 
-            <div class="input-group">
-                <label for="data">Data:</label>
-                <input type="date" id="data" name="data" value="{{ agendamento.data }}" required>
+        <div class="input-group">
+            <label for="endereco">Endereço</label>
+            <input type="text" id="endereco" name="endereco" placeholder="Digite seu endereço" value="{{ agendamento.endereco }}" required>
+        </div>
+    
+        <div class="input-group">
+            <label>Tipos de resíduos</label>
+            <div class="checkbox-group">
+                <label><input type="checkbox" name="tipos_residuos" value="Metal" {% if "Metal" in agendamento.tipos_residuos %}checked{% endif %}> Metal</label>
+                <label><input type="checkbox" name="tipos_residuos" value="Papel" {% if "Papel" in agendamento.tipos_residuos %}checked{% endif %}> Papel</label>
+                <label><input type="checkbox" name="tipos_residuos" value="Plástico" {% if "Plástico" in agendamento.tipos_residuos %}checked{% endif %}> Plástico</label>
+                <label><input type="checkbox" name="tipos_residuos" value="Orgânico" {% if "Orgânico" in agendamento.tipos_residuos %}checked{% endif %}> Orgânico</label>
+                <label><input type="checkbox" name="tipos_residuos" value="Perigoso" {% if "Perigoso" in agendamento.tipos_residuos %}checked{% endif %}> Perigoso</label>
+                <label><input type="checkbox" name="tipos_residuos" value="Vidro" {% if "Vidro" in agendamento.tipos_residuos %}checked{% endif %}> Vidro</label>
             </div>
-
-            <div class="input-group">
-                <label for="hora">Hora:</label>
-                <select id="hora" name="hora" required>
-                    <option value="{{ agendamento.hora }}">{{ agendamento.hora }}</option>
-                    <option value="08:00">08:00</option>
-                    <option value="09:00">09:00</option>
-                    <option value="10:00">10:00</option>
-                </select>
-            </div>
-
-            <div class="input-group">
-                <label for="endereco">Endereço:</label>
-                <input type="text" id="endereco" name="endereco" value="{{ agendamento.endereco }}" required>
-            </div>
-
-            <div class="input-group">
-                <label>Tipos de resíduos:</label>
-                <div class="checkbox-group">
-                    {% for tipo in tipos_residuos %}
-                        <label>
-                            <input type="checkbox" name="tipos_residuos" value="{{ tipo }}" {% if tipo in agendamento.tipos_residuos %} checked {% endif %}> {{ tipo }}
-                        </label>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <button type="submit" class="btn-agendar">Salvar Alterações</button>
-        </form>
-    </div>
-{% endblock %}
+        </div>
+    
+        <button type="submit" class="btn-agendar">Salvar Alterações</button>
+    </form>
+{% endblock content %}
