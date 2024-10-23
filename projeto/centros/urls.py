@@ -1,6 +1,5 @@
 from django.urls import path
 from .views import cadastrar_centro, lista_centros, atualizar_centro, remover_centro
-
 app_name = 'centros'
 
 urlpatterns = [

@@ -1,146 +1,25 @@
-/* Reset básico */
-* {
-    margin: 0;
+.messages {
+    list-style: none;
     padding: 0;
-    box-sizing: border-box;
 }
 
-/* Estilo do corpo */
-body {
-    font-family: 'Arial', sans-serif;
-    height: 100vh;
-    background-color: #E4E2DD;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.messages li {
+    margin: 0.5em 0;
+    padding: 1em;
+    border-radius: 5px;
 }
 
-/* Estilo para os elementos */
-.elements {
-    text-align: center;
+.messages .error {
+    background-color: #ffdddd;
+    color: #d8000c;
 }
 
-/* Estilo para a tabela */
-table {
-    border-collapse: collapse; /* Remove espaços entre as bordas */
-    width: 80%; /* Defina a largura desejada da tabela */
-    margin: 0 auto; /* Centraliza a tabela horizontalmente */
-    border-radius: 15px; /* Arredonda as bordas da tabela */
-    overflow: hidden; /* Garante que os cantos arredondados sejam visíveis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para a tabela */
+.messages .success {
+    background-color: #ddffdd;
+    color: #4caf50;
 }
 
-/* Estilo para os cabeçalhos da tabela */
-th, td {
-    padding: 12px 15px; /* Preenchimento interno ajustado */
-    border: 1px solid #ccc; /* Borda das células */
-    text-align: center; /* Alinhamento do texto */
-    font-size: 16px; /* Tamanho de fonte ajustado */
-}
-
-th {
-    background-color: #f0f0f0; /* Cor de fundo dos cabeçalhos */
-    font-weight: bold; /* Negrito para cabeçalhos */
-    text-transform: uppercase; /* Transformar texto em maiúsculas */
-    letter-spacing: 0.05em; /* Espaçamento entre letras */
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9; /* Cor de fundo para linhas pares */
-}
-
-tr:hover {
-    background-color: #e0e0e0; /* Cor de fundo ao passar o mouse */
-}
-
-/* Estilo para os títulos */
-h2 {
-    text-align: center;
-    font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-/* Estilo para os cabeçalhos e parágrafos dentro do item */
-h4 {
-    margin: 0;
-}
-
-p {
-    margin: 0;
-    padding: 2px 0;
-}
-
-/* Navbar */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #e0ddd5;
-    padding: 10px 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-.nav-link {
-    margin-right: auto;
-    padding: 10px 15px;
-    color: #333;
-    text-decoration: none;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.nav-link:hover {
-    background-color: #34495e;
-    color: #fff;
-    border-radius: 4px;
-}
-
-.nav-link2 {
-    margin-left: auto;
-    color: white;
-    background-color: #28a745;
-    text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 10px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.nav-link2:hover {
-    background-color: #218838;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .col-md-8 {
-        width: 100%;
-        padding: 15px;
-    }
-
-    form button {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .btn {
-        width: 100%;
-        text-align: center;
-    }
-
-    /* Ajuste para a tabela em telas menores */
-    table {
-        font-size: 14px;
-        width: 100%;
-    }
-
-    th, td {
-        padding: 8px;
-    }
-
-    .navbar {
-        flex-direction: column;
-        text-align: center;
-    }
+.messages .info {
+    background-color: #e7f3fe;
+    color: #31708f;
 }
