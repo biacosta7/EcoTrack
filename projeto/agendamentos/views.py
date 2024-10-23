@@ -125,19 +125,35 @@ def editar_agendamento(request, agendamento_id):
     agendamento = get_object_or_404(Agendamento, id=agendamento_id)
 
     if request.method == 'POST':
-        agendamento.nome = request.POST.get('nome')
-        agendamento.data = request.POST.get('data')
-        agendamento.hora = request.POST.get('hora')
-        agendamento.endereco = request.POST.get('endereco')
-        # Supondo que tipos_residuos é uma lista
-        agendamento.tipos_residuos = request.POST.getlist('tipos_residuos')
+        nome = request.POST['nome']
+        data = request.POST['data']
+        hora = request.POST['hora']
+        endereco = request.POST['endereco']
+        tipos_residuos = request.POST.getlist('tipos_residuos')
+
+        # Verificar se o horário está sendo alterado
+        if agendamento.hora != hora:
+            # Verificar se já existe um agendamento para a mesma data e hora
+            if Agendamento.objects.filter(data=data, hora=hora).exists():
+                messages.error(request, 'Este horário já está indisponível.')
+                return render(request, 'agendamentos/editar_agendamento.html', {
+                    'agendamento': agendamento,
+                    'messages': messages,
+                })
+
+        # Atualizar agendamento
+        agendamento.nome = nome
+        agendamento.data = data
+        agendamento.hora = hora
+        agendamento.endereco = endereco
+        agendamento.tipos_residuos = tipos_residuos
         agendamento.save()
-        return redirect('agendamentos:ver_agendamentos_usuario')  # Redireciona para a lista de agendamentos
+        messages.success(request, 'Agendamento atualizado com sucesso!')
+        return redirect('user:usuario_dashboard')  # ou onde você quiser redirecionar
 
-    # Renderiza a página de edição com os dados do agendamento
-    return render(request, 'agendamentos/editar_agendamento.html', {'agendamento': agendamento})
-
-
+    return render(request, 'agendamentos/editar_agendamento.html', {
+        'agendamento': agendamento,
+    })
 
 
 

@@ -1,87 +1,25 @@
-/* Reset básico */
-* {
-    margin: 0;
+.messages {
+    list-style: none;
     padding: 0;
-    box-sizing: border-box;
 }
 
-/* Estilo do corpo */
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #E4E2DD;
-    font-family: Arial, sans-serif;
-}
-
-/* Estilo do container principal */
-.container {
-    background-color: #ffffff; /* Mudei para branco para destacar */
-    padding: 40px;
-    border-radius: 10px;
-    width: 500px; /* Ajuste a largura conforme necessário */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidade */
-}
-
-/* Estilo do título */
-h1 {
-    margin-bottom: 20px;
-    color: #333;
-    text-align: center; /* Centraliza o título */
-}
-
-/* Estilo para grupos de entrada */
-.input-group {
-    margin-bottom: 20px;
-}
-
-/* Estilo dos rótulos */
-.input-group label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-    font-weight: bold; /* Negrito para os rótulos */
-}
-
-/* Estilo dos campos de entrada */
-.input-group input,
-.input-group select {
-    width: 100%;
-    padding: 12px; /* Mais espaçamento para melhor usabilidade */
-    border: 1px solid #ccc;
+.messages li {
+    margin: 0.5em 0;
+    padding: 1em;
     border-radius: 5px;
-    font-size: 16px; /* Tamanho de fonte maior para legibilidade */
 }
 
-/* Estilo do grupo de checkboxes */
-.checkbox-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px; /* Espaçamento entre os checkboxes */
+.messages .error {
+    background-color: #ffdddd;
+    color: #d8000c;
 }
 
-/* Estilo dos checkboxes */
-.checkbox-group label {
-    display: flex;
-    align-items: center;
-    font-size: 14px;
+.messages .success {
+    background-color: #ddffdd;
+    color: #4caf50;
 }
 
-/* Estilo do botão de agendar */
-.btn-agendar {
-    width: 100%;
-    padding: 12px; /* Mais espaçamento para melhor usabilidade */
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s; /* Transição suave para hover */
-}
-
-/* Estilo para o hover do botão */
-.btn-agendar:hover {
-    background-color: #218838;
+.messages .info {
+    background-color: #e7f3fe;
+    color: #31708f;
 }

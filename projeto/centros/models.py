@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import User
+
 #nome', 'telefone', 'endereco', 'numero', 
 # 'complemento', 'cep', 'tipos', 
 # 'horario_abertura', 'horario_fechamento'
