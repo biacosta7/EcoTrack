@@ -22,7 +22,7 @@ class PontoDeColetaTests(TestCase):
             self.driver.get("https://ecotrackapp.azurewebsites.net/centros/cadastrar/")
 
             # Espera um pouco para garantir que a página tenha carregado
-            time.sleep(4)
+            time.sleep(2)
 
             # Verifica se a URL atual é a página de login
             current_url = self.driver.current_url
@@ -62,34 +62,34 @@ class PontoDeColetaTests(TestCase):
         WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.NAME, "nome"))
         ).send_keys("Ponto de Coleta Incompleto")
-        time.sleep(2)
+        time.sleep(1)
         # Telefone
         WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.NAME, "telefone"))
         ).send_keys("11999999999")
-        time.sleep(2)
+        time.sleep(1)
         # Deixa o campo de endereço vazio para simular o envio de dados incompletos
 
         # Campo CEP
         WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.NAME, "cep"))
         ).send_keys("12345-678")
-        time.sleep(2)
+        time.sleep(1)
         # Seleciona um tipo de material
         WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.XPATH, "//input[@value='metal']"))
         ).click()
-        time.sleep(2)
+        time.sleep(1)
         # Horário de Abertura
         WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.NAME, "horario_abertura"))
         ).send_keys("08:00")
-        time.sleep(2)
+        time.sleep(1)
         # Horário de Fechamento
         WebDriverWait(self.driver, 10).until(
             EC.visibility_of_element_located((By.NAME, "horario_fechamento"))
         ).send_keys("18:00")
-        time.sleep(4)
+        time.sleep(2)
         # Submete o formulário
         self.driver.find_element(By.XPATH, '//button[@type="submit"]').click()
 
