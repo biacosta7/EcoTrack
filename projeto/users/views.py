@@ -154,7 +154,7 @@ class CustomLoginView(LoginView):
     
     def form_invalid(self, form):
         # Quando o formulário de login for inválido, exibe uma mensagem de erro.
-        messages.error(self.request, "E-mail ou senha inválidos.")
+        messages.error(self.request, "Email ou senha inválidos.")
         return super().form_invalid(form)
 
     def get_redirect_url(self):

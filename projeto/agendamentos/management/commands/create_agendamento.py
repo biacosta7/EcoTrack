@@ -7,7 +7,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument('empresa_id', type=int)
         parser.add_argument('nome', type=str)
-        parser.add_argument('data', type=str)
+        parser.add_argument('data', type=str) 
         parser.add_argument('hora', type=str)
         parser.add_argument('endereco', type=str)
         parser.add_argument('tipos_residuos', nargs='+')  # Aceita múltiplos tipos
