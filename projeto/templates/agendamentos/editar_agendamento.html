@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Editar Agendamento{% endblock %}
+
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'style_agendamentos.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <div class="container">  <!-- Adicionando a classe container -->
+        <h1>Editar Agendamento</h1>
+        <form method="POST" action="{% url 'agendamentos:editar_agendamento' agendamento.id %}">
+            {% csrf_token %}
+            
+            <div class="input-group">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" value="{{ agendamento.nome }}" required>
+            </div>
+
+            <div class="input-group">
+                <label for="data">Data:</label>
+                <input type="date" id="data" name="data" value="{{ agendamento.data }}" required>
+            </div>
+
+            <div class="input-group">
+                <label for="hora">Hora:</label>
+                <select id="hora" name="hora" required>
+                    <option value="{{ agendamento.hora }}">{{ agendamento.hora }}</option>
+                    <option value="08:00">08:00</option>
+                    <option value="09:00">09:00</option>
+                    <option value="10:00">10:00</option>
+                    <!-- Adicione mais opções conforme necessário -->
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="endereco">Endereço:</label>
+                <input type="text" id="endereco" name="endereco" value="{{ agendamento.endereco }}" required>
+            </div>
+
+            <div class="input-group">
+                <label>Tipos de resíduos:</label>
+                <div class="checkbox-group">
+                    {% for tipo in tipos_residuos %}
+                        <label>
+                            <input type="checkbox" name="tipos_residuos" value="{{ tipo }}" {% if tipo in agendamento.tipos_residuos %} checked {% endif %}> {{ tipo }}
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <button type="submit" class="btn-agendar">Salvar Alterações</button>
+        </form>
+    </div>
+{% endblock %}
