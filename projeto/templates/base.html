@@ -18,10 +18,14 @@
             <img src="{% static 'logo.png' %}" alt="Logo Ecotrack" class="logo_icon" style="width: 30%;">
         </a>
         {% if user.is_authenticated %}
-            <a class="nav-link2" href="{% url 'user:user-detail' user.id%}">Perfil</a>
+            <a class="nav-link2" href="{% url 'user:user-detail' user.id %}">Perfil</a>
+            <!-- Botão para acessar os agendamentos do usuário -->
         {% endif %}
+        {% if request.user.is_authenticated and not request.user.is_company %}
+    <a class="nav-link2" href="{% url 'agendamentos:ver_agendamentos_usuario' %}" style="margin-left: 20px;">Meus Agendamentos</a>
+    {% endif %}
+
     </nav>
-  
 
     <!-- Container Principal -->
     <div class="container mt-4" style="min-height: 80vh;">
