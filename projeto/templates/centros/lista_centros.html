@@ -8,7 +8,7 @@
 
 {% block content %}
     <h1>Centros de Coleta</h1>
-
+    
     {% if centros %}
         <ul>
             {% for centro in centros %}
@@ -44,4 +44,5 @@
     {% endif %}
 
     <a href="{% url 'centros:cadastrar_centro' %}">Cadastrar novo centro</a>
+
 {% endblock %}

@@ -16,6 +16,19 @@ class AgendamentoTests(TestCase):
     def tearDownClass(cls):
         cls.driver.quit()
         super().tearDownClass()
+        
+      
+    def test_access_solicitacoes_without_authentication(self):
+        """Teste para verificar se uma empresa não autenticada é redirecionada ao tentar acessar as solicitações."""
+        self.driver.get("https://ecotrackapp.azurewebsites.net/agendamento/visualizar/1/")
+
+        # Espera um pouco para garantir que a página tenha carregado
+        time.sleep(4)
+
+        # Verifica se a URL atual é a página de login
+        current_url = self.driver.current_url
+        assert "login" in current_url, f"Esperado estar na página de login, mas está em {current_url}"
+        print("Redirecionado para a página de login, como esperado.")
 
     def test_login_empresa(self):
         """Teste para verificar o login da empresa e exclusão de um agendamento."""

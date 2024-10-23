@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from .models import CentroColeta
+from django.contrib import messages
 
 @login_required
 def cadastrar_centro(request):
@@ -83,28 +84,23 @@ def remover_centro(request, centro_id):
 
 @login_required
 def atualizar_centro(request, centro_id):
-    # Obtendo o centro de coleta específico
-    centro = get_object_or_404(CentroColeta, id=centro_id, usuario_responsavel=request.user)
+    """View para atualizar um Centro de Coleta."""
+    try:
+        # Tenta obter o Centro de Coleta ou retorna None se não existir
+        centro = CentroColeta.objects.get(id=centro_id)
 
-    if request.method == 'POST':
-        # Obter os dados enviados pelo formulário
-        nome = request.POST.get('nome')
-        endereco = request.POST.get('endereco')
-        telefone = request.POST.get('telefone')
-
-        # Validar se os campos não estão vazios
-        if nome and endereco and telefone:
-            # Atualizar os dados do centro de coleta
-            centro.nome = nome
-            centro.endereco = endereco
-            centro.telefone = telefone
+        if request.method == 'POST':
+            # Aqui ficaria o código para processar o formulário de atualização (se necessário)
+            centro.nome = request.POST.get('nome')
+            centro.endereco = request.POST.get('endereco')
+            # Suponha que você atualiza outros campos como necessário
             centro.save()
-
-            # Redirecionar para a página de lista de centros após salvar
+            messages.success(request, 'Ponto de coleta atualizado com sucesso.')
             return redirect('centros:lista_centros')
-        else:
-            # Adicionar uma mensagem de erro, se necessário
-            error_message = "Todos os campos são obrigatórios."
-            return render(request, 'centros/atualizar_centro.html', {'centro': centro, 'error_message': error_message})
 
-    return render(request, 'centros/atualizar_centro.html', {'centro': centro})
+        return render(request, 'centros/atualizar_centro.html', {'centro': centro})
+
+    except CentroColeta.DoesNotExist:
+        # Adiciona uma mensagem de erro se o Centro não for encontrado
+        messages.error(request, 'Ponto de coleta não existente.')
+        return redirect('centros:lista_centros')
