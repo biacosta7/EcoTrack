@@ -43,7 +43,7 @@ class PontoColetaTests(TestCase):
             print("Campo de email encontrado")
             email_field.click()
             email_field.clear()
-            email_field.send_keys("teste@gmail.com")  # Preenche o email
+            email_field.send_keys("empresa@gmail.com")  # Preenche o email
             print("Campo de email preenchido com sucesso")
         except Exception as e:
             print("Erro ao encontrar ou preencher o campo de email:", e)
@@ -59,7 +59,7 @@ class PontoColetaTests(TestCase):
             print("Campo de senha encontrado")
             password_field.click()
             password_field.clear()
-            password_field.send_keys("teste123")  # Preenche a senha
+            password_field.send_keys("123")  # Preenche a senha
             print("Campo de senha preenchido com sucesso")
         except Exception as e:
             print("Erro ao encontrar ou preencher o campo de senha:", e)
