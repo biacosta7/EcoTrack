@@ -77,5 +77,5 @@ A crescente produção de resíduos e o descarte inadequado de materiais represe
 - [Print do quadro da Sprint e backlog (JIRA) + Atualização dos protótipos de Lo-Fi](projeto/Mídia/Entrega3)
 - [Screencast FIGMA](https://www.youtube.com/watch?v=MkB3BYY00ss)
 - [Screencast apresentando sistema](https://youtu.be/eDkMeYYnb9M)
-- [Screencast execução dos testes]()
+- [Screencast execução dos testes](https://youtu.be/uytzYS6Nd3Y)
 
