@@ -96,7 +96,7 @@ class AgendamentoTests(TestCase):
                 EC.visibility_of_element_located((By.TAG_NAME, 'p'))
             )
             message_element = self.driver.find_element(By.TAG_NAME, 'p')
-            assert "Não há agendamentos para a sua empresa." in message_element.text
+            assert "Não há agendamentos." in message_element.text
         except Exception as e:
             print("Erro ao verificar a mensagem de agendamentos:", e)
             
@@ -297,7 +297,6 @@ class AgendamentoTests(TestCase):
             login_button.click()
         except Exception as e:
             print("Erro ao clicar no botão de login:", e)
-
 
     #-------Júlio e Thiago--------
     def test_delete_agendamento(self):
