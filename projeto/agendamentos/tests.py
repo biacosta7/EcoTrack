@@ -19,6 +19,7 @@ class AgendamentoTests(TestCase):
         super().tearDownClass()
 
     def test_access_agendamentos_without_authentication(self):
+        time.sleep(5)
         """Se o usuário tentar agendar uma coleta sem estar autenticado, o sistema deve solicitar autenticação antes de permitir o agendamento."""
         self.driver.get("https://ecotrackapp.azurewebsites.net/agendamento/")
 
@@ -32,7 +33,7 @@ class AgendamentoTests(TestCase):
         """Se a empresa tentar acessar as solicitações sem estar autenticada, o sistema deve solicitar autenticação antes de permitir o acesso às solicitações."""
         self.driver.get("https://ecotrackapp.azurewebsites.net/agendamento/visualizar/1/")
 
-        time.sleep(3)
+        time.sleep(4)
 
         current_url = self.driver.current_url
         assert "login" in current_url, f"Esperado estar na página de login, mas está em {current_url}"
