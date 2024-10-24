@@ -62,7 +62,7 @@
                 </td>
                 <td>
                     <!-- Botão de exclusão (ícone de lixeira) -->
-                    <form action="{% url 'agendamentos:delete_appointment' agendamento.id %}" method="POST" style="display:inline;">
+                    <form action="{% url 'agendamentos:delete_user_appointment' agendamento.id %}" method="POST" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" class="delete-button" onclick="return confirm('Tem certeza que deseja excluir este agendamento?');">
                             🗑️
