@@ -73,5 +73,9 @@ A crescente produção de resíduos e o descarte inadequado de materiais represe
 - [Screencast apresentando sistema](https://youtu.be/oN77fTKYXE8)
 
 ## Entrega 3
-- [Print do quadro da Sprint e backlog (JIRA)](projeto/Mídia/Entrega3)
-- [Screencast]()
+- Link do [JIRA](https://cesar-ecotrack.atlassian.net/jira/software/projects/EC/boards/1)
+- [Print do quadro da Sprint e backlog (JIRA) + Atualização dos protótipos de Lo-Fi](projeto/Mídia/Entrega3)
+- [Screencast FIGMA]()
+- [Screencast apresentando sistema]()
+- [Screencast execução dos testes]()
+
