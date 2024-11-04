@@ -25,7 +25,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, blank=False, help_text="Endereço de e-mail do usuário.")
 
     is_company = models.BooleanField(default=False, help_text="Designa se o usuário é uma empresa.")
-    
+    pontuacao = models.IntegerField(default=0, help_text="Pontuação acumulada por reciclagem de resíduos.")
     # Campos adicionais para empresas
     nome_empresa = models.CharField(max_length=255, blank=True, null=True, help_text="Nome da empresa.")
     endereco_empresa = models.CharField(max_length=500, blank=True, null=True, help_text="Endereço da empresa.")

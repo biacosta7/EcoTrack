@@ -6,9 +6,10 @@ class Agendamento(models.Model):
     data = models.DateField()
     hora = models.TimeField()
     endereco = models.CharField(max_length=255)
-    tipos_residuos = models.TextField(max_length=150)
-    empresa = models.ForeignKey(User, limit_choices_to={'is_company': True}, related_name='agendamentos', on_delete=models.CASCADE)
-    usuario = models.ForeignKey(User, related_name='agendamentos_usuario', on_delete=models.CASCADE)  # Novo campo para associar o agendamento ao usuário
+    tipos_residuos = models.TextField()  # Armazena os tipos de resíduos
+    empresa = models.ForeignKey(User, on_delete=models.CASCADE, related_name='agendamentos')
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='meus_agendamentos')
+    pontuacao = models.IntegerField(default=0)  # Adicionando o campo pontuacao
 
     def __str__(self):
-        return f'{self.nome} - {self.data} às {self.hora}'
+        return f'Agendamento de {self.nome} para {self.data} às {self.hora}'

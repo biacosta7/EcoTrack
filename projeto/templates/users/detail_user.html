@@ -1,4 +1,4 @@
-<!-- users/templates/users/user_detail.html -->
+<!-- users/templates/users/detail_user.html -->
 
 {% extends "base.html" %}
 {% block title %}Detalhes do Usuário{% endblock %}
@@ -17,6 +17,7 @@
       <li class="list-group-item"><strong>Endereço da Empresa:</strong> {{ user_detail.endereco_empresa }}</li>
     {% else %}
       <li class="list-group-item"><strong>Nome:</strong> {{ user_detail.nome }} {{ user_detail.sobrenome }}</li>
+      <li class="list-group-item"><strong>Pontuação:</strong> {{ pontuacao }}</li>  <!-- Exibe a pontuação -->
     {% endif %}
     <li class="list-group-item"><strong>Email:</strong> {{ user_detail.email }}</li>
     <li class="list-group-item"><strong>Tipo:</strong> 
@@ -26,8 +27,5 @@
         Usuário
       {% endif %}
     </li>
-    
   </ul>
-  {% comment %} <a href="{% url 'user:listar_user' %}" class="btn btn-secondary mt-3">Voltar à Lista</a> 
-  <a href="{% url 'user:user-update' user_detail.id %}" class="btn btn-warning mt-3">Editar</a>{% endcomment %}
 {% endblock %}

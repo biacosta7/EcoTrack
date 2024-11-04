@@ -37,10 +37,13 @@ def user_detail_view(request, id):
     # Contexto a ser passado para o template
     context = {
         'user': request.user,  # O usuário que está autenticado
-        'user_detail': user_detail  # O usuário que está sendo detalhado
+        'user_detail': user_detail,  # O usuário que está sendo detalhado
+        'pontuacao': user_detail.pontuacao  # Inclui a pontuação
     }
-    print(f"User: {request.user}, ID: {id}")
+    print(f"User: {request.user}, ID: {id}, Pontuação: {user_detail.pontuacao}")
     return render(request, 'users/detail_user.html', context)
+
+
 
 @login_required
 @user_passes_test(is_admin)
