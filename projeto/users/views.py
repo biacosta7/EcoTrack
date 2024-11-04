@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.views import LoginView
 from django.contrib import messages
-from .models import User
+from .models import User, Recompensa
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 
@@ -42,8 +42,6 @@ def user_detail_view(request, id):
     }
     print(f"User: {request.user}, ID: {id}, Pontuação: {user_detail.pontuacao}")
     return render(request, 'users/detail_user.html', context)
-
-
 
 @login_required
 @user_passes_test(is_admin)
@@ -147,9 +145,10 @@ def register_view(request):
             'user_type': user_type,
         }
         return render(request, template_name, context)
- 
+
 class CustomLoginView(LoginView):
     template_name = 'users/login.html'
+    
     def get(self, request, *args, **kwargs):
         if 'next' in request.GET:
             messages.error(request, "Você precisa estar autenticado para acessar esta página.")
@@ -168,7 +167,6 @@ class CustomLoginView(LoginView):
             else:
                 return reverse('user:usuario_dashboard')
         return super().get_redirect_url()
-    
 
 @login_required
 def usuario_dashboard_view(request):
@@ -195,6 +193,50 @@ def empresa_dashboard_view(request):
     }
     return render(request, 'users/dashboard_empresa.html', context)
 
+@login_required
+def recompensas_view(request):
+    """
+    View para exibir recompensas e ranking de usuários.
+    Apenas usuários autenticados podem acessar.
+    """
+    user = request.user
+
+    # Verifica se o usuário tem mais de 0 pontos
+    if user.pontuacao <= 0:
+        messages.warning(request, "Você não possui pontos suficientes para acessar recompensas.")
+        return redirect('user:usuario_dashboard')
+
+    # Obtém todas as recompensas disponíveis
+    recompensas = Recompensa.objects.filter(disponivel=True)
+
+    # Obtém o ranking dos usuários comuns com mais pontos
+    ranking = User.objects.filter(is_company=False).order_by('-pontuacao')[:10]
+
+    context = {
+        'recompensas': recompensas,
+        'ranking': ranking,
+        'pontuacao': user.pontuacao,
+    }
+    return render(request, 'users/recompensas.html', context)
+@login_required
+def trocar_recompensa_view(request, recompensa_id):
+    """
+    View para processar a troca de recompensa.
+    Apenas usuários autenticados podem acessar.
+    """
+    user = request.user
+    recompensa = get_object_or_404(Recompensa, id=recompensa_id)
+
+    # Verifica se o usuário tem pontos suficientes
+    if user.pontuacao >= recompensa.custo:
+        user.pontuacao -= recompensa.custo
+        user.save()
+        messages.success(request, f"Você trocou {recompensa.nome} com sucesso!")
+    else:
+        messages.warning(request, "Você não possui pontos suficientes para esta recompensa.")
+
+    return redirect('user:recompensas')
+
+
 def confirmacao_view(request):
     return render(request, 'agendamentos/confirmacao.html')
-

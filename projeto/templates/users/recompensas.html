@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Recompensas Disponíveis</h2>
+<p>Pontuação atual: {{ pontuacao }}</p>
+
+<!-- Lista de recompensas -->
+<div class="recompensas-container">
+    <ul>
+        {% for recompensa in recompensas %}
+            <li>
+                <strong>{{ recompensa.nome }}</strong> - {{ recompensa.descricao }} (Custo: {{ recompensa.custo }} pontos)
+                {% if pontuacao >= recompensa.custo %}
+                    <form action="{% url 'user:trocar_recompensa' recompensa.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Trocar por recompensa</button>
+                    </form>
+                {% else %}
+                    <span>Insuficiente para trocar</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<!-- Ranking dos Usuários em uma coluna à direita -->
+<div class="ranking-container">
+    <h2>Ranking dos Usuários</h2>
+    <ol>
+        {% for usuario in ranking %}
+            <li>{{ usuario.nome }}: {{ usuario.pontuacao }} pontos</li>
+        {% endfor %}
+    </ol>
+</div>
+
+<style>
+    .recompensas-container {
+        float: left;
+        width: 70%; /* Ajuste conforme necessário */
+        margin-right: 20px;
+    }
+    .ranking-container {
+        float: right;
+        width: 25%; /* Ajuste conforme necessário */
+        background-color: #f8f9fa; /* Cor de fundo leve para destacar o ranking */
+        padding: 15px;
+        border-radius: 8px;
+    }
+</style>
+{% endblock %}

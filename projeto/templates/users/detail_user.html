@@ -17,7 +17,14 @@
       <li class="list-group-item"><strong>Endereço da Empresa:</strong> {{ user_detail.endereco_empresa }}</li>
     {% else %}
       <li class="list-group-item"><strong>Nome:</strong> {{ user_detail.nome }} {{ user_detail.sobrenome }}</li>
-      <li class="list-group-item"><strong>Pontuação:</strong> {{ pontuacao }}</li>  <!-- Exibe a pontuação -->
+      <li class="list-group-item">
+        <strong>Pontuação:</strong> {{ pontuacao }} 
+        {% if pontuacao > 0 %}
+          <a href="{% url 'user:recompensas' %}" class="btn btn-primary btn-sm ms-2">Acessar Recompensas</a>
+        {% else %}
+          <span class="text-danger ms-2">Você ainda não possui recompensas disponíveis.</span>
+        {% endif %}
+      </li>
     {% endif %}
     <li class="list-group-item"><strong>Email:</strong> {{ user_detail.email }}</li>
     <li class="list-group-item"><strong>Tipo:</strong> 
