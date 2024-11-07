@@ -1,0 +1,42 @@
+<html>
+<head>
+    <title>Mapa de Centros</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <div id="map" style="height: 500px;"></div>
+
+    <script>
+        var latitude = -8.0587;  // Latitude da Rua do Bom Jesus, Recife
+        var longitude = -34.8769; // Longitude da Rua do Bom Jesus, Recife
+        var map = L.map('map').setView([latitude, longitude], 13); // Defina o centro do mapa
+
+        // Substitua 'SUA_CHAVE_API' pela sua chave da API Geoapify
+        L.tileLayer('https://maps.geoapify.com/v1/tile/carto/{z}/{x}/{y}.png?&apiKey=fe9dcd1706f6496a8c40b70dcd0cdde6', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Função para carregar os pontos de coleta
+        function loadPontosDeColeta() {
+            fetch('/pontos-de-coleta/')
+                .then(response => response.json())
+                .then(data => {
+                    var pontos = data.pontos;
+
+                    pontos.forEach(function(ponto) {
+                        // Adiciona um marcador para cada ponto de coleta
+                        L.marker([ponto.latitude, ponto.longitude]).addTo(map)
+                            .bindPopup('<b>' + ponto.nome + '</b><br>' + ponto.endereco);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar os pontos de coleta:', error);
+                });
+        }
+
+        // Carregar os pontos de coleta ao carregar o mapa
+        loadPontosDeColeta();
+    </script>
+</body>
+</html>

@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from .models import CentroColeta
 from django.contrib import messages
+from django.http import JsonResponse
 
 @login_required
 def cadastrar_centro(request):
@@ -16,8 +17,9 @@ def cadastrar_centro(request):
         tipos = request.POST.getlist('tipos')
         horario_abertura = request.POST.get('horario_abertura', '').strip()
         horario_fechamento = request.POST.get('horario_fechamento', '').strip()
+        latitude = request.POST.get('latitude', '').strip()
+        longitude = request.POST.get('longitude', '').strip()
 
-        # Validações básicas
         errors = []
 
         if not nome:
@@ -32,7 +34,10 @@ def cadastrar_centro(request):
             errors.append("Selecione ao menos um tipo de material.")
         if not horario_abertura or not horario_fechamento:
             errors.append("Os campos 'Horário de Abertura' e 'Horário de Fechamento' são obrigatórios.")
-
+        if not latitude:
+            errors.append('O campo latitude é obrigatório')
+        if not longitude:
+            errors.append('O campo longitude é obrigatório')
         # Caso não haja erros, salvar o centro
         if not errors:
             try:
@@ -46,7 +51,9 @@ def cadastrar_centro(request):
                     tipos=','.join(tipos),  # Verifique se o modelo aceita string de tipos
                     horario_abertura=horario_abertura,
                     horario_fechamento=horario_fechamento,
-                    usuario_responsavel=request.user
+                    usuario_responsavel=request.user,
+                    latitude = latitude,
+                    longitude = longitude,
                 )
                 centro.full_clean()  # Verifica a validade dos campos
                 centro.save()
@@ -104,3 +111,25 @@ def atualizar_centro(request, centro_id):
         # Adiciona uma mensagem de erro se o Centro não for encontrado
         messages.error(request, 'Ponto de coleta não existente.')
         return redirect('centros:lista_centros')
+
+def localizar_centros(request):
+    centros = CentroColeta.objects.all() 
+    return render(request, 'centros/localizar_centros.html', {'centros': centros})
+
+def pontos_de_coleta(request):
+    # Consulta todos os centros de coleta registrados
+    centros = CentroColeta.objects.all()
+
+    # Cria uma lista com os dados que serão enviados ao frontend
+    pontos_data = [
+        {
+            'nome': centro.nome,
+            'latitude': centro.latitude,  # Certifique-se de ter campos de latitude e longitude no seu modelo
+            'longitude': centro.longitude,  # Se não tiver, você pode precisar adicionar essas coordenadas no modelo
+            'endereco': centro.endereco,
+        }
+        for centro in centros
+    ]
+
+    # Retorna a lista como uma resposta JSON
+    return JsonResponse({'pontos': pontos_data})

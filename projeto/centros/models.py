@@ -24,6 +24,8 @@ class CentroColeta(models.Model):
     horario_abertura = models.CharField(max_length=100, help_text="Horário de abertura.", blank=True, null=True)
     horario_fechamento = models.CharField(max_length=100, help_text="Horário de fechamento.", blank=True, null=True)
     usuario_responsavel = models.ForeignKey(User, related_name='centros_responsaveis', on_delete=models.CASCADE, help_text="Usuário responsável pelo centro.")
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
     def __str__(self):
         return self.nome
