@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Mapa de Centros</title>
@@ -19,20 +20,27 @@
 
         // Função para carregar os pontos de coleta
         function loadPontosDeColeta() {
-            fetch('/pontos-de-coleta/')
-                .then(response => response.json())
-                .then(data => {
-                    var pontos = data.pontos;
+            console.log("Carregando pontos de coleta..."); 
+            fetch('/centros/pontos-de-coleta/')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Verifique os dados retornados
+                var pontos = data.pontos;
 
-                    pontos.forEach(function(ponto) {
-                        // Adiciona um marcador para cada ponto de coleta
-                        L.marker([ponto.latitude, ponto.longitude]).addTo(map)
+                pontos.forEach(function(ponto) {
+                    if (ponto.latitude && ponto.longitude) {
+                        var lat = parseFloat(ponto.latitude);
+                        var lon = parseFloat(ponto.longitude);
+                        L.marker([lat, lon]).addTo(map)
                             .bindPopup('<b>' + ponto.nome + '</b><br>' + ponto.endereco);
-                    });
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar os pontos de coleta:', error);
+                    } else {
+                        console.log('Coordenadas inválidas para o ponto:', ponto.nome);
+                    }
                 });
+            })
+            .catch(error => {
+                console.error('Erro ao carregar os pontos de coleta:', error);
+            });
         }
 
         // Carregar os pontos de coleta ao carregar o mapa
