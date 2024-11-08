@@ -47,6 +47,7 @@ else:
             'OPTIONS': {'sslmode': 'require'},
         }
     }
+OPENCAGE_API_KEY = '459e9c9643e247058cdbb94929e6d8d4'
 
 LOGIN_REDIRECT_URL = '/'
 

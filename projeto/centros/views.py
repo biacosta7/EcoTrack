@@ -4,6 +4,26 @@ from django.core.exceptions import ValidationError
 from .models import CentroColeta
 from django.contrib import messages
 from django.http import JsonResponse
+import requests
+from django.conf import settings
+OPENCAGE_API_KEY = settings.OPENCAGE_API_KEY
+def geocode_address(address):
+
+    url = f"https://api.opencagedata.com/geocode/v1/json?q={address}&key={OPENCAGE_API_KEY}&language=pt"
+    response = requests.get(url)
+    data = response.json()
+
+    if data['status']['code'] == 200 and data['results']:
+        # Pega a latitude e longitude do primeiro resultado
+        lat = data['results'][0]['geometry']['lat']
+        lng = data['results'][0]['geometry']['lng']
+
+        lat = round(lat, 6)
+        lng = round(lng, 6)
+
+        return lat, lng
+    else:
+        return None, None
 
 @login_required
 def cadastrar_centro(request):
@@ -17,9 +37,11 @@ def cadastrar_centro(request):
         tipos = request.POST.getlist('tipos')
         horario_abertura = request.POST.get('horario_abertura', '').strip()
         horario_fechamento = request.POST.get('horario_fechamento', '').strip()
-        latitude = request.POST.get('latitude', '').strip()
-        longitude = request.POST.get('longitude', '').strip()
-
+        latitude, longitude = geocode_address(endereco)
+        
+        latitude = round(latitude, 6) if latitude is not None else None
+        longitude = round(longitude, 6) if longitude is not None else None
+        print(f"Latitude: {latitude}, Longitude: {longitude}")
         errors = []
 
         if not nome:
@@ -34,10 +56,8 @@ def cadastrar_centro(request):
             errors.append("Selecione ao menos um tipo de material.")
         if not horario_abertura or not horario_fechamento:
             errors.append("Os campos 'Horário de Abertura' e 'Horário de Fechamento' são obrigatórios.")
-        if not latitude:
-            errors.append('O campo latitude é obrigatório')
-        if not longitude:
-            errors.append('O campo longitude é obrigatório')
+        if not latitude or not longitude:
+            errors.append("Não foi possível obter as coordenadas para o endereço fornecido.")
         # Caso não haja erros, salvar o centro
         if not errors:
             try:
