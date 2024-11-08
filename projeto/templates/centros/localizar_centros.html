@@ -1,13 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Mapa de Centros</title>
+{% extends "base.html" %}
+{% block title %}Mapa de Centros{% endblock %}
+
+{% load static %}
+{% block css %}
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-</head>
-<body>
-    <div id="map" style="height: 500px;"></div>
+    <link rel="stylesheet" href="{% static 'centros.css' %}">
+{% endblock css %}
 
+{% block content %}
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <h1>Centros de Reciclagem</h1>
+        <div id="map" style="height: 500px; width: 500px; border-radius: 15px;"></div>
+    </div>
+{% endblock content %}
+{% block scripts %}
     <script>
         var latitude = -8.0587;  // Latitude da Rua do Bom Jesus, Recife
         var longitude = -34.8769; // Longitude da Rua do Bom Jesus, Recife
@@ -46,5 +54,4 @@
         // Carregar os pontos de coleta ao carregar o mapa
         loadPontosDeColeta();
     </script>
-</body>
-</html>
+{% endblock scripts %}
