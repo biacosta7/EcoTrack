@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
 from .models import CentroColeta
@@ -30,8 +31,6 @@ def geocode_address(address):
             lng = round(location['lng'], 6)
             lat = Decimal(f"{lat:.6f}")
             lng = Decimal(f"{lng:.6f}")
-            print(f"TIPO LAT: {type(lat)}")
-            print(f"{lat}: {count_decimal_places(lat)} decimal places (lat)")
             return lat, lng
             
         else:
@@ -47,6 +46,9 @@ def geocode_address(address):
 @login_required
 @login_required
 def cadastrar_centro(request):
+    if not hasattr(request.user, 'is_company') or not request.user.is_company:
+        return HttpResponseForbidden("Apenas usuários do tipo 'Empresa' podem cadastrar centros de coleta.")
+
     if request.method == 'POST':
         form_data = {
             'nome': request.POST.get('nome', '').strip(),
@@ -89,9 +91,6 @@ def cadastrar_centro(request):
                 form_data['latitude'] = round(latitude, 6)
                 form_data['longitude'] = round(longitude, 6)
 
-        print(f"{form_data['latitude']}: {count_decimal_places(form_data['latitude'])} decimal places (lat)")
-        print(f"{form_data['longitude']}: {count_decimal_places(form_data['longitude'])} decimal places (long)")
-
         # If there are no errors, try to save the center
         if not errors:
             try:
@@ -128,25 +127,22 @@ def cadastrar_centro(request):
     # If it's a GET request, just render the empty form
     return render(request, 'centros/cadastrar_centro.html')
 
-def count_decimal_places(number):
-    str_value = f"{number:.6f}"
-    parts = str_value.split('.')
-    if len(parts) == 1:
-        return 0
-    return len(parts[1].rstrip('0'))
-
 @login_required
 def lista_centros(request):
-    centros = CentroColeta.objects.all()
-    # Processar os tipos para cada centro
+    if not hasattr(request.user, 'is_company') or not request.user.is_company:
+        return HttpResponseForbidden("Apenas usuários do tipo 'Empresa' podem visualizar centros de coleta.")
+    # Filtra centros para mostrar apenas os criados pelo usuário logado
+    centros = CentroColeta.objects.filter(usuario_responsavel=request.user)
     for centro in centros:
         centro.tipos_lista = [tipo.strip() for tipo in centro.tipos.split(",")] if centro.tipos else []
     return render(request, 'centros/lista_centros.html', {'centros': centros})
 
-
 @login_required
 def remover_centro(request, centro_id):
+    if not hasattr(request.user, 'is_company') or not request.user.is_company:
+        return HttpResponseForbidden("Apenas usuários do tipo 'Empresa' podem deletar centros de coleta.")
     try:
+        # Verifica se o centro pertence ao usuário logado
         centro = CentroColeta.objects.get(id=centro_id, usuario_responsavel=request.user)
         if request.method == 'POST':
             centro.delete()
@@ -157,16 +153,21 @@ def remover_centro(request, centro_id):
 
 @login_required
 def atualizar_centro(request, centro_id):
-    """View para atualizar um Centro de Coleta."""
+    if not hasattr(request.user, 'is_company') or not request.user.is_company:
+        return HttpResponseForbidden("Apenas usuários do tipo 'Empresa' podem editar centros de coleta.")
     try:
-        # Tenta obter o Centro de Coleta ou retorna None se não existir
-        centro = CentroColeta.objects.get(id=centro_id)
-
+        # Verifica se o centro pertence ao usuário logado
+        centro = CentroColeta.objects.get(id=centro_id, usuario_responsavel=request.user)
         if request.method == 'POST':
-            # Aqui ficaria o código para processar o formulário de atualização (se necessário)
             centro.nome = request.POST.get('nome')
             centro.endereco = request.POST.get('endereco')
-            # Suponha que você atualiza outros campos como necessário
+            centro.numero = request.POST.get('numero')
+            centro.complemento = request.POST.get('complemento')
+            centro.cep = request.POST.get('cep')
+            centro.telefone = request.POST.get('telefone')
+            centro.tipos = ','.join(request.POST.getlist('tipos'))
+            centro.horario_abertura = request.POST.get('horario_abertura')
+            centro.horario_fechamento = request.POST.get('horario_fechamento')
             centro.save()
             messages.success(request, 'Ponto de coleta atualizado com sucesso.')
             return redirect('centros:lista_centros')
@@ -174,7 +175,6 @@ def atualizar_centro(request, centro_id):
         return render(request, 'centros/atualizar_centro.html', {'centro': centro})
 
     except CentroColeta.DoesNotExist:
-        # Adiciona uma mensagem de erro se o Centro não for encontrado
         messages.error(request, 'Ponto de coleta não existente.')
         return redirect('centros:lista_centros')
 
