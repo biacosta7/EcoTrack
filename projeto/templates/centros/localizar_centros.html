@@ -9,10 +9,28 @@
 {% endblock css %}
 
 {% block content %}
-<body>
     <div style="display: flex; flex-direction: column; align-items: center;">
         <h1>Centros de Reciclagem</h1>
-        <div id="map" style="height: 500px; width: 500px; border-radius: 15px;"></div>
+        
+        <div style="display: flex; gap: 20px; margin-top: 20px;">
+            <div id="map" style="margin-top: 15px; height: 500px; width: 500px; border-radius: 15px;"></div>
+            <div>
+                {% if centros %}
+                <ul>
+                    {% for centro in centros %}
+                        <li>
+                            <strong>{{ centro.nome }}</strong><br>
+                            <br><b>Endereço:</b> {{ centro.endereco }}, {{ centro.numero }} {{ centro.complemento }}<br>
+                            <p style="color: green;">X km de distância</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                    <p>Nenhum centro de coleta cadastrado.</p>
+                {% endif %}
+            </div>
+            
+        </div>
     </div>
 {% endblock content %}
 {% block scripts %}
