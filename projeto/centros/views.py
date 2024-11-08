@@ -223,7 +223,7 @@ def calcular_distancia(request):
 
         if user_coords == (None, None):
             messages.error(request, "Endereço não encontrado. Tente novamente.")
-            return redirect('nome_da_pagina_com_o_formulario')
+            return render(request, 'centros/localizar_centros.html', {'user_address': user_address})
 
         user_lat, user_lon = user_coords
         centros = CentroColeta.objects.all()
@@ -252,3 +252,4 @@ def calcular_distancia(request):
             'centros_com_distancia': centros_com_distancia,
             'user_address': user_address
         })
+    return render(request, 'centros/localizar_centros.html')

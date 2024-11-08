@@ -51,6 +51,19 @@
 
 {% block scripts %}
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const errorMessages = document.querySelector('.error-messages');
+            const closeButton = document.querySelector('.close-button');
+        
+            if (errorMessages) {
+                errorMessages.classList.add('show');
+                
+                // Adiciona um evento de clique ao botão de fechar
+                closeButton.addEventListener('click', function() {
+                    errorMessages.classList.remove('show');
+                });
+            }
+        });  
         var latitude = -8.0587;  // Latitude da Rua do Bom Jesus, Recife
         var longitude = -34.8769; // Longitude da Rua do Bom Jesus, Recife
         var map = L.map('map').setView([latitude, longitude], 13); // Defina o centro do mapa
