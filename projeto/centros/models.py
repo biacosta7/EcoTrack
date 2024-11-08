@@ -27,5 +27,13 @@ class CentroColeta(models.Model):
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6, null=True, blank=True)
 
+    def save(self, *args, **kwargs):
+        if self.latitude is not None:
+            self.latitude = round(self.latitude, 6)
+        if self.longitude is not None:
+            self.longitude = round(self.longitude, 6)
+        super(CentroColeta, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.nome
+    

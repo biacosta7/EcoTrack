@@ -6,88 +6,134 @@ from django.contrib import messages
 from django.http import JsonResponse
 import requests
 from django.conf import settings
+from decimal import Decimal
+
+
 OPENCAGE_API_KEY = settings.OPENCAGE_API_KEY
 def geocode_address(address):
+    url = "https://api.opencagedata.com/geocode/v1/json"
+    params = {
+        'q': address,
+        'key': OPENCAGE_API_KEY,
+        'language': 'pt',
+        'countrycode': 'br'
+    }
+    
+    try:
+        response = requests.get(url, params=params, timeout=10)
+        response.raise_for_status()
+        data = response.json()
 
-    url = f"https://api.opencagedata.com/geocode/v1/json?q={address}&key={OPENCAGE_API_KEY}&language=pt"
-    response = requests.get(url)
-    data = response.json()
-
-    if data['status']['code'] == 200 and data['results']:
-        # Pega a latitude e longitude do primeiro resultado
-        lat = data['results'][0]['geometry']['lat']
-        lng = data['results'][0]['geometry']['lng']
-
-        lat = round(lat, 6)
-        lng = round(lng, 6)
-
-        return lat, lng
-    else:
+        if data['results']:
+            location = data['results'][0]['geometry']
+            lat = round(location['lat'], 6)
+            lng = round(location['lng'], 6)
+            lat = Decimal(f"{lat:.6f}")
+            lng = Decimal(f"{lng:.6f}")
+            print(f"TIPO LAT: {type(lat)}")
+            print(f"{lat}: {count_decimal_places(lat)} decimal places (lat)")
+            return lat, lng
+            
+        else:
+            print(f"No results found for address: {address}")
+            return None, None
+    except requests.RequestException as e:
+        print(f"Error during geocoding request: {e}")
+        return None, None
+    except (KeyError, IndexError) as e:
+        print(f"Error parsing geocoding response: {e}")
         return None, None
 
 @login_required
+@login_required
 def cadastrar_centro(request):
     if request.method == 'POST':
-        nome = request.POST.get('nome', '').strip()
-        telefone = request.POST.get('telefone', '').strip()
-        endereco = request.POST.get('endereco', '').strip()
-        numero = request.POST.get('numero', '').strip()
-        complemento = request.POST.get('complemento', '').strip()
-        cep = request.POST.get('cep', '').strip()
-        tipos = request.POST.getlist('tipos')
-        horario_abertura = request.POST.get('horario_abertura', '').strip()
-        horario_fechamento = request.POST.get('horario_fechamento', '').strip()
-        latitude, longitude = geocode_address(endereco)
-        
-        latitude = round(latitude, 6) if latitude is not None else None
-        longitude = round(longitude, 6) if longitude is not None else None
-        print(f"Latitude: {latitude}, Longitude: {longitude}")
+        form_data = {
+            'nome': request.POST.get('nome', '').strip(),
+            'telefone': request.POST.get('telefone', '').strip(),
+            'endereco': request.POST.get('endereco', '').strip(),
+            'numero': request.POST.get('numero', '').strip(),
+            'complemento': request.POST.get('complemento', '').strip(),
+            'cep': request.POST.get('cep', '').strip(),
+            'tipos': request.POST.getlist('tipos'),
+            'horario_abertura': request.POST.get('horario_abertura', '').strip(),
+            'horario_fechamento': request.POST.get('horario_fechamento', '').strip(),
+        }
+
         errors = []
 
-        if not nome:
-            errors.append("O campo 'Nome' é obrigatório.")
-        if not telefone:
-            errors.append("O campo 'Telefone' é obrigatório.")
-        if not endereco:
-            errors.append("O campo 'Endereço' é obrigatório.")
-        if not cep:
-            errors.append("O campo 'CEP' é obrigatório.")
-        if not tipos:
+        # Validate required fields
+        required_fields = [
+            ('nome', "O campo 'Nome' é obrigatório."),
+            ('telefone', "O campo 'Telefone' é obrigatório."),
+            ('endereco', "O campo 'Endereço' é obrigatório."),
+            ('cep', "O campo 'CEP' é obrigatório."),
+            ('horario_abertura', "O campo 'Horário de Abertura' é obrigatório."),
+            ('horario_fechamento', "O campo 'Horário de Fechamento' é obrigatório."),
+        ]
+        
+        for field, error_message in required_fields:
+            if not form_data[field]:
+                errors.append(error_message)
+
+        if not form_data['tipos']:
             errors.append("Selecione ao menos um tipo de material.")
-        if not horario_abertura or not horario_fechamento:
-            errors.append("Os campos 'Horário de Abertura' e 'Horário de Fechamento' são obrigatórios.")
-        if not latitude or not longitude:
-            errors.append("Não foi possível obter as coordenadas para o endereço fornecido.")
-        # Caso não haja erros, salvar o centro
+
+        # Geocode address only if there are no errors in required fields
+        if not errors:
+            full_address = f"{form_data['endereco']}, {form_data['numero']}, {form_data['cep']}"
+            latitude, longitude = geocode_address(full_address)
+            if latitude is None or longitude is None:
+                errors.append("Não foi possível obter as coordenadas para o endereço fornecido.")
+            else:
+                form_data['latitude'] = round(latitude, 6)
+                form_data['longitude'] = round(longitude, 6)
+
+        print(f"{form_data['latitude']}: {count_decimal_places(form_data['latitude'])} decimal places (lat)")
+        print(f"{form_data['longitude']}: {count_decimal_places(form_data['longitude'])} decimal places (long)")
+
+        # If there are no errors, try to save the center
         if not errors:
             try:
                 centro = CentroColeta(
-                    nome=nome,
-                    telefone=telefone,
-                    endereco=endereco,
-                    numero=numero,
-                    complemento=complemento,
-                    cep=cep,
-                    tipos=','.join(tipos),  # Verifique se o modelo aceita string de tipos
-                    horario_abertura=horario_abertura,
-                    horario_fechamento=horario_fechamento,
+                    nome=form_data['nome'],
+                    telefone=form_data['telefone'],
+                    endereco=form_data['endereco'],
+                    numero=form_data['numero'],
+                    complemento=form_data['complemento'],
+                    cep=form_data['cep'],
+                    tipos=','.join(form_data['tipos']),
+                    horario_abertura=form_data['horario_abertura'],
+                    horario_fechamento=form_data['horario_fechamento'],
                     usuario_responsavel=request.user,
-                    latitude = latitude,
-                    longitude = longitude,
+                    latitude=form_data['latitude'],  # Já em Decimal com 6 casas
+                    longitude=form_data['longitude'],  # Já em Decimal com 6 casas
                 )
-                centro.full_clean()  # Verifica a validade dos campos
+                print(f"Latitude após arredondamento: {form_data['latitude']}")
+                print(f"Longitude após arredondamento: {form_data['longitude']}")
+
+                centro.full_clean()
                 centro.save()
-                return redirect('centros:lista_centros')  # Redirecionar para a lista de centros
+                return redirect('centros:lista_centros')
             except ValidationError as e:
                 errors.extend(e.messages)
-                print(e.messages)  # Exibe os erros de validação
+                print(f"Validation errors: {e.messages}")
 
+        # If there are errors, render the form again with error messages
         return render(request, 'centros/cadastrar_centro.html', {
             'errors': errors,
-            'form_data': request.POST  # Repassa os dados inseridos pelo usuário
+            'form_data': form_data
         })
 
+    # If it's a GET request, just render the empty form
     return render(request, 'centros/cadastrar_centro.html')
+
+def count_decimal_places(number):
+    str_value = f"{number:.6f}"
+    parts = str_value.split('.')
+    if len(parts) == 1:
+        return 0
+    return len(parts[1].rstrip('0'))
 
 @login_required
 def lista_centros(request):
