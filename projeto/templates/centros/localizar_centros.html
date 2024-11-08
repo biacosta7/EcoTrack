@@ -20,32 +20,35 @@
                 🔍
             </button>
         </form>
-              
-        
+
         <div style="display: flex; gap: 20px;">
             <div id="map" style="margin-top: 15px; height: 500px; width: 500px; border-radius: 15px;"></div>
-            
+
             <div>
                 {% if centros_com_distancia %}
-                    <ul>
+                    <ul id="centro-lista">
                         {% for item in centros_com_distancia %}
-                            <li style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <li class="centro-item" style="display: {% if forloop.counter > 4 %}none{% else %}flex{% endif %}; width: 600px; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                                 <div>
                                     <strong style="margin-bottom: 5px; display: inline-block;">{{ item.centro.nome }}</strong><br>
                                     <b style="margin-bottom: 4px; display: inline-block;">Endereço:</b> {{ item.centro.endereco }}, {{ item.centro.numero }} {{ item.centro.complemento }}
                                 </div>
-                                <p style="color: green; margin-left: 20px;">{{ item.distancia }} km de distância</p>
+                                <p style="color: green; margin-left: 10px;">{{ item.distancia }} km de distância</p>
                             </li>
                         {% endfor %}
                     </ul>
+                    
+                    <!-- Botões de "Ver mais" e "Ver menos" -->
+                    <button id="ver-mais" onclick="mostrarMais()" style="margin-top: 10px; padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">Ver mais</button>
+                    <button id="ver-menos" onclick="mostrarMenos()" style="margin-top: 10px; padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; display: none;">Ver menos</button>
                 {% else %}
-                    <p>Nenhum centro de coleta cadastrado.</p>
+                    <p>Nenhum centro de coleta disponível. <br>Por favor digite um endereço.</p>
                 {% endif %}
             </div>
         </div>
     </div>
-
 {% endblock content %}
+
 {% block scripts %}
     <script>
         var latitude = -8.0587;  // Latitude da Rua do Bom Jesus, Recife
@@ -80,6 +83,31 @@
             .catch(error => {
                 console.error('Erro ao carregar os pontos de coleta:', error);
             });
+        }
+
+        // Função para exibir mais centros
+        function mostrarMais() {
+            // Exibe todos os itens de lista
+            const items = document.querySelectorAll('.centro-item');
+            items.forEach(item => {
+                item.style.display = 'flex';
+            });
+    
+            // Alterna a visibilidade dos botões
+            document.getElementById('ver-mais').style.display = 'none';
+            document.getElementById('ver-menos').style.display = 'block';
+        }
+    
+        function mostrarMenos() {
+            // Exibe apenas os primeiros 4 itens de lista
+            const items = document.querySelectorAll('.centro-item');
+            items.forEach((item, index) => {
+                item.style.display = index < 4 ? 'flex' : 'none';
+            });
+    
+            // Alterna a visibilidade dos botões
+            document.getElementById('ver-mais').style.display = 'block';
+            document.getElementById('ver-menos').style.display = 'none';
         }
 
         // Carregar os pontos de coleta ao carregar o mapa

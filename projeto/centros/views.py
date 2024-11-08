@@ -45,7 +45,6 @@ def geocode_address(address):
         return None, None
 
 @login_required
-@login_required
 def cadastrar_centro(request):
     if not hasattr(request.user, 'is_company') or not request.user.is_company:
         return HttpResponseForbidden("Apenas usuários do tipo 'Empresa' podem cadastrar centros de coleta.")
@@ -169,6 +168,12 @@ def atualizar_centro(request, centro_id):
             centro.tipos = ','.join(request.POST.getlist('tipos'))
             centro.horario_abertura = request.POST.get('horario_abertura')
             centro.horario_fechamento = request.POST.get('horario_fechamento')
+            full_address = f"{centro.endereco}, {centro.numero}, {centro.cep}"
+            latitude, longitude = geocode_address(full_address)
+            if latitude is not None and longitude is not None:
+                centro.latitude = round(latitude, 6)
+                centro.longitude = round(longitude, 6)
+
             centro.save()
             messages.success(request, 'Ponto de coleta atualizado com sucesso.')
             return redirect('centros:lista_centros')
