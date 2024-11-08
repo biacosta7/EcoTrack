@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from math import radians, sin, cos, sqrt, atan2
 from django.http import HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
@@ -199,3 +200,50 @@ def pontos_de_coleta(request):
 
     # Retorna a lista como uma resposta JSON
     return JsonResponse({'pontos': pontos_data})
+
+def haversine_distance(lat1, lon1, lat2, lon2):
+    """Calcula a distância entre duas coordenadas (em quilômetros) usando a fórmula de Haversine."""
+    R = 6371.0  # Raio da Terra em quilômetros
+    dlat = radians(lat2 - lat1)
+    dlon = radians(lon2 - lon1)
+    a = sin(dlat / 2)**2 + cos(radians(lat1)) * cos(radians(lat2)) * sin(dlon / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+    return R * c
+
+@login_required
+def calcular_distancia(request):
+    if request.method == 'POST':
+        user_address = request.POST.get('user_address')
+        user_coords = geocode_address(user_address)
+
+        if user_coords == (None, None):
+            messages.error(request, "Endereço não encontrado. Tente novamente.")
+            return redirect('nome_da_pagina_com_o_formulario')
+
+        user_lat, user_lon = user_coords
+        centros = CentroColeta.objects.all()
+
+        # Calcule a distância entre o endereço do usuário e cada centro
+        centros_com_distancia = []
+        for centro in centros:
+            # Verifique se as coordenadas do centro são válidas
+            if centro.latitude is not None and centro.longitude is not None:
+                distancia = haversine_distance(user_lat, user_lon, Decimal(centro.latitude), Decimal(centro.longitude))
+                centros_com_distancia.append({
+                    'centro': centro,
+                    'distancia': round(distancia, 2)  # Arredonda para 2 casas decimais
+                })
+            else:
+                # Se as coordenadas não são válidas, adicione uma mensagem ou apenas ignore o centro
+                centros_com_distancia.append({
+                    'centro': centro,
+                    'distancia': 'Coordenadas inválidas'
+                })
+
+        # Ordene os centros pela distância
+        centros_com_distancia.sort(key=lambda x: x['distancia'] if isinstance(x['distancia'], float) else float('inf'))
+
+        return render(request, 'centros/localizar_centros.html', {
+            'centros_com_distancia': centros_com_distancia,
+            'user_address': user_address
+        })

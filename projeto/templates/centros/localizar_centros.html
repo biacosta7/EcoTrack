@@ -12,30 +12,36 @@
     <div style="display: flex; flex-direction: column; align-items: center;">
         <h1>Centros de Reciclagem</h1>
         
-        <div style="display: flex; gap: 20px; margin-top: 20px;">
+        <!-- Formulário para entrada do endereço -->
+        <form style="margin-bottom: 20px;" method="POST" action="{% url 'centros:calcular_distancia' %}">
+            {% csrf_token %}
+            <input type="text" id="user_address" name="user_address" placeholder="Digite seu endereço" required style="margin-left: 10px; padding: 5px; border-radius: 5px; width: 300px;">
+            <button type="submit" style="margin-left: 10px; padding: 5px 10px; border-radius: 5px; background-color: #4CAF50; color: white; border: none;">Buscar</button>
+        </form>
+
+        <div style="display: flex; gap: 20px;">
             <div id="map" style="margin-top: 15px; height: 500px; width: 500px; border-radius: 15px;"></div>
+            
             <div>
-                {% if centros %}
-                <ul>
-                    {% for centro in centros %}
-                        <li style="display: flex; justify-content: space-between; align-items: center;">
-                            <div>
+                {% if centros_com_distancia %}
+                    <ul>
+                        {% for item in centros_com_distancia %}
+                            <li style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                                 <div>
-                                    <strong style="margin-bottom: 5px; display: inline-block;">{{ centro.nome }}</strong><br>
-                                    <b style="margin-bottom: 4px; display: inline-block;">Endereço:</b> {{ centro.endereco }}, {{ centro.numero }} {{ centro.complemento }}
+                                    <strong style="margin-bottom: 5px; display: inline-block;">{{ item.centro.nome }}</strong><br>
+                                    <b style="margin-bottom: 4px; display: inline-block;">Endereço:</b> {{ item.centro.endereco }}, {{ item.centro.numero }} {{ item.centro.complemento }}
                                 </div>
-                            </div>
-                            <p style="color: green; margin-left: 20px;">X km de distância</p>
-                        </li>
-                    {% endfor %}
-                </ul>
+                                <p style="color: green; margin-left: 20px;">{{ item.distancia }} km de distância</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 {% else %}
                     <p>Nenhum centro de coleta cadastrado.</p>
                 {% endif %}
             </div>
-            
         </div>
     </div>
+
 {% endblock content %}
 {% block scripts %}
     <script>

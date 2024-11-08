@@ -10,4 +10,6 @@ urlpatterns = [
     path('remover/<int:centro_id>/', views.remover_centro, name='remover_centro'),
     path('mapa/', views.localizar_centros, name='localizar_centros'),
     path('pontos-de-coleta/', views.pontos_de_coleta, name='pontos_de_coleta'),  # Nova URL para retornar JSON dos pontos
+    path('calcular_distancia/', views.calcular_distancia, name='calcular_distancia'),
+
 ]
