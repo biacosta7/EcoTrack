@@ -18,10 +18,14 @@
                 {% if centros %}
                 <ul>
                     {% for centro in centros %}
-                        <li>
-                            <strong>{{ centro.nome }}</strong><br>
-                            <br><b>Endereço:</b> {{ centro.endereco }}, {{ centro.numero }} {{ centro.complemento }}<br>
-                            <p style="color: green;">X km de distância</p>
+                        <li style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <div>
+                                    <strong style="margin-bottom: 5px; display: inline-block;">{{ centro.nome }}</strong><br>
+                                    <b style="margin-bottom: 4px; display: inline-block;">Endereço:</b> {{ centro.endereco }}, {{ centro.numero }} {{ centro.complemento }}
+                                </div>
+                            </div>
+                            <p style="color: green; margin-left: 20px;">X km de distância</p>
                         </li>
                     {% endfor %}
                 </ul>
