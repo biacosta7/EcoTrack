@@ -108,3 +108,34 @@ class PontoDeColetaTests(TestCase):
         except Exception as e:
             print(f"Teste falhou: {e}")
     
+    def test_campo_endereco_vazio(self):
+        self.driver.get("https://ecotrackapp.azurewebsites.net/users/login/")
+        time.sleep(2)
+
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.ID, "username"))
+        ).send_keys("testeuser@gmail.com")
+        WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.ID, "password"))
+        ).send_keys("testeuser")
+        self.driver.find_element(By.XPATH, '//button[@type="submit"]').click()
+
+         # Aguarda até que o link de Agendamentos esteja visível
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.LINK_TEXT, 'Localizar'))
+            ).click()
+            print("Link de Localizar clicado")
+            time.sleep(4)
+        except Exception as e:
+            print("Erro ao encontrar ou clicar no link de Localizar:", e)
+        
+        self.driver.find_element(By.XPATH, '//button[@type="submit"]').click()
+        time.sleep(2)
+        try:
+            endereco_field = self.driver.find_element(By.NAME, "user_address")
+            error_message = endereco_field.get_attribute("validationMessage")
+            self.assertEqual(error_message, "Preencha este campo.", "A mensagem de erro não foi exibida corretamente.")
+            print("Teste passou: A mensagem de erro 'Preencha este campo.' foi exibida.")
+        except Exception as e:
+            print(f"Teste falhou: {e}")
