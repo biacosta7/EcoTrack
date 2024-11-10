@@ -50,6 +50,7 @@
     </footer>
 
     <!-- Scripts do Bootstrap e Dependências via CDN -->
+    {% block scripts %}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" 
             integrity="sha384-DfXdvdP5N6tqeMo3a47/mjcdMFEMEMu5I5eZoJM+rmUpagzNNb2qvM22hTcKq6C7" 
             crossorigin="anonymous"></script>
@@ -59,5 +60,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" 
             integrity="sha384-B4gt1jrGC7Jh4AgWQx2YpZKvycdVx1S3oPzpcxqhx/jz4EG2UKTjSZj1p48VN/8h" 
             crossorigin="anonymous"></script>
+    {% endblock scripts %}
 </body>
 </html>

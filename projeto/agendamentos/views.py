@@ -5,6 +5,16 @@ from users.models import User
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 
+# Dicionário para mapear tipos de resíduos a suas pontuações
+PONTUACAO_RESIDUOS = {
+    'Metal': 7,
+    'Papel': 5,
+    'Plástico': 6,
+    'Orgânico': 3,
+    'Perigoso': 10,
+    'Vidro': 4,
+}
+
 @login_required
 def agendar(request):
     if request.method == 'POST':
@@ -15,6 +25,9 @@ def agendar(request):
         empresa_id = request.POST.get('empresa')
         tipos_residuos = request.POST.getlist('tipos_residuos')
         tipos_residuos_str = ', '.join(tipos_residuos)
+
+        # Calcular a pontuação total
+        pontuacao_total = sum(PONTUACAO_RESIDUOS.get(residuo, 0) for residuo in tipos_residuos)
 
         # Verificação de conflitos
         if Agendamento.objects.filter(data=data, hora=hora, empresa_id=empresa_id).exists():
@@ -30,10 +43,15 @@ def agendar(request):
                 tipos_residuos=tipos_residuos_str,
                 empresa_id=empresa_id,
                 endereco=endereco,
-                usuario=request.user  # Associando o agendamento ao usuário logado
+                usuario=request.user,  # Associando o agendamento ao usuário logado
+                pontuacao=pontuacao_total  # Salvar a pontuação no agendamento
             )
             agendamento.full_clean()  # Valida os dados
             agendamento.save()  # Salva no banco
+
+            # Atualizar a pontuação do usuário
+            request.user.pontuacao += pontuacao_total
+            request.user.save()  # Salva as mudanças na pontuação
 
             return redirect('agendamentos:confirmacao', data_agendamento=data, horario_agendamento=hora, empresa_nome=User.objects.get(id=empresa_id).nome_empresa)
 
@@ -42,6 +60,7 @@ def agendar(request):
 
     empresas = User.objects.filter(is_company=True)
     return render(request, 'agendamentos/agendamentos_coleta.html', {'empresas': empresas})
+
 
 @login_required
 def confirmacao_view(request, data_agendamento, horario_agendamento, empresa_nome):

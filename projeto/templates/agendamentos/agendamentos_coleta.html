@@ -1,3 +1,4 @@
+<!-- users/templates/agendamento.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -6,6 +7,29 @@
     <title>Ecotrack - Agendamento</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'style_agendamentos.css' %}">
+    <script>
+        function calcularPontuacao() {
+            // Define as pontuações dos tipos de resíduos
+            const pontuacoes = {
+                "Metal": 7,
+                "Papel": 5,
+                "Plástico": 6,
+                "Orgânico": 3,
+                "Perigoso": 10,
+                "Vidro": 4
+            };
+
+            let totalPontuacao = 0;
+            const checkboxes = document.querySelectorAll('input[name="tipos_residuos"]:checked');
+
+            checkboxes.forEach((checkbox) => {
+                totalPontuacao += pontuacoes[checkbox.value] || 0;
+            });
+
+            // Define o valor da pontuação total em um campo oculto
+            document.getElementById('pontuacao').value = totalPontuacao;
+        }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -29,7 +53,7 @@
             </ul>
         {% endif %}
         
-        <form method="POST">
+        <form method="POST" onsubmit="calcularPontuacao()">
             {% csrf_token %}
             
             <div class="input-group">
@@ -63,21 +87,24 @@
             </div>
 
             <div class="input-group">
-                <label for="name">Endereço</label>
+                <label for="endereco">Endereço</label>
                 <input type="text" id="endereco" name="endereco" placeholder="Digite seu endereço" required>
             </div>
         
             <div class="input-group">
                 <label>Tipos de resíduos</label>
                 <div class="checkbox-group">
-                    <label><input type="checkbox" name="tipos_residuos" value="Metal"> Metal</label>
-                    <label><input type="checkbox" name="tipos_residuos" value="Papel"> Papel</label>
-                    <label><input type="checkbox" name="tipos_residuos" value="Plástico"> Plástico</label>
-                    <label><input type="checkbox" name="tipos_residuos" value="Orgânico"> Orgânico</label>
-                    <label><input type="checkbox" name="tipos_residuos" value="Perigoso"> Perigoso</label>
-                    <label><input type="checkbox" name="tipos_residuos" value="Vidro"> Vidro</label>
+                    <label><input type="checkbox" name="tipos_residuos" value="Metal" onchange="calcularPontuacao()"> Metal</label>
+                    <label><input type="checkbox" name="tipos_residuos" value="Papel" onchange="calcularPontuacao()"> Papel</label>
+                    <label><input type="checkbox" name="tipos_residuos" value="Plástico" onchange="calcularPontuacao()"> Plástico</label>
+                    <label><input type="checkbox" name="tipos_residuos" value="Orgânico" onchange="calcularPontuacao()"> Orgânico</label>
+                    <label><input type="checkbox" name="tipos_residuos" value="Perigoso" onchange="calcularPontuacao()"> Perigoso</label>
+                    <label><input type="checkbox" name="tipos_residuos" value="Vidro" onchange="calcularPontuacao()"> Vidro</label>
                 </div>
             </div>
+
+            <!-- Campo oculto para armazenar a pontuação total -->
+            <input type="hidden" id="pontuacao" name="pontuacao" value="0">
         
             <button type="submit" class="btn-agendar">Agendar</button>
         </form>
