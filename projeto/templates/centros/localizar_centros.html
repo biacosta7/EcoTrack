@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}Mapa de Centros{% endblock %}
+
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="{% static 'centros.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <h1>Centros de Reciclagem</h1>
+        
+        <!-- entrada do endereço -->
+        <form style="margin-bottom: 20px; display: flex; align-items: center;" method="POST" action="{% url 'centros:calcular_distancia' %}">
+            {% csrf_token %}
+            <input type="text" id="user_address" name="user_address" placeholder="Digite seu endereço" required style="padding-top: 15px; border-radius: 5px; width: 500px; flex-shrink: 0;">
+            <button type="submit" style="padding: 5px; margin-left: 10px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background-color: #d3d3d3; border: none; border-radius: 5px;">
+                🔍
+            </button>
+        </form>
+
+        <div style="display: flex; gap: 20px;">
+            <div id="map" style="margin-top: 15px; height: 500px; width: 500px; border-radius: 15px;"></div>
+
+            <div>
+                {% if centros_com_distancia %}
+                    <ul id="centro-lista">
+                        {% for item in centros_com_distancia %}
+                            <li class="centro-item" style="display: {% if forloop.counter > 4 %}none{% else %}flex{% endif %}; width: 600px; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <div>
+                                    <strong style="margin-bottom: 5px; display: inline-block;">{{ item.centro.nome }}</strong><br>
+                                    <b style="margin-bottom: 4px; display: inline-block;">Endereço:</b> {{ item.centro.endereco }}, {{ item.centro.numero }} {{ item.centro.complemento }}
+                                </div>
+                                <p style="color: green; margin-left: 10px;">{{ item.distancia }} km de distância</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <!-- Botões de "Ver mais" e "Ver menos" -->
+                    <button id="ver-mais" onclick="mostrarMais()" style="margin-top: 10px; padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">Ver mais</button>
+                    <button id="ver-menos" onclick="mostrarMenos()" style="margin-top: 10px; padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; display: none;">Ver menos</button>
+                {% else %}
+                    <p>Nenhum centro de coleta disponível. <br>Por favor digite um endereço.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const errorMessages = document.querySelector('.error-messages');
+            const closeButton = document.querySelector('.close-button');
+        
+            if (errorMessages) {
+                errorMessages.classList.add('show');
+                
+                // Adiciona um evento de clique ao botão de fechar
+                closeButton.addEventListener('click', function() {
+                    errorMessages.classList.remove('show');
+                });
+            }
+        });  
+        var latitude = -8.0587;  // Latitude da Rua do Bom Jesus, Recife
+        var longitude = -34.8769; // Longitude da Rua do Bom Jesus, Recife
+        var map = L.map('map').setView([latitude, longitude], 13); // Defina o centro do mapa
+
+        // Substitua 'SUA_CHAVE_API' pela sua chave da API Geoapify
+        L.tileLayer('https://maps.geoapify.com/v1/tile/carto/{z}/{x}/{y}.png?&apiKey=fe9dcd1706f6496a8c40b70dcd0cdde6', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Função para carregar os pontos de coleta
+        function loadPontosDeColeta() {
+            console.log("Carregando pontos de coleta..."); 
+            fetch('/centros/pontos-de-coleta/')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // Verifique os dados retornados
+                var pontos = data.pontos;
+
+                pontos.forEach(function(ponto) {
+                    if (ponto.latitude && ponto.longitude) {
+                        var lat = parseFloat(ponto.latitude);
+                        var lon = parseFloat(ponto.longitude);
+                        L.marker([lat, lon]).addTo(map)
+                            .bindPopup('<b>' + ponto.nome + '</b><br>' + ponto.endereco);
+                    } else {
+                        console.log('Coordenadas inválidas para o ponto:', ponto.nome);
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Erro ao carregar os pontos de coleta:', error);
+            });
+        }
+
+        // Função para exibir mais centros
+        function mostrarMais() {
+            // Exibe todos os itens de lista
+            const items = document.querySelectorAll('.centro-item');
+            items.forEach(item => {
+                item.style.display = 'flex';
+            });
+    
+            // Alterna a visibilidade dos botões
+            document.getElementById('ver-mais').style.display = 'none';
+            document.getElementById('ver-menos').style.display = 'block';
+        }
+    
+        function mostrarMenos() {
+            // Exibe apenas os primeiros 4 itens de lista
+            const items = document.querySelectorAll('.centro-item');
+            items.forEach((item, index) => {
+                item.style.display = index < 4 ? 'flex' : 'none';
+            });
+    
+            // Alterna a visibilidade dos botões
+            document.getElementById('ver-mais').style.display = 'block';
+            document.getElementById('ver-menos').style.display = 'none';
+        }
+
+        // Carregar os pontos de coleta ao carregar o mapa
+        loadPontosDeColeta();
+    </script>
+{% endblock scripts %}
