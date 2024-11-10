@@ -18,43 +18,34 @@ class UserManager(BaseUserManager):
         return self.create_user(email, password, **extra_fields)
 
 class User(AbstractUser):
-    """
-    Modelo de usuario personalizado para diferenciar entre usuarios comuns e empresas.
-    """
     username = None  # Remove o campo username
     email = models.EmailField(unique=True, blank=False, help_text="Endereço de e-mail do usuário.")
-
     is_company = models.BooleanField(default=False, help_text="Designa se o usuário é uma empresa.")
-    
-    # Campos adicionais para empresas
+    pontuacao = models.IntegerField(default=0, help_text="Pontuação acumulada por reciclagem de resíduos.")
     nome_empresa = models.CharField(max_length=255, blank=True, null=True, help_text="Nome da empresa.")
     endereco_empresa = models.CharField(max_length=500, blank=True, null=True, help_text="Endereço da empresa.")
     telefone_empresa = models.CharField(max_length=20, blank=True, null=True, help_text="Telefone da empresa.")
     cep = models.CharField(max_length=20, blank=True, null=True, help_text="CEP do usuário ou da empresa.")
-    # Campos obrigatorios para usuarios comuns
-    nome = models.CharField(max_length=30, help_text="Nome do usuário.", null=True)  # Nome obrigatorio
-    sobrenome = models.CharField(max_length=30, blank=False, help_text="Sobrenome do usuário.")  # Nome obrigatorio
+    nome = models.CharField(max_length=30, help_text="Nome do usuário.", null=True)  # Nome obrigatório
+    sobrenome = models.CharField(max_length=30, blank=False, help_text="Sobrenome do usuário.")  # Nome obrigatório
     telefone = models.CharField(max_length=20, blank=True, null=True, help_text="Telefone do usuário.")
 
-
-    # Solução do erro: adicionar related_name nos campos de grupos e permissões
     groups = models.ManyToManyField(
         'auth.Group',
-        related_name='custom_user_set',  # Adicionando related_name para evitar conflito
+        related_name='custom_user_set',
         blank=True,
         help_text='Os grupos aos quais este usuário pertence.'
     )
 
     user_permissions = models.ManyToManyField(
         'auth.Permission',
-        related_name='custom_user_permissions_set',  # Adicionando related_name para evitar conflito
+        related_name='custom_user_permissions_set',
         blank=True,
         help_text='Permissões específicas para este usuário.'
     )
 
     objects = UserManager()
 
-    # Definindo o e-mail como campo de login
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
@@ -62,3 +53,12 @@ class User(AbstractUser):
         if self.is_company:
             return f"Empresa: {self.nome_empresa} ({self.email})"
         return self.email
+
+class Recompensa(models.Model):
+    nome = models.CharField(max_length=100)
+    descricao = models.TextField()
+    custo = models.PositiveIntegerField()  # Custo em pontos
+    disponivel = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.nome
