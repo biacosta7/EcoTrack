@@ -86,3 +86,76 @@ A crescente produção de resíduos e o descarte inadequado de materiais represe
 - [Screencast FIGMA]()
 - [Screencast apresentando sistema]()
 - [Screencast execução dos testes]()
+
+# <a name="_b2ijskc3sjif"></a>**Guia de Contribuição para o EcoTrack**
+Bem-vindo ao guia de contribuição para o EcoTrack! Agradecemos seu interesse em contribuir para a melhora de nossa plataforma e estamos ansiosos para trabalhar com você para promover práticas de reciclagem e sustentabilidade. Este documento fornecerá orientações para facilitar a sua contribuição e garantir que todos trabalhemos de forma colaborativa e organizada.
+## <a name="_fj175muld532"></a>**Índice**
+1. Como Começar
+2. Regras para Contribuições
+3. Relato de Bugs
+4. Propostas de Melhoria
+5. Padrões de Código e Formatação
+6. Ambiente de Desenvolvimento
+7. Reconhecimento
+8. Contato e Suporte
+-----
+## <a name="_mn239x73awx3"></a>**Como Começar**
+Para contribuir com o EcoTrack, siga os passos abaixo:
+
+1. **Fork** o repositório para a sua conta.
+2. **Clone** o repositório em sua máquina local.
+3. **Instale** as dependências necessárias para rodar o projeto localmente (veja a seção de Ambiente de Desenvolvimento).
+4. Crie uma **nova branch** com um nome descritivo para a sua contribuição (por exemplo: feature/minha-nova-funcionalidade ou fix/corrigir-bug).
+5. Realize suas alterações, faça **commits** descritivos e siga os padrões de código e formatação descritos neste guia.
+
+## <a name="_y9mnyaue1rmn"></a>**Regras para Contribuições**
+1. **Documentação**: Todas as novas funcionalidades devem incluir documentação no README.md ou em arquivos específicos, se necessário.
+2. **Testes**: Se você estiver adicionando novas funcionalidades ou corrigindo bugs, inclua testes que verifiquem o funcionamento correto das alterações.
+3. **Código Claro e Organizado**: Mantenha o código limpo e evite duplicações. Utilize comentários quando necessário para facilitar o entendimento.
+
+## <a name="_rgjkrsuci56n"></a>**Relato de Bugs**
+Se você encontrou um bug no EcoTrack, nos ajude a corrigir! Para relatar um bug:
+
+1. Verifique se o bug já foi relatado na seção de **Issues** do repositório.
+2. Caso o bug não tenha sido relatado, crie um novo relatório de **Issue**, fornecendo informações detalhadas:
+   1. Descrição do problema
+   2. Passos para reproduzir o bug
+   3. Comportamento esperado
+   4. Prints de tela ou logs (se aplicável)
+
+## <a name="_p4fmz5gxh3oh"></a>**Propostas de Melhoria**
+Gostaria de sugerir uma nova funcionalidade ou melhoria? Siga os passos abaixo:
+
+1. Verifique a seção de **Issues** para ver se a ideia já foi discutida.
+2. Se a ideia for nova, abra uma **Issue** explicando detalhadamente a proposta.
+3. Descreva os benefícios da implementação e como ela se alinha com os objetivos do EcoTrack.
+
+## <a name="_v095cr3822x"></a>**Padrões de Código e Formatação**
+Para manter a consistência do código, siga os seguintes padrões:
+
+- **Commits**: Use verbos no imperativo ("Adiciona", "Corrige") e mensagens curtas.
+  - Exemplo: "Adiciona funcionalidade de agendamento de coleta".
+- **Indentação**: Utilize quatro espaços para indentação.
+- **Nominação**: Variáveis e funções devem ter nomes descritivos e seguir o padrão snake\_case em Python. 
+  - Recomendamos a nomeação de variáveis da forma mais explícita possível.
+- **Estilo**: Utilize uma linguagem formal e evite abreviações, exceto quando no uso de termos amplamente conhecidos no desenvolvimento.
+## <a name="_f9ubg2po0a4v"></a>**Ambiente de Desenvolvimento**
+Para configurar o ambiente de desenvolvimento do EcoTrack, siga os passos abaixo:
+
+  1. Clone o repositório e navegue até o diretório do projeto.
+  2. Instale as dependências listadas no arquivo requirements.txt.
+  3. Execute os comandos para configurar o banco de dados e o ambiente:
+
+    python manage.py migrate
+    python manage.py runserver
+
+  4. Pronto! O EcoTrack deve estar rodando localmente em  http://127.0.0.1:8000.
+
+## <a name="_f7tn7wvydqax"></a>**Reconhecimento**
+Agradecemos todas as contribuições e reconhecemos o valor que cada colaborador traz ao projeto. Para honrar as suas contribuições, mencionaremos os colaboradores no README.md do projeto e no arquivo humans.txt na raiz do repositório.
+
+## <a name="_y24dbnp59v2m"></a>**Contato e Suporte**
+Se você tiver alguma dúvida sobre como contribuir ou enfrentar algum problema, entre em contato através do e-mail de suporte do projeto: <suporte@ecotrack.com>.
+
+
+
