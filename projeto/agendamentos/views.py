@@ -77,10 +77,17 @@ def ver_agendamentos_empresa(request, id):
 
 @login_required
 def delete_user_appointment(request, agendamento_id):
-    agendamento = get_object_or_404(Agendamento, id=agendamento_id, usuario=request.user)
+    # Pega o agendamento com o ID fornecido
+    agendamento = get_object_or_404(Agendamento, id=agendamento_id)
+
+    # Exclui o agendamento diretamente
     agendamento.delete()
-    messages.success(request, 'Agendamento excluído com sucesso.')
-    return redirect('agendamentos:ver_agendamentos_usuario')
+    
+    # Mensagem de sucesso
+    messages.success(request, 'Agendamento excluído com sucesso!')
+
+    # Redireciona para a página de visualização de agendamentos da empresa
+    return redirect('agendamentos:ver_agendamentos_empresa', id=agendamento.empresa.id)
 
 @login_required
 def editar_agendamento(request, agendamento_id):
@@ -122,8 +129,17 @@ def editar_etapa_agendamento(request, agendamento_id):
 
         # Validar se a etapa está entre as permitidas
         if nova_etapa in ['solicitacao', 'coleta', 'triagem', 'transformacao', 'realocacao']:
-            agendamento.etapa = nova_etapa
+            # Atualiza a etapa tanto do agendamento da empresa quanto do agendamento do usuário
+            agendamento.etapa_atual = nova_etapa
             agendamento.save()
+
+            # Tentar recuperar o agendamento do usuário. Se não encontrar, ignora a operação
+            agendamento_usuario = Agendamento.objects.filter(id=agendamento_id, usuario=request.user).first()
+
+            if agendamento_usuario:
+                agendamento_usuario.etapa_atual = nova_etapa
+                agendamento_usuario.save()
+
             messages.success(request, 'Etapa do agendamento atualizada com sucesso!')
         else:
             messages.error(request, 'Etapa inválida.')
@@ -132,6 +148,7 @@ def editar_etapa_agendamento(request, agendamento_id):
         return redirect('agendamentos:ver_agendamentos_empresa', id=agendamento.empresa.id)
 
     return render(request, 'agendamentos/editar_etapa_agendamento.html', {'agendamento': agendamento})
+
 
 
 
