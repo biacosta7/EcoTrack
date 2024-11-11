@@ -163,7 +163,7 @@ class AgendamentoTests(TestCase):
         
         # Preencher o campo "Hora" (Seleção por valor)
         # Forçar a seleção do horário usando JavaScript
-        self.driver.execute_script("document.getElementById('time').value = '09:00';")
+        self.driver.execute_script("document.getElementById('time').value = '08:00';")
         time.sleep(1)
 
         # empresa

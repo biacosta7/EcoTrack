@@ -79,5 +79,84 @@ class AgendamentoTests(TestCase):
             print("Erro ao clicar no link de Perfil:", e)
             
         time.sleep(2)
+        
+    
+    def test_recompensas(self):
+        """Quando o usuário tiver pontos de recompensa, o sistema deve permitir que ele entre na página de resgatar recompensas"""
+        self.driver.get("https://ecotrackapp.azurewebsites.net/agendamento/")
+        
+                # Preenche o formulário para ganhar pontos
+        nome_field = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.ID, "name"))
+        )
+        nome_field.send_keys("Teste Usuário 1")
+        time.sleep(1)
+        data_field = self.driver.find_element(By.ID, "date")
+        data_field.clear()  # Limpa o campo de data antes de preenchê-lo
+        self.driver.execute_script("document.getElementById('date').value = '2024-11-29';")
+        time.sleep(1)
+        
+        # Preencher o campo "Hora" (Seleção por valor)
+        # Forçar a seleção do horário usando JavaScript
+        self.driver.execute_script("document.getElementById('time').value = '10:00';")
+        time.sleep(1)
+
+        # empresa
+        empresa_dropdown = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.ID, "empresa"))
+        )
+        empresa_dropdown.click()
+        time.sleep(1)
+
+        # Seleciona a primeira opção diretamente usando JavaScript
+        self.driver.execute_script("document.querySelector('#empresa option:nth-child(2)').selected = true;")
+        time.sleep(1)
+
+        # Alternativa: clicar na primeira opção
+        first_option = self.driver.find_element(By.XPATH, "//select[@id='empresa']/option[2]")  # Mudamos para 2, pois o primeiro é o valor padrão
+        first_option.click()
+        time.sleep(1)
+       
+        endereco_field = self.driver.find_element(By.ID, "endereco")
+        endereco_field.clear()  # Limpa o campo de data antes de preenchê-lo
+        self.driver.execute_script("document.getElementById('endereco').value = 'Rua do Brum, 77';")
+        time.sleep(1)
+        
+        # tipo de material
+        metal_checkbox = self.driver.find_element(By.XPATH, "//input[@value='Metal']")
+        metal_checkbox.click()
+        time.sleep(2)
+        submit_button = WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable((By.XPATH, '//button[@type="submit"]'))
+            )
+        submit_button.click()
+
+        time.sleep(2)
+        
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.LINK_TEXT, 'Voltar ao Dashboard'))
+            ).click()
+            time.sleep(3)
+        except Exception as e:
+            print("Erro ao clicar no link de Dashboard:", e)
+            
+            
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.LINK_TEXT, 'Perfil'))
+            ).click()
+            time.sleep(3)
+        except Exception as e:
+            print("Erro ao clicar no link de Perfil:", e)
+            
+        try:
+            WebDriverWait(self.driver, 10).until(
+                EC.visibility_of_element_located((By.LINK_TEXT, 'Acessar Recompensas'))
+            ).click()
+            time.sleep(3)
+        except Exception as e:
+            print("Erro ao clicar no link de Recompensas:", e)
+    
                     
         
