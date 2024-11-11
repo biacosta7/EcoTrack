@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def rastrear_usuario_view(request):
+    return render(request, 'rastreamentos/rastrear_usuario.html')

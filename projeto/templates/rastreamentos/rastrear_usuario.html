@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreamento de Usuário</title>
+    <link rel="stylesheet" href="{% static 'rastreamento_usuario.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Status de Rastreamento</h1>
+            <p class="confirmation-message">Acompanhe o progresso do seu pedido de reciclagem:</p>
+        </header>
+        
+        <div class="details">
+            <h2>Etapas de Reciclagem</h2>
+            
+            <div class="stage">
+                <h3>Coleta</h3>
+                <p>Seu pedido foi coletado e está a caminho do centro de triagem.</p>
+            </div>
+            
+            <div class="stage">
+                <h3>Triagem</h3>
+                <p>O material está sendo separado para garantir a reciclagem adequada.</p>
+            </div>
+            
+            <div class="stage">
+                <h3>Processamento</h3>
+                <p>Os materiais selecionados estão passando por tratamento especializado.</p>
+            </div>
+            
+            <div class="stage">
+                <h3>Alocação</h3>
+                <p>Os resíduos processados estão sendo alocados para novos usos.</p>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <a href="{% url 'user:usuario_dashboard' %}" class="btn">Voltar ao Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>
