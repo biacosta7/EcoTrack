@@ -115,9 +115,16 @@ def editar_agendamento(request, agendamento_id):
 
     return render(request, 'agendamentos/editar_agendamento.html', {'agendamento': agendamento})
 
+
+
 @login_required
 def editar_etapa_agendamento(request, agendamento_id):
-    agendamento = get_object_or_404(Agendamento, id=agendamento_id)
+    # Usando get_object_or_404 para automaticamente retornar 404 ou lidar com a exceção
+    try:
+        agendamento = Agendamento.objects.get(id=agendamento_id)
+    except Agendamento.DoesNotExist:
+        messages.error(request, 'Agendamento não encontrado.')
+        return redirect('agendamentos:ver_agendamentos_empresa', id=request.user.id)  # Redireciona para a página da empresa ou uma página de erro
 
     # Verificar se o usuário é dono da empresa do agendamento
     if agendamento.empresa != request.user:
@@ -129,22 +136,13 @@ def editar_etapa_agendamento(request, agendamento_id):
 
         # Validar se a etapa está entre as permitidas
         if nova_etapa in ['solicitacao', 'coleta', 'triagem', 'transformacao', 'realocacao']:
-            # Atualiza a etapa tanto do agendamento da empresa quanto do agendamento do usuário
-            agendamento.etapa_atual = nova_etapa
+            agendamento.etapa = nova_etapa
             agendamento.save()
-
-            # Tentar recuperar o agendamento do usuário. Se não encontrar, ignora a operação
-            agendamento_usuario = Agendamento.objects.filter(id=agendamento_id, usuario=request.user).first()
-
-            if agendamento_usuario:
-                agendamento_usuario.etapa_atual = nova_etapa
-                agendamento_usuario.save()
-
             messages.success(request, 'Etapa do agendamento atualizada com sucesso!')
         else:
             messages.error(request, 'Etapa inválida.')
 
-        # Redireciona para a lista de agendamentos da empresa, usando o ID correto da empresa
+        # Redireciona para a lista de agendamentos da empresa
         return redirect('agendamentos:ver_agendamentos_empresa', id=agendamento.empresa.id)
 
     return render(request, 'agendamentos/editar_etapa_agendamento.html', {'agendamento': agendamento})
