@@ -77,5 +77,7 @@ class AgendamentoTests(TestCase):
             time.sleep(3)
         except Exception as e:
             print("Erro ao clicar no link de Perfil:", e)
+            
+        time.sleep(2)
                     
         
