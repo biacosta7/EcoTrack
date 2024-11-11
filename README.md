@@ -82,7 +82,7 @@ A crescente produção de resíduos e o descarte inadequado de materiais represe
 ## Entrega 4
 - Link do [JIRA](https://cesar-ecotrack.atlassian.net/jira/software/projects/EC/boards/1)
 - [Print do quadro da Sprint e backlog (JIRA)](projeto/Mídia/QuadroBacklog/JIRA-Entrega-4-final)
-- [Atualização dos protótipos de Lo-Fi]()
+- [Atualização dos protótipos de Lo-Fi](projeto/Mídia/Entrega4)
 - [Screencast FIGMA]()
 - [Screencast apresentando sistema]()
 - [Screencast execução dos testes]()
