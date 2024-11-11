@@ -2,53 +2,60 @@
 {% block title %}Meus Agendamentos{% endblock %}
 
 {% load static %}
-{% block css %}
-    <link rel="stylesheet" href="{% static 'style_ver_agendamentos.css' %}">
-{% endblock css %}
 
 {% block content %}
     <br>
     <h2>Meus Agendamentos</h2>
     <br>
+
     {% if agendamentos %}
-    <table>
-        <thead>
-            <tr>
-                <th style="background-color: #5db467;">Código</th>
-                <th style="background-color: #5db467;">Nome</th>
-                <th style="background-color: #5db467;">Tipos de resíduos</th>
-                <th style="background-color: #5db467;">Detalhes</th>
-                <th style="background-color: #5db467;">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for agendamento in agendamentos %}
-            <tr>
-                <td>#{{ agendamento.id }}</td>
-                <td>{{ agendamento.nome }}</td>
-                <td>{{ agendamento.tipos_residuos }}</td>
-                <td>
-                    <p>{{ agendamento.endereco }}</p>
-                    <p>{{ agendamento.data }} - {{ agendamento.hora }}h</p>
-                </td>
-                <td>
-                    <!-- Formulário para editar -->
-                    <form action="{% url 'agendamentos:editar_agendamento' agendamento.id %}" method="GET" style="display:inline;">
-                        <button type="submit" class="edit-button">✏️</button>
-                    </form>
-                    
-                    <!-- Formulário para exclusão -->
-                    <form action="{% url 'agendamentos:delete_user_appointment' agendamento.id %}" method="POST" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="delete-button" onclick="return confirm('Tem certeza que deseja excluir este agendamento?');">
-                            🗑️
-                        </button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr style="background-color: #5db467; color: white;">
+                    <th>Código</th>
+                    <th>Nome</th>
+                    <th>Tipos de resíduos</th>
+                    <th>Detalhes</th>
+                    <th>Etapa Atual</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for agendamento in agendamentos %}
+                    <tr>
+                        <td>#{{ agendamento.id }}</td>
+                        <td>{{ agendamento.nome }}</td>
+                        <td>{{ agendamento.tipos_residuos }}</td>
+                        <td>
+                            <p>{{ agendamento.endereco }}</p>
+                            <p>{{ agendamento.data }} - {{ agendamento.hora }}h</p>
+                        </td>
+                        <td>
+                            <!-- Exibe a Etapa Atual dinamicamente -->
+                            <span class="badge badge-primary">
+                                {{ agendamento.get_etapa_display|default:"Solicitação de Agendamento" }}
+                            </span>
+                        </td>
+                        <td>
+                            <!-- Botão de Edição -->
+                            <form action="{% url 'agendamentos:editar_agendamento' agendamento.id %}" method="GET" style="display:inline;">
+                                <button type="submit" class="btn btn-warning btn-sm">✏️ Editar</button>
+                            </form>
+                            
+                            <!-- Botão de Exclusão -->
+                            <form action="{% url 'agendamentos:delete_user_appointment' agendamento.id %}" method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este agendamento?');">
+                                    🗑️ Excluir
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% else %}
     <div style="text-align: center; margin-top: 20px;">
         <p>Não há agendamentos.</p>

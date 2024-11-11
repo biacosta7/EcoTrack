@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Editar Etapa do Agendamento{% endblock %}
+
+{% block content %}
+    <h2>Editar Etapa do Agendamento</h2>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="etapa">Etapa Atual:</label>
+            <select class="form-control" id="etapa" name="etapa" required>
+                <!-- Opções fixas para edição de status -->
+                <option value="solicitacao" {% if agendamento.etapa == 'solicitacao' %}selected{% endif %}>Solicitação de Agendamento</option>
+                <option value="coleta" {% if agendamento.etapa == 'coleta' %}selected{% endif %}>Coleta</option>
+                <option value="triagem" {% if agendamento.etapa == 'triagem' %}selected{% endif %}>Triagem</option>
+                <option value="transformacao" {% if agendamento.etapa == 'transformacao' %}selected{% endif %}>Transformação</option>
+                <option value="realocacao" {% if agendamento.etapa == 'realocacao' %}selected{% endif %}>Realocação</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+    </form>
+
+    <a href="{% url 'agendamentos:ver_agendamentos_empresa' request.user.id %}" class="btn btn-secondary mt-2">Voltar</a>
+{% endblock %}

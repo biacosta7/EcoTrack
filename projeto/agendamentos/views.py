@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .models import Agendamento
 from users.models import User
-from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 
 # Dicionário para mapear tipos de resíduos a suas pontuações
@@ -26,41 +25,31 @@ def agendar(request):
         tipos_residuos = request.POST.getlist('tipos_residuos')
         tipos_residuos_str = ', '.join(tipos_residuos)
 
-        # Calcular a pontuação total
         pontuacao_total = sum(PONTUACAO_RESIDUOS.get(residuo, 0) for residuo in tipos_residuos)
 
         # Verificação de conflitos
         if Agendamento.objects.filter(data=data, hora=hora, empresa_id=empresa_id).exists():
-            messages.error(request, 'Já existe um agendamento para esta data, hora e empresa. Por favor, escolha outro horário.')
-            empresas = User.objects.filter(is_company=True)
-            return render(request, 'agendamentos/agendamentos_coleta.html', {'empresas': empresas})
+            messages.error(request, 'Já existe um agendamento para esta data, hora e empresa.')
+            return redirect('agendamentos:agendamentos_coleta')
 
-        try:
-            agendamento = Agendamento(
-                nome=nome,
-                data=data,
-                hora=hora,
-                tipos_residuos=tipos_residuos_str,
-                empresa_id=empresa_id,
-                endereco=endereco,
-                usuario=request.user,  # Associando o agendamento ao usuário logado
-                pontuacao=pontuacao_total  # Salvar a pontuação no agendamento
-            )
-            agendamento.full_clean()  # Valida os dados
-            agendamento.save()  # Salva no banco
+        agendamento = Agendamento(
+            nome=nome,
+            data=data,
+            hora=hora,
+            tipos_residuos=tipos_residuos_str,
+            empresa_id=empresa_id,
+            endereco=endereco,
+            usuario=request.user,
+            pontuacao=pontuacao_total
+        )
+        agendamento.save()
+        request.user.pontuacao += pontuacao_total
+        request.user.save()
 
-            # Atualizar a pontuação do usuário
-            request.user.pontuacao += pontuacao_total
-            request.user.save()  # Salva as mudanças na pontuação
-
-            return redirect('agendamentos:confirmacao', data_agendamento=data, horario_agendamento=hora, empresa_nome=User.objects.get(id=empresa_id).nome_empresa)
-
-        except ValidationError as e:
-            print(f"Erro de validação: {e}")
+        return redirect('agendamentos:confirmacao', data_agendamento=data, horario_agendamento=hora, empresa_nome=User.objects.get(id=empresa_id).nome_empresa)
 
     empresas = User.objects.filter(is_company=True)
     return render(request, 'agendamentos/agendamentos_coleta.html', {'empresas': empresas})
-
 
 @login_required
 def confirmacao_view(request, data_agendamento, horario_agendamento, empresa_nome):
@@ -77,43 +66,26 @@ def lista_agendamentos(request):
 
 @login_required
 def ver_agendamentos(request):
-    """View para visualizar agendamentos do usuário logado"""
     agendamentos = Agendamento.objects.filter(usuario=request.user)
     return render(request, 'agendamentos/ver_agendamentos_usuario.html', {'agendamentos': agendamentos})
 
+@login_required
 def ver_agendamentos_empresa(request, id):
-    # Obtém a empresa específica pelo ID ou retorna 404 se não existir
     empresa = get_object_or_404(User, id=id, is_company=True)
-    # Filtra os agendamentos associados à empresa
     agendamentos = Agendamento.objects.filter(empresa=empresa)
-
-    context = {
-        'agendamentos': agendamentos, 
-        'empresa': empresa,
-    }
-
-    return render(request, 'agendamentos/ver_agendamentos.html', context)
+    return render(request, 'agendamentos/ver_agendamentos.html', {'agendamentos': agendamentos, 'empresa': empresa})
 
 @login_required
 def delete_user_appointment(request, agendamento_id):
-    try:
-        agendamento = Agendamento.objects.get(id=agendamento_id)
-
-        # Verifica se o usuário logado é o dono do agendamento
-        if agendamento.usuario == request.user:
-            agendamento.delete()
-            messages.success(request, 'Agendamento excluído com sucesso.')
-        else:
-            messages.error(request, 'Você não tem permissão para excluir este agendamento.')
-    except Agendamento.DoesNotExist:
-        messages.error(request, 'Agendamento não disponível para exclusão.')
-
-    return redirect('agendamentos:ver_agendamentos_usuario')  # Redireciona para a lista de agendamentos do usuário
+    agendamento = get_object_or_404(Agendamento, id=agendamento_id, usuario=request.user)
+    agendamento.delete()
+    messages.success(request, 'Agendamento excluído com sucesso.')
+    return redirect('agendamentos:ver_agendamentos_usuario')
 
 @login_required
 def editar_agendamento(request, agendamento_id):
-    agendamento = get_object_or_404(Agendamento, id=agendamento_id)
-
+    agendamento = get_object_or_404(Agendamento, id=agendamento_id, usuario=request.user)
+    
     if request.method == 'POST':
         nome = request.POST['nome']
         data = request.POST['data']
@@ -121,15 +93,10 @@ def editar_agendamento(request, agendamento_id):
         endereco = request.POST['endereco']
         tipos_residuos = request.POST.getlist('tipos_residuos')
 
-        # Verificar se o horário está sendo alterado
-        if agendamento.hora != hora:
-            if Agendamento.objects.filter(data=data, hora=hora, empresa=agendamento.empresa).exists():
-                messages.error(request, 'Este horário já está indisponível.')
-                return render(request, 'agendamentos/editar_agendamento.html', {
-                    'agendamento': agendamento,
-                })
+        if Agendamento.objects.filter(data=data, hora=hora, empresa=agendamento.empresa).exclude(id=agendamento.id).exists():
+            messages.error(request, 'Este horário já está indisponível.')
+            return redirect('agendamentos:editar_agendamento', agendamento_id=agendamento_id)
 
-        # Atualizar agendamento
         agendamento.nome = nome
         agendamento.data = data
         agendamento.hora = hora
@@ -137,8 +104,34 @@ def editar_agendamento(request, agendamento_id):
         agendamento.tipos_residuos = ', '.join(tipos_residuos)
         agendamento.save()
         messages.success(request, 'Agendamento atualizado com sucesso!')
-        return redirect('agendamentos:ver_agendamentos_usuario')  # Redirecionar após atualização
+        return redirect('agendamentos:ver_agendamentos_usuario')
 
-    return render(request, 'agendamentos/editar_agendamento.html', {
-        'agendamento': agendamento,
-    })
+    return render(request, 'agendamentos/editar_agendamento.html', {'agendamento': agendamento})
+
+@login_required
+def editar_etapa_agendamento(request, agendamento_id):
+    agendamento = get_object_or_404(Agendamento, id=agendamento_id)
+
+    # Verificar se o usuário é dono da empresa do agendamento
+    if agendamento.empresa != request.user:
+        messages.error(request, 'Você não tem permissão para editar a etapa deste agendamento.')
+        return redirect('agendamentos:ver_agendamentos_empresa', id=agendamento.empresa.id)
+
+    if request.method == 'POST':
+        nova_etapa = request.POST.get('etapa')
+
+        # Validar se a etapa está entre as permitidas
+        if nova_etapa in ['solicitacao', 'coleta', 'triagem', 'transformacao', 'realocacao']:
+            agendamento.etapa = nova_etapa
+            agendamento.save()
+            messages.success(request, 'Etapa do agendamento atualizada com sucesso!')
+        else:
+            messages.error(request, 'Etapa inválida.')
+
+        # Redireciona para a lista de agendamentos da empresa, usando o ID correto da empresa
+        return redirect('agendamentos:ver_agendamentos_empresa', id=agendamento.empresa.id)
+
+    return render(request, 'agendamentos/editar_etapa_agendamento.html', {'agendamento': agendamento})
+
+
+
