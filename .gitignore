@@ -3,6 +3,8 @@
 *.pot
 *.pyc
 __pycache__
+.cache_ggshield
+
 #db.sqlite3
 media
 
