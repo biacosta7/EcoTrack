@@ -85,7 +85,7 @@ A crescente produção de resíduos e o descarte inadequado de materiais represe
 - [Atualização dos protótipos de Lo-Fi](projeto/Mídia/Entrega4)
 - [Screencast FIGMA](https://youtu.be/zj7lMirRliU)
 - [Screencast apresentando sistema]()
-- [Screencast execução dos testes]()
+- [Screencast execução dos testes](https://youtu.be/X5qN6h5yCWw)
 
 # <a name="_b2ijskc3sjif"></a>**Guia de Contribuição para o EcoTrack**
 Bem-vindo ao guia de contribuição para o EcoTrack! Agradecemos seu interesse em contribuir para a melhora de nossa plataforma e estamos ansiosos para trabalhar com você para promover práticas de reciclagem e sustentabilidade. Este documento fornecerá orientações para facilitar a sua contribuição e garantir que todos trabalhemos de forma colaborativa e organizada.
