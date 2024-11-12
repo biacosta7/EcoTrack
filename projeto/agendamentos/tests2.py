@@ -42,7 +42,7 @@ class AgendamentoTests(TestCase):
             )
             email_field.click()
             email_field.clear()
-            email_field.send_keys("testeruser@gmail.com")
+            email_field.send_keys("testerecompensa2@gmail.com")
         except Exception as e:
             print("Erro ao preencher o campo de email:", e)
 
@@ -55,7 +55,7 @@ class AgendamentoTests(TestCase):
             )
             password_field.click()
             password_field.clear()
-            password_field.send_keys("testeruser")
+            password_field.send_keys("123")
         except Exception as e:
             print("Erro ao preencher o campo de senha:", e)
 
@@ -93,7 +93,7 @@ class AgendamentoTests(TestCase):
         time.sleep(1)
         data_field = self.driver.find_element(By.ID, "date")
         data_field.clear()  # Limpa o campo de data antes de preenchê-lo
-        self.driver.execute_script("document.getElementById('date').value = '2024-11-29';")
+        self.driver.execute_script("document.getElementById('date').value = '2024-11-26';")
         time.sleep(1)
         
         # Preencher o campo "Hora" (Seleção por valor)

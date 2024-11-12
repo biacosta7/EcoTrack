@@ -1,0 +1,9 @@
+Dados para utilizar nos testes
+
+Usuário comum
+- Email: testeruser@gmail.com
+- Senha: testeruser
+
+Usuário empresa
+- Email: teste@gmail.com
+- Senha: teste123
