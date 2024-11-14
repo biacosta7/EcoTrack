@@ -46,9 +46,9 @@
             <button id="closePopup" style="position: absolute; top: 10px; right: 15px; font-size: 35px; background: none; border: none; cursor: pointer;">&times;</button>
             <h2>Escolha o tipo de cadastro</h2>
             <p>Selecione uma das opções abaixo para se registrar.</p>
-            <a href="{% url 'user:register' %}?type=company" class="btn btn-primary" style="color: black; padding-right: 26px; padding-left: 26px;">Sou Cliente</a>
+            <a href="{% url 'user:register' %}?type=user" class="btn btn-primary" style="color: black; padding-right: 26px; padding-left: 26px;">Sou Cliente</a>
             <br>
-            <a href="{% url 'user:register' %}?type=user" class="btn btn-primary" style="color: black;">Sou Empresa</a>
+            <a href="{% url 'user:register' %}?type=company" class="btn btn-primary" style="color: black;">Sou Empresa</a>
         </div>
     </div>
     
