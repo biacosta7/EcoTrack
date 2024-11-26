@@ -125,15 +125,18 @@ def register_view(request):
         )
 
         user.set_password(password1)
-        user.save()
-
-        messages.success(request, "Registro realizado com sucesso.")
+        try:
+            user.save()
+            messages.success(request, "Registro realizado com sucesso.")
+        except Exception as e:
+            messages.error(request, "Erro ao realizar registro.")
 
         # Redirecionar com base no tipo de usuário
-        if user_type == 'company':
-            return redirect('user:empresa_dashboard')  # Redireciona para o dashboard da empresa
-        else:
-            return redirect('user:usuario_dashboard')  # Redireciona para o dashboard do usuário comum
+        # if user_type == 'company':
+        #     return redirect('user:empresa_dashboard')  # Redireciona para o dashboard da empresa
+        # else:
+        #     return redirect('user:usuario_dashboard')  # Redireciona para o dashboard do usuário comum
+        return redirect('user:login')
 
     # Renderiza o formulário de registro
     else:
@@ -149,10 +152,10 @@ def register_view(request):
 class CustomLoginView(LoginView):
     template_name = 'users/login.html'
     
-    def get(self, request, *args, **kwargs):
-        if 'next' in request.GET:
-            messages.error(request, "Você precisa estar autenticado para acessar esta página.")
-        return super().get(request, *args, **kwargs)
+    # def get(self, request, *args, **kwargs):
+    #     if 'next' in request.GET:
+    #         messages.error(request, "Você precisa estar autenticado para acessar esta página.")
+    #     return super().get(request, *args, **kwargs)
     
     def form_invalid(self, form):
         # Quando o formulário de login for inválido, exibe uma mensagem de erro.

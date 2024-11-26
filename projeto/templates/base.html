@@ -28,14 +28,7 @@
     </nav>
 
     <!-- Container Principal -->
-    <div class="container mt-4" style="min-height: 80vh;">
-      {% if messages %}
-      <div class="alert alert-danger" role="alert">
-          {% for message in messages %}
-              {{ message }}
-          {% endfor %}
-      </div>
-  {% endif %}
+    
 
         <!-- Bloco de Conteúdo -->
         {% block content %}

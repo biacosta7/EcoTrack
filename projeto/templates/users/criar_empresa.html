@@ -26,16 +26,15 @@
             <form method="post" action="{{ form_action }}">
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
                 <input type="hidden" name="user_type" value="{{ user_type }}">
-                {% csrf_token %}
-                <!-- Verificação de erros -->
-                {% if errors %}
-                    <ul class="error-list alert alert-danger">
-                        {% for field, error in errors.items %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
+                {# Messages section #}
+                {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
                 {% endif %}
-                
+                                
                 <label for="nome_empresa">Nome da Empresa:</label>
                 <input type="text" id="nome_empresa" name="nome_empresa" class="form-control" value="{{ nome_empresa_value }}">
             

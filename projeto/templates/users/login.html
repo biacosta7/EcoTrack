@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{% static 'users.css' %}">
     {% endblock css %}
 </head>
+
 <style>
     .error-messages {
         background-color: #f8d7da;
@@ -46,17 +47,14 @@
             <h1>Login</h1>
             <br>
             <p>Ainda não tem conta? <a href="{% url 'user:register' %}" class="signup-link">Cadastre-se</a></p>
-            
-            <!-- Exibir mensagens de erro -->
             {% if messages %}
-                <div class="error-messages">
-                    <button class="close-button" aria-label="Fechar">&times;</button>
-                    {% for message in messages %}
-                        <div class="error">{{ message }}</div>
-                    {% endfor %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show" role="alert">
+                    {{ message }}
                 </div>
+            {% endfor %}
             {% endif %}
-
+            
             <!-- Formulário de login -->
             <form method="post" action="{% url 'user:login' %}">
                 {% csrf_token %}

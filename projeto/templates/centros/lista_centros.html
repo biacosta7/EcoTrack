@@ -7,9 +7,11 @@
 {% endblock css %}
 
 {% block content %}
+<div style="margin-right: 200px; margin-left: 200px;">
     <h1>Centros de Coleta</h1>
     
     {% if centros %}
+    <a class="nav-link2" style="display: flex; justify-content: center; width: 300px !important; margin: auto; color:white;" href="{% url 'centros:cadastrar_centro' %}">Cadastrar novo centro</a>
         <ul>
             {% for centro in centros %}
                 <li>
@@ -31,18 +33,26 @@
                     <br><b>Horário de Fechamento:</b> {{ centro.horario_fechamento }}<br>
                     <br>
                     <!-- Botões de Remover e Editar -->
-                    <form action="{% url 'centros:remover_centro' centro.id %}" method="post" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Remover</button>
-                    </form>
-                    <a href="{% url 'centros:atualizar_centro' centro.id %}" class="btn btn-primary">Editar</a>
+                    <div style="display: flex; gap: 10px; justify-content: center; align-items: center;">
+                        <form action="{% url 'centros:atualizar_centro' centro.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" style="width: 300px; background-color: #28a745;border-radius: 10px; ">
+                                Editar
+                            </button>
+                        </form>
+                        <form action="{% url 'centros:remover_centro' centro.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" style="width: 300px; background-color: rgb(214, 9, 9); border-radius: 10px;">
+                                Remover
+                            </button>
+                        </form>
+                    </div>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>Nenhum centro de coleta cadastrado.</p>
+        <p style="display: flex; justify-content: center; padding-top: 50px;">Nenhum centro de coleta cadastrado.</p>
+        <a class="nav-link2" style="display: flex; justify-content: center; width: 300px !important; margin: auto; margin-bottom: 400px;" href="{% url 'centros:cadastrar_centro' %}">Cadastrar novo centro</a>
     {% endif %}
-
-    <a href="{% url 'centros:cadastrar_centro' %}">Cadastrar novo centro</a>
-
+</div>
 {% endblock %}
