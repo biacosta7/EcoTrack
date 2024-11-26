@@ -9,14 +9,17 @@
     {% block css %}
     <link rel="stylesheet" href="{% static 'users.css' %}">
     {% endblock css %}
-    <!-- Verificação de erros -->
-    {% if errors %}
-        <ul class="error-list alert alert-danger">
-            {% for field, error in errors.items %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
+    {# Messages section #}
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
     {% endif %}
+
+   
 
     <div class="form-group">
         <label for="nome_empresa">Nome da Empresa:</label>
