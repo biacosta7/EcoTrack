@@ -22,6 +22,15 @@
             <img src="{% static 'logo.png' %}" alt="Logo Ecotrack" class="logo">
             <h1>Registrar Usuário</h1>
             <br>
+            {# Messages section #}
+            {% if messages %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            {% endif %}
             <form method="post" action="{{ form_action }}">
                 {% csrf_token %}
                 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">

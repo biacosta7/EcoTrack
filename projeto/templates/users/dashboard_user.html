@@ -5,7 +5,15 @@
 {% block css %}
     <link rel="stylesheet" href="{% static 'dashboard_user.css' %}">
 {% endblock css %}
-
+{# Messages section #}
+{% if messages %}
+{% for message in messages %}
+    <div class="alert {% if message.tags == 'success' %}alert-success{% elif message.tags == 'error' %}alert-danger{% endif %} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{% endfor %}
+{% endif %}
 {% block content %}
 <header class="main-header">
     <div class="logo-container">
