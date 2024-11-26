@@ -9,7 +9,7 @@
 {% block content %}
     <h2>Cadastrar Ponto de Coleta</h2>
 
-    <form method="post" action="{% url 'centros:cadastrar_centro' %}">
+    <form method="post" style="margin-right: 200px; margin-left: 200px;" action="{% url 'centros:cadastrar_centro' %}">
         {% csrf_token %}
 
         <!-- Campo Nome -->
@@ -48,32 +48,45 @@
             <input type="text" id="cep" name="cep" maxlength="9" required value="{{ form_data.cep|default_if_none:'' }}">
         </div>
 
+        <br>
         <!-- Campo Tipos de Materiais (Checkboxes) -->
         <div class="form-group">
-            <label>Tipos de Materiais</label><br>
-            <input type="checkbox" name="tipos" value="metal" {% if "metal" in form_data.tipos %}checked{% endif %}> Metal<br>
-            <input type="checkbox" name="tipos" value="papel" {% if "papel" in form_data.tipos %}checked{% endif %}> Papel<br>
-            <input type="checkbox" name="tipos" value="plastico" {% if "plastico" in form_data.tipos %}checked{% endif %}> Plástico<br>
-            <input type="checkbox" name="tipos" value="organico" {% if "organico" in form_data.tipos %}checked{% endif %}> Orgânico<br>
-            <input type="checkbox" name="tipos" value="perigoso" {% if "perigoso" in form_data.tipos %}checked{% endif %}> Perigoso<br>
-            <input type="checkbox" name="tipos" value="vidro" {% if "vidro" in form_data.tipos %}checked{% endif %}> Vidro<br>
-        </div>
-
+            <label>Tipos de Materiais Suportados:</label><br>
+            <div class="checkbox-inline">
+                <input type="checkbox" name="tipos" value="metal" {% if "metal" in form_data.tipos %}checked{% endif %}><span>Metal</span>
+            </div>
+            <div class="checkbox-inline">
+                <input type="checkbox" name="tipos" value="papel" {% if "papel" in form_data.tipos %}checked{% endif %}><span>Papel</span>
+            </div>
+            <div class="checkbox-inline">
+                <input type="checkbox" name="tipos" value="plastico" {% if "plastico" in form_data.tipos %}checked{% endif %}><span>Plástico</span>
+            </div>
+            <div class="checkbox-inline">
+                <input type="checkbox" name="tipos" value="organico" {% if "organico" in form_data.tipos %}checked{% endif %}><span>Orgânico</span>
+            </div>
+            <div class="checkbox-inline">
+                <input type="checkbox" name="tipos" value="perigoso" {% if "perigoso" in form_data.tipos %}checked{% endif %}><span>Perigoso</span>
+            </div>
+            <div class="checkbox-inline">
+                <input type="checkbox" name="tipos" value="vidro" {% if "vidro" in form_data.tipos %}checked{% endif %}><span>Vidro</span>
+            </div>
+        </div>        
+        <br>
         <!-- Campo Horário de Abertura -->
         <div class="form-group">
             <label for="horario_abertura">Horário de Abertura</label>
             <input type="time" id="horario_abertura" name="horario_abertura" value="{{ form_data.horario_abertura|default_if_none:'' }}">
         </div>
-
+        <br>
         <!-- Campo Horário de Fechamento -->
         <div class="form-group">
             <label for="horario_fechamento">Horário de Fechamento</label>
             <input type="time" id="horario_fechamento" name="horario_fechamento" value="{{ form_data.horario_fechamento|default_if_none:'' }}">
         </div>
-
+        <br>
         <!-- Botões -->
-        <button type="submit">Cadastrar</button>
-        <a href="{% url 'centros:lista_centros' %}">Cancelar</a>
+        <button type="submit" style="margin-top: 10px; margin-left:19px; width: 1021px !important; margin-bottom: 15px;">Cadastrar</button>
+        <a style="padding-top: 20px; margin-left:19px;" href="{% url 'centros:lista_centros' %}">Cancelar</a>
     </form>
 
     <!-- Exibe erros se houver -->

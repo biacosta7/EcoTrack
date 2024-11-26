@@ -62,8 +62,9 @@ form .form-group {
 
 
 form .form-group label {
+    margin-left: 20px;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 15px;
     margin-bottom: 10px;
     display: block;
     color: #34495E;
@@ -78,6 +79,7 @@ form input, form select, form textarea {
     font-size: 14px;
     background-color: #F9F9F9;
     box-sizing: border-box;
+    margin-left: 15px;
 }
 
 
@@ -341,7 +343,62 @@ td {
     }
 }
 
+.alert {
+    margin: 20px;
+    padding: 15px;
+    border-radius: 4px;
+    position: relative;
+    list-style: none; 
+}
 
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
 
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
 
+.alert-dismissible {
+    padding-right: 4rem;
+}
 
+.alert-dismissible .btn-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1.25rem 1rem;
+}
+
+.fade {
+    transition: opacity 0.15s linear;
+}
+
+.fade.show {
+    opacity: 1;
+}
+
+/* If you have any specific lists inside alerts, you can target them directly */
+.alert ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.alert li {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.checkbox-inline {
+    display: inline-block;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 14px; /* Ajuste conforme necessário */
+    margin-bottom: 10px;
+    color: #2C3E50;
+}
